@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DIMI AD INK — Tatuaje București</title>
+  <title>AD Tattoo Lab — Alexandros Dimosthenous · București</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -17,8 +17,9 @@
       --border:   #1e1e1e;
       --text:     #e8e2d9;
       --muted:    #6b6560;
-      --accent:   #c8b89a;
-      --white:    #f5f0ea;
+      --accent:   #cc1100;
+      --accent2:  #e82200;
+      --white:    #f0ece8;
     }
 
     html { scroll-behavior: smooth; }
@@ -52,13 +53,28 @@
     nav.scrolled { border-bottom-color: var(--border); }
 
     .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      padding: 2px;
+      display: block;
+    }
+
+    .nav-logo span {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 400;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--white);
-      text-decoration: none;
     }
 
     .nav-link {
@@ -428,18 +444,21 @@
 
   <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">Dimi AD Ink</a>
+    <a href="#hero" class="nav-logo">
+      <img src="img/logo.png" alt="AD Tattoo Lab" />
+      <span>AD Tattoo Lab</span>
+    </a>
     <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="nav-link">Instagram ↗</a>
   </nav>
 
   <!-- HERO -->
   <section id="hero">
-    <p class="hero-eyebrow">Tattoo Artist · București</p>
+    <p class="hero-eyebrow">Alexandros Dimosthenous · București</p>
     <h1 class="hero-title">
-      Dimi AD
-      <span>Ink</span>
+      AD
+      <span>Tattoo Lab</span>
     </h1>
-    <p class="hero-sub">Tatuaje fine line · Geometric · Custom</p>
+    <p class="hero-sub">Black & Grey · Blackwork · Custom Design</p>
     <a href="#contact" class="btn">Programează-te</a>
     <div class="scroll-hint">
       <div class="scroll-line"></div>
@@ -453,18 +472,18 @@
       <div class="about-grid">
         <div class="about-text">
           <p class="section-label">Despre</p>
-          <h2 class="section-title">Fiecare linie<br />spune ceva</h2>
-          <p>Tatuez în București cu focus pe fine line, geometric și design custom. Fiecare piesă e gândită și executată cu atenție la detaliu — nu fac volum, fac calitate.</p>
-          <p>Disponibil pentru programări individuale. Dacă ai o idee, hai să o transformăm în ceva permanent.</p>
+          <h2 class="section-title">Black & grey.<br />Fără compromisuri.</h2>
+          <p>Tatuez în București cu specializare în black & grey realism, blackwork bold și design custom. Fiecare piesă e construită de la zero — nu lucrez cu flash-uri generice.</p>
+          <p>Dacă ai o idee — un concept, o referință, sau doar o direcție — hai să o transformăm în ceva permanent și bine executat.</p>
         </div>
         <div class="about-stats">
           <div>
-            <div class="stat-number">Fine</div>
-            <div class="stat-label">Line work</div>
+            <div class="stat-number">B&G</div>
+            <div class="stat-label">Realism</div>
           </div>
           <div>
-            <div class="stat-number">Geo</div>
-            <div class="stat-label">Metric</div>
+            <div class="stat-number">BW</div>
+            <div class="stat-label">Blackwork</div>
           </div>
           <div>
             <div class="stat-number">100%</div>
@@ -537,7 +556,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Dimi AD Ink</div>
+    <div class="footer-logo">Alexandros Dimosthenous · Tattoo Lab</div>
     <div class="footer-copy">© 2026</div>
   </footer>
 
