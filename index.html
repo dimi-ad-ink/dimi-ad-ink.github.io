@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Roboto+Condensed:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +37,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Disable custom cursor on touch */
     @media (hover: none) {
       body { cursor: auto; }
       .cursor, .cursor-ring { display: none; }
@@ -67,7 +66,6 @@
     }
     .cursor-ring.hover { width: 64px; height: 64px; border-color: var(--red); }
 
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--black); }
     ::-webkit-scrollbar-thumb { background: var(--line2); }
@@ -77,16 +75,15 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 22px 48px;
-      background: linear-gradient(to bottom, rgba(8,8,8,0.92), rgba(8,8,8,0));
-      transition: background 0.3s, border-bottom 0.3s;
-      border-bottom: 1px solid transparent;
+      padding: 20px 48px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      transition: padding 0.3s, background 0.3s;
     }
     nav.scrolled {
       background: rgba(8,8,8,0.96);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom-color: var(--line);
       padding: 14px 48px;
     }
 
@@ -108,14 +105,30 @@
     }
     .nav-logo-text span { color: var(--red); }
 
-    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
-    .nav-links a {
+    .nav-center { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-center a {
       font-family: 'Space Mono', monospace;
       font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
       color: var(--muted); text-decoration: none; transition: color 0.25s;
-      position: relative;
     }
-    .nav-links a:hover { color: var(--red); }
+    .nav-center a:hover { color: var(--red); }
+
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+
+    .lang-toggle {
+      display: flex; align-items: center; gap: 4px;
+      border: 1px solid var(--line2); padding: 4px;
+    }
+    .lang-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      background: transparent; border: none; color: var(--muted);
+      padding: 6px 10px; cursor: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { background: var(--red); color: var(--black); }
+
     .nav-cta {
       font-family: 'Space Mono', monospace;
       font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
@@ -125,16 +138,19 @@
     }
     .nav-cta:hover { background: var(--red); border-color: var(--red); color: var(--black); }
 
-    @media (max-width: 900px) {
-      nav { padding: 16px 20px; }
+    @media (max-width: 1100px) {
+      .nav-center { display: none; }
+    }
+    @media (max-width: 720px) {
+      nav { padding: 14px 20px; }
       nav.scrolled { padding: 12px 20px; }
-      .nav-links { display: none; }
+      .nav-cta { display: none; }
     }
 
     /* ─── HERO ──────────────────────────────────────── */
     .hero {
       min-height: 100vh; display: flex; align-items: center;
-      position: relative; overflow: hidden; padding: 0 48px;
+      position: relative; overflow: hidden; padding: 140px 48px 80px;
     }
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
@@ -147,57 +163,49 @@
       width: 42vw; max-width: 600px; opacity: 0.85;
       z-index: 1; pointer-events: none;
     }
-    .hero-content { position: relative; z-index: 2; max-width: 900px; }
-    .hero-eyebrow {
+
+    /* Vertical side marker (numele complet, vizibil) */
+    .hero-side-marker {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: rotate(-90deg) translateX(50%);
+      transform-origin: left center;
       font-family: 'Space Mono', monospace;
-      font-size: 11px; letter-spacing: 4px; color: var(--red);
-      text-transform: uppercase; margin-bottom: 28px;
+      font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--red);
+      white-space: nowrap;
+      z-index: 2;
       display: flex; align-items: center; gap: 14px;
-      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
     }
-    .hero-eyebrow::before {
+    .hero-side-marker::before {
       content: ''; width: 32px; height: 1px; background: var(--red);
     }
+
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+    /* Titlu mai jos, Roboto Condensed lizibil, mai mic, misterios */
     .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 13vw, 200px);
-      line-height: 0.88; letter-spacing: -0.02em;
-      margin-bottom: 32px;
-      opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: clamp(56px, 9vw, 130px);
+      line-height: 1.0;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      color: var(--text);
+      opacity: 0; animation: fadeUp 0.9s 0.3s forwards;
     }
-    .hero-title .l1 { display: block; }
-    .hero-title .l2 {
-      display: block;
-      -webkit-text-stroke: 1.5px rgba(232,232,232,0.4);
-      color: transparent;
-    }
-    .hero-title .l3 { display: block; color: var(--red); }
+    .hero-title .accent { color: var(--red); font-weight: 400; }
+
     .hero-desc {
-      font-size: 18px; font-weight: 300; font-style: italic;
-      color: var(--muted); line-height: 1.6;
-      max-width: 460px; margin-bottom: 48px;
-      opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 17px; letter-spacing: 0.02em;
+      color: var(--muted); line-height: 1.7;
+      max-width: 520px;
+      opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
     }
-    .hero-ctas {
-      display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
-    }
-    .btn-primary {
-      background: var(--red); color: white;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      padding: 18px 40px; text-decoration: none; transition: all 0.3s;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      position: relative; overflow: hidden;
-    }
-    .btn-primary:hover { background: var(--red-bright); transform: translateY(-2px); }
-    .btn-secondary {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; padding: 18px 0;
-      border-bottom: 1px solid var(--line2); transition: all 0.3s;
-    }
-    .btn-secondary:hover { color: var(--text); border-color: var(--red); }
 
     .scroll-indicator {
       position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
@@ -205,7 +213,7 @@
       color: var(--muted); font-family: 'Space Mono', monospace;
       font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
       z-index: 3;
-      animation: fadeIn 1s 1.2s forwards; opacity: 0;
+      animation: fadeIn 1s 1s forwards; opacity: 0;
     }
     .scroll-indicator-line {
       width: 1px; height: 50px;
@@ -213,32 +221,10 @@
       animation: scrollLine 2s ease-in-out infinite;
     }
 
-    /* ─── STATS BAR ──────────────────────────────────── */
-    .stats {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      margin: 0 48px; background: var(--dark);
-    }
-    .stat {
-      padding: 36px 32px; border-right: 1px solid var(--line);
-      position: relative; overflow: hidden;
-    }
-    .stat:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 56px; color: var(--red); line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px; letter-spacing: 2px; color: var(--muted);
-      text-transform: uppercase;
-    }
     @media (max-width: 720px) {
-      .stats { grid-template-columns: repeat(2, 1fr); margin: 0 20px; }
-      .stat:nth-child(2) { border-right: none; }
-      .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+      .hero { padding: 120px 20px 80px; }
+      .hero-side-marker { display: none; }
+      .hero-machine { opacity: 0.3; }
     }
 
     /* ─── SECTION COMMONS ────────────────────────────── */
@@ -250,13 +236,17 @@
       display: flex; align-items: center; gap: 14px;
     }
     .section-label::before { content: ''; width: 28px; height: 1px; background: var(--red); }
+
+    /* Titluri secțiuni — Roboto Condensed lizibil */
     .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(42px, 6vw, 80px);
-      line-height: 0.95; letter-spacing: 0.02em;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: clamp(38px, 5.5vw, 70px);
+      line-height: 1.05; letter-spacing: 0.02em;
+      text-transform: uppercase;
       margin-bottom: 28px;
     }
-    .section-title .accent { color: var(--red); }
+    .section-title .accent { color: var(--red); font-weight: 400; }
 
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s, transform 0.9s; }
     .reveal.in { opacity: 1; transform: translateY(0); }
@@ -268,9 +258,12 @@
     }
     .about-left { padding-right: 80px; border-right: 1px solid var(--line); }
     .about-text {
-      font-size: 17px; font-weight: 300; line-height: 1.85;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 16px; line-height: 1.85;
       color: var(--muted); margin-bottom: 24px;
     }
+    .about-text strong { color: var(--text); font-weight: 500; }
     .about-right {
       padding-left: 80px; display: flex; flex-direction: column;
       justify-content: center; gap: 28px;
@@ -281,16 +274,24 @@
     }
     .style-item:last-child { border-bottom: none; padding-bottom: 0; }
     .style-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 38px; color: var(--red); opacity: 0.5;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 32px; color: var(--red); opacity: 0.6;
       line-height: 1; min-width: 44px;
     }
     .style-info { flex: 1; }
     .style-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 26px; letter-spacing: 0.08em; margin-bottom: 6px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 500;
+      font-size: 22px; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
-    .style-desc { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.6; }
+    .style-desc {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+    }
 
     @media (max-width: 900px) {
       .about { grid-template-columns: 1fr; margin: 80px 20px; gap: 60px; }
@@ -298,11 +299,38 @@
       .about-right { padding-left: 0; }
     }
 
-    /* ─── PROCESS (Sticky scroll machine) ────────────── */
+    /* ─── ETAPE / PROCESS ────────────────────────────── */
+    .etape-header {
+      max-width: 1400px; margin: 0 auto;
+      padding: 80px 60px 0;
+      text-align: center;
+    }
+    .etape-header .section-label {
+      justify-content: center;
+    }
+    .etape-header .section-label::before { display: none; }
+    .etape-title {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: clamp(48px, 7vw, 90px);
+      line-height: 1; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+      position: relative;
+      display: inline-block;
+    }
+    .etape-title::after {
+      content: '';
+      position: absolute; left: 50%; bottom: -18px;
+      transform: translateX(-50%);
+      width: 60px; height: 2px; background: var(--red);
+    }
+
     .process {
       position: relative; background: var(--dark);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
+      padding-top: 60px;
     }
     .process-inner {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -329,16 +357,21 @@
     }
     .process-step:last-child { border-bottom: none; }
     .process-step-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 14px; letter-spacing: 3px; color: var(--red);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; letter-spacing: 3px; color: var(--red);
       margin-bottom: 18px;
     }
     .process-step-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(36px, 4.5vw, 60px);
-      line-height: 1; margin-bottom: 22px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 400;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.1; letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
     }
     .process-step-desc {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
       font-size: 16px; line-height: 1.8; color: var(--muted);
       max-width: 460px;
     }
@@ -350,66 +383,50 @@
       .process-step { min-height: auto; padding: 60px 0; }
     }
 
-    /* ─── PORTFOLIO CAROUSEL ─────────────────────────── */
+    /* ─── PORTFOLIO — CIRCULAR AUTO-SCROLL ───────────── */
     .portfolio { padding: 120px 0 120px; overflow: hidden; }
     .portfolio-header {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      padding: 0 48px; margin-bottom: 48px; gap: 32px; flex-wrap: wrap;
+      padding: 0 48px; margin-bottom: 56px;
     }
-    .portfolio-controls { display: flex; gap: 12px; }
-    .ctrl-btn {
-      width: 50px; height: 50px;
-      border: 1px solid var(--line2); background: transparent;
-      color: var(--text); cursor: none;
-      transition: all 0.25s;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Mono', monospace; font-size: 18px;
-    }
-    .ctrl-btn:hover { border-color: var(--red); color: var(--red); }
-    .ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    .carousel {
-      display: flex; gap: 16px; padding: 0 48px;
-      overflow-x: auto; scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      scroll-behavior: smooth;
+    .carousel-viewport {
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
     }
-    .carousel::-webkit-scrollbar { display: none; }
+    .carousel-track {
+      display: flex; gap: 0;
+      width: max-content;
+      animation: scrollX 80s linear infinite;
+    }
+    .carousel-track:hover { animation-play-state: paused; }
     .carousel-item {
-      flex: 0 0 380px; aspect-ratio: 3/4;
-      scroll-snap-align: start;
+      flex: 0 0 auto;
+      width: 360px; height: 480px;
       position: relative; overflow: hidden;
-      border: 1px solid var(--line);
       cursor: none;
-      transition: border-color 0.3s, transform 0.4s;
     }
-    .carousel-item:hover { border-color: var(--red); }
     .carousel-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.6s, filter 0.4s;
-      filter: grayscale(0.15) brightness(0.92);
+      width: 100%; height: 100%;
+      object-fit: cover; /* umple cardul, fără benzi negre vizibile */
+      display: block;
+      transition: transform 0.8s, filter 0.4s;
+      filter: grayscale(0.1) brightness(0.95);
     }
-    .carousel-item:hover img { transform: scale(1.06); filter: grayscale(0) brightness(1); }
-    .carousel-item-overlay {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 22px;
-      background: linear-gradient(to top, rgba(8,8,8,0.95), transparent);
-      display: flex; justify-content: space-between; align-items: flex-end;
+    .carousel-item:hover img {
+      transform: scale(1.05);
+      filter: grayscale(0) brightness(1.05);
     }
-    .carousel-item-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px; color: var(--red); line-height: 1;
-    }
-    .carousel-item-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; color: var(--muted);
-      text-transform: uppercase;
+
+    @keyframes scrollX {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
     @media (max-width: 720px) {
       .portfolio-header { padding: 0 20px; }
-      .carousel { padding: 0 20px; }
-      .carousel-item { flex: 0 0 280px; }
+      .carousel-item { width: 260px; height: 360px; }
     }
 
     /* ─── EQUIPMENT MARQUEE ──────────────────────────── */
@@ -422,12 +439,15 @@
     }
     .equipment-header { padding: 0 48px; margin-bottom: 60px; max-width: 1100px; }
     .equipment-desc {
-      font-size: 17px; color: var(--muted); line-height: 1.8;
-      font-weight: 300; max-width: 600px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 16px; color: var(--muted); line-height: 1.8;
+      max-width: 600px;
     }
     .marquee {
       display: flex; gap: 0;
-      overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
       -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
     }
     .marquee-track {
@@ -467,20 +487,25 @@
       text-transform: uppercase; margin-bottom: 14px;
     }
     .eq-card-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px; letter-spacing: 0.06em; margin-bottom: 8px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 500;
+      font-size: 24px; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
     .eq-card-desc {
-      font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.5;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 13px; color: var(--muted); line-height: 1.5;
     }
     @media (max-width: 720px) {
       .equipment-header { padding: 0 20px; }
       .equipment-grid { margin: 60px 20px 0; }
     }
 
-    /* ─── CONTACT ────────────────────────────────────── */
+    /* ─── CONTACT — ZOOM-IN TITLE ────────────────────── */
     .contact {
-      padding: 140px 48px;
+      padding: 160px 48px;
       text-align: center;
       position: relative; overflow: hidden;
     }
@@ -489,16 +514,35 @@
       background: radial-gradient(ellipse at 50% 50%, rgba(200,16,46,0.08), transparent 60%);
       z-index: 0;
     }
-    .contact-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+    .contact-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
     .contact-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(56px, 9vw, 130px);
-      line-height: 0.9; letter-spacing: -0.01em;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: clamp(56px, 10vw, 150px);
+      line-height: 1; letter-spacing: 0.02em;
+      text-transform: uppercase;
       margin-bottom: 36px;
+
+      /* Zoom-in: începe mic și departe, devine mare aproape */
+      transform: scale(0.25);
+      opacity: 0;
+      filter: blur(8px);
+      transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 1.2s ease-out,
+                  filter 1.4s ease-out;
     }
-    .contact-title .accent { color: var(--red); }
+    .contact-title.in {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
+    .contact-title .accent { color: var(--red); font-weight: 400; }
+
     .contact-desc {
-      font-size: 18px; color: var(--muted); line-height: 1.7;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 17px; color: var(--muted); line-height: 1.7;
       max-width: 540px; margin: 0 auto 56px;
     }
     .contact-card {
@@ -518,8 +562,11 @@
       stroke: var(--red); fill: none; stroke-width: 1.5;
     }
     .contact-card-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px; letter-spacing: 0.1em; color: var(--text);
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 500;
+      font-size: 22px; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
     }
     .contact-meta {
       margin-top: 60px;
@@ -532,17 +579,16 @@
     footer {
       padding: 36px 48px;
       border-top: 1px solid var(--line);
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: center; align-items: center;
       flex-wrap: wrap; gap: 16px;
       font-family: 'Space Mono', monospace;
       font-size: 10px; letter-spacing: 2px;
       color: var(--muted2);
       text-transform: uppercase;
+      text-align: center;
     }
-    footer a { color: var(--muted); text-decoration: none; transition: color 0.25s; }
-    footer a:hover { color: var(--red); }
     @media (max-width: 720px) {
-      footer { padding: 28px 20px; flex-direction: column; text-align: center; }
+      footer { padding: 28px 20px; }
     }
 
     /* ─── ANIMATIONS ─────────────────────────────────── */
@@ -550,9 +596,7 @@
       from { opacity: 0; transform: translateY(28px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes scrollLine {
       0%, 100% { opacity: 0.3; transform: scaleY(1); }
       50% { opacity: 1; transform: scaleY(0.5); }
@@ -561,19 +605,14 @@
       from { transform: translateX(0); }
       to { transform: translateX(-100%); }
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
     @keyframes needleVibrate {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(2px); }
     }
 
-    /* SVG Machine - parts animation */
     .machine-needle { animation: needleVibrate 0.08s linear infinite; transform-origin: center; }
 
-    /* Lightbox */
+    /* ─── LIGHTBOX ───────────────────────────────────── */
     .lightbox {
       position: fixed; inset: 0; z-index: 5000;
       background: rgba(8,8,8,0.96);
@@ -584,7 +623,8 @@
     }
     .lightbox.active { display: flex; animation: fadeIn 0.3s; }
     .lightbox img {
-      max-width: 90vw; max-height: 88vh; object-fit: contain;
+      max-width: 90vw; max-height: 88vh;
+      object-fit: contain; /* arată imaginea integral, cu benzi dacă e cazul */
       border: 1px solid var(--line2);
     }
     .lightbox-close {
@@ -619,18 +659,29 @@
       <div class="nav-logo-badge">AD</div>
       <div class="nav-logo-text">Tattoo<span>·</span>Lab</div>
     </a>
-    <ul class="nav-links">
-      <li><a href="#about">Despre</a></li>
-      <li><a href="#process">Proces</a></li>
-      <li><a href="#portfolio">Portofoliu</a></li>
-      <li><a href="#equipment">Echipament</a></li>
+    <ul class="nav-center">
+      <li><a href="#about" data-ro="Despre" data-en="About">Despre</a></li>
+      <li><a href="#process" data-ro="Proces" data-en="Process">Proces</a></li>
+      <li><a href="#portfolio" data-ro="Portofoliu" data-en="Portfolio">Portofoliu</a></li>
+      <li><a href="#equipment" data-ro="Echipament" data-en="Equipment">Echipament</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Programează-te</a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="ro">RO</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="#contact" class="nav-cta" data-ro="Programează-te" data-en="Book now">Programează-te</a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section id="hero" class="hero">
     <div class="hero-bg"></div>
+
+    <!-- Side marker visible: numele complet, vertical pe stânga -->
+    <div class="hero-side-marker" data-ro="Alexandros Dimosthenous · București" data-en="Alexandros Dimosthenous · Bucharest">
+      Alexandros Dimosthenous · București
+    </div>
 
     <!-- Tattoo Machine SVG (hero) -->
     <svg class="hero-machine" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -639,36 +690,25 @@
           <stop offset="0%" stop-color="#2a2a2a"/>
           <stop offset="100%" stop-color="#0e0e0e"/>
         </linearGradient>
-        <linearGradient id="grad-red" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#c8102e"/>
-          <stop offset="100%" stop-color="#8a0a1e"/>
-        </linearGradient>
       </defs>
-      <!-- Body -->
       <rect x="140" y="80" width="120" height="180" rx="8" fill="url(#grad-body)" stroke="#c8102e" stroke-width="1.5"/>
       <rect x="155" y="100" width="90" height="20" fill="#c8102e" opacity="0.85"/>
       <text x="200" y="115" text-anchor="middle" fill="#080808" font-family="Bebas Neue" font-size="14" letter-spacing="3">AD</text>
-      <!-- Adjustment ring -->
       <circle cx="200" cy="160" r="28" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
       <circle cx="200" cy="160" r="22" fill="none" stroke="#c8102e" stroke-width="1" opacity="0.5"/>
       <circle cx="200" cy="160" r="6" fill="#c8102e"/>
-      <!-- Tube -->
       <rect x="190" y="260" width="20" height="60" fill="#1a1a1a" stroke="#c8102e" stroke-width="1"/>
-      <!-- Grip -->
       <rect x="180" y="220" width="40" height="50" rx="4" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
       <line x1="186" y1="230" x2="214" y2="230" stroke="#c8102e" stroke-width="0.5"/>
       <line x1="186" y1="240" x2="214" y2="240" stroke="#c8102e" stroke-width="0.5"/>
       <line x1="186" y1="250" x2="214" y2="250" stroke="#c8102e" stroke-width="0.5"/>
       <line x1="186" y1="260" x2="214" y2="260" stroke="#c8102e" stroke-width="0.5"/>
-      <!-- Needle -->
       <g class="machine-needle">
         <rect x="198" y="318" width="4" height="40" fill="#c8102e"/>
         <polygon points="200,365 196,358 204,358" fill="#c8102e"/>
       </g>
-      <!-- Cable -->
       <path d="M 200 80 Q 280 30 320 60" stroke="#c8102e" stroke-width="2" fill="none" opacity="0.6"/>
       <circle cx="320" cy="60" r="6" fill="#c8102e"/>
-      <!-- Decorative -->
       <line x1="60" y1="200" x2="120" y2="200" stroke="#c8102e" stroke-width="0.5" opacity="0.4"/>
       <line x1="280" y1="200" x2="340" y2="200" stroke="#c8102e" stroke-width="0.5" opacity="0.4"/>
       <text x="60" y="190" fill="#7a7a7a" font-family="Space Mono" font-size="9" letter-spacing="2">ROTARY</text>
@@ -676,65 +716,84 @@
     </svg>
 
     <div class="hero-content">
-      <div class="hero-eyebrow">Alexandros Dimosthenous · București</div>
       <h1 class="hero-title">
-        <span class="l1">AD</span>
-        <span class="l2">Tattoo</span>
-        <span class="l3">Lab.</span>
+        AD <span class="accent">Tattoo</span> Lab
       </h1>
-      <p class="hero-desc">Black & grey realism. Blackwork bold. Custom design — fără flash-uri generice. Fiecare piesă, construită de la zero.</p>
-      <div class="hero-ctas">
-        <a href="#contact" class="btn-primary">Programează-te</a>
-        <a href="#portfolio" class="btn-secondary">Vezi portofoliul →</a>
-      </div>
+      <p class="hero-desc"
+         data-ro="Black & grey realism. Blackwork bold. Custom design — fără flash-uri generice. Fiecare piesă, construită de la zero."
+         data-en="Black & grey realism. Bold blackwork. Custom design — no generic flash. Every piece, built from scratch.">
+        Black & grey realism. Blackwork bold. Custom design — fără flash-uri generice. Fiecare piesă, construită de la zero.
+      </p>
     </div>
 
     <div class="scroll-indicator">
       <div class="scroll-indicator-line"></div>
-      Scroll
+      <span data-ro="Scroll" data-en="Scroll">Scroll</span>
     </div>
   </section>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat"><div class="stat-num" data-counter="3">0</div><div class="stat-label">Stiluri specializate</div></div>
-    <div class="stat"><div class="stat-num" data-counter="100" data-suffix="%">0%</div><div class="stat-label">Custom design</div></div>
-    <div class="stat"><div class="stat-num" data-counter="19" data-suffix="+">0+</div><div class="stat-label">Lucrări realizate</div></div>
-    <div class="stat"><div class="stat-num">BCU</div><div class="stat-label">București — RO</div></div>
-  </div>
 
   <!-- ABOUT -->
   <section id="about" class="about">
     <div class="about-left reveal">
-      <div class="section-label">Despre</div>
-      <h2 class="section-title">Black & grey.<br/><span class="accent">Fara compromisuri.</span></h2>
-      <p class="about-text">Tatuez în București cu specializare în <strong style="color:var(--text)">black & grey realism</strong>, <strong style="color:var(--text)">blackwork bold</strong> și <strong style="color:var(--text)">design custom</strong>. Nu lucrez cu flash-uri generice — fiecare piesă e construită de la zero, plecând de la ideea ta.</p>
-      <p class="about-text">Procesul e simplu: discutăm conceptul, propun design-ul, ajustăm până e fix ce vrei, apoi facem treaba bine. Una pe săptămână, calitate maximă.</p>
+      <div class="section-label" data-ro="Despre" data-en="About">Despre</div>
+      <h2 class="section-title"
+          data-ro-html="Black &amp; grey.<br/><span class='accent'>Fără compromisuri.</span>"
+          data-en-html="Black &amp; grey.<br/><span class='accent'>No compromises.</span>">
+        Black &amp; grey.<br/><span class="accent">Fără compromisuri.</span>
+      </h2>
+      <p class="about-text"
+         data-ro-html="Tatuez în București cu specializare în <strong>black &amp; grey realism</strong>, <strong>blackwork bold</strong> și <strong>design custom</strong>. Nu lucrez cu flash-uri generice — fiecare piesă e construită de la zero, plecând de la ideea ta."
+         data-en-html="I tattoo in Bucharest, specialized in <strong>black &amp; grey realism</strong>, <strong>bold blackwork</strong>, and <strong>custom design</strong>. No generic flash — every piece is built from scratch, starting from your idea.">
+        Tatuez în București cu specializare în <strong>black &amp; grey realism</strong>, <strong>blackwork bold</strong> și <strong>design custom</strong>. Nu lucrez cu flash-uri generice — fiecare piesă e construită de la zero, plecând de la ideea ta.
+      </p>
+      <p class="about-text"
+         data-ro="Procesul e simplu: discutăm conceptul, propun design-ul, ajustăm până e fix ce vrei, apoi facem treaba bine. Una pe săptămână, calitate maximă."
+         data-en="The process is simple: we discuss the concept, I propose the design, we adjust until it is exactly what you want, then we do the job right. One per week, maximum quality.">
+        Procesul e simplu: discutăm conceptul, propun design-ul, ajustăm până e fix ce vrei, apoi facem treaba bine. Una pe săptămână, calitate maximă.
+      </p>
     </div>
     <div class="about-right reveal">
       <div class="style-item">
         <div class="style-num">01</div>
         <div class="style-info">
-          <div class="style-name">Black & Grey Realism</div>
-          <div class="style-desc">Skulls, portrete, scene cu gradient și shading detaliat. Profunzime maximă, contrast precis.</div>
+          <div class="style-name" data-ro="Black &amp; Grey Realism" data-en="Black &amp; Grey Realism">Black &amp; Grey Realism</div>
+          <div class="style-desc"
+               data-ro="Skulls, portrete, scene cu gradient și shading detaliat. Profunzime maximă, contrast precis."
+               data-en="Skulls, portraits, scenes with gradients and detailed shading. Maximum depth, precise contrast.">
+            Skulls, portrete, scene cu gradient și shading detaliat. Profunzime maximă, contrast precis.
+          </div>
         </div>
       </div>
       <div class="style-item">
         <div class="style-num">02</div>
         <div class="style-info">
           <div class="style-name">Blackwork</div>
-          <div class="style-desc">Black solid bold, ornamental, neo-tradițional. Linii grele, fill-uri saturate, impact vizual puternic.</div>
+          <div class="style-desc"
+               data-ro="Black solid bold, ornamental, neo-tradițional. Linii grele, fill-uri saturate, impact vizual puternic."
+               data-en="Solid bold black, ornamental, neo-traditional. Heavy lines, saturated fills, strong visual impact.">
+            Black solid bold, ornamental, neo-tradițional. Linii grele, fill-uri saturate, impact vizual puternic.
+          </div>
         </div>
       </div>
       <div class="style-item">
         <div class="style-num">03</div>
         <div class="style-info">
-          <div class="style-name">Custom Design</div>
-          <div class="style-desc">De la concept la stencil — fiecare proiect e unic. Niciun design copiat, niciun flash refolosit.</div>
+          <div class="style-name" data-ro="Custom Design" data-en="Custom Design">Custom Design</div>
+          <div class="style-desc"
+               data-ro="De la concept la stencil — fiecare proiect e unic. Niciun design copiat, niciun flash refolosit."
+               data-en="From concept to stencil — every project is unique. No copied designs, no reused flash.">
+            De la concept la stencil — fiecare proiect e unic. Niciun design copiat, niciun flash refolosit.
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ETAPE HEADER -->
+  <div class="etape-header reveal">
+    <div class="section-label" data-ro="Cum lucrez" data-en="How I work">Cum lucrez</div>
+    <h2 class="etape-title" data-ro="Etape" data-en="Stages">Etape</h2>
+  </div>
 
   <!-- PROCESS - Sticky scroll -->
   <section id="process" class="process">
@@ -748,11 +807,8 @@
                 <stop offset="100%" stop-color="#0e0e0e"/>
               </linearGradient>
             </defs>
-            <!-- Cable -->
             <path id="m-cable" d="M 200 80 Q 80 50 60 100 Q 40 150 80 180" stroke="#c8102e" stroke-width="2" fill="none" opacity="0" stroke-dasharray="200" stroke-dashoffset="200"/>
             <circle id="m-cable-end" cx="80" cy="180" r="6" fill="#c8102e" opacity="0"/>
-
-            <!-- Body -->
             <g id="m-body" opacity="0" transform="translate(0,-30)">
               <rect x="140" y="80" width="120" height="180" rx="8" fill="url(#g-body)" stroke="#c8102e" stroke-width="1.5"/>
               <rect x="155" y="100" width="90" height="20" fill="#c8102e" opacity="0.9"/>
@@ -760,18 +816,14 @@
               <circle cx="200" cy="160" r="28" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
               <circle cx="200" cy="160" r="22" fill="none" stroke="#c8102e" stroke-width="1" opacity="0.5"/>
               <circle cx="200" cy="160" r="6" fill="#c8102e"/>
-              <!-- Adjustment screws -->
               <circle cx="160" cy="200" r="4" fill="#3a3a3a"/>
               <circle cx="240" cy="200" r="4" fill="#3a3a3a"/>
               <circle cx="160" cy="220" r="4" fill="#3a3a3a"/>
               <circle cx="240" cy="220" r="4" fill="#3a3a3a"/>
-              <!-- Vents -->
               <line x1="155" y1="240" x2="245" y2="240" stroke="#c8102e" stroke-width="0.4"/>
               <line x1="155" y1="245" x2="245" y2="245" stroke="#c8102e" stroke-width="0.4"/>
               <line x1="155" y1="250" x2="245" y2="250" stroke="#c8102e" stroke-width="0.4"/>
             </g>
-
-            <!-- Grip -->
             <g id="m-grip" opacity="0" transform="translate(0,30)">
               <rect x="180" y="270" width="40" height="60" rx="4" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
               <line x1="186" y1="280" x2="214" y2="280" stroke="#c8102e" stroke-width="0.5"/>
@@ -780,28 +832,20 @@
               <line x1="186" y1="310" x2="214" y2="310" stroke="#c8102e" stroke-width="0.5"/>
               <line x1="186" y1="320" x2="214" y2="320" stroke="#c8102e" stroke-width="0.5"/>
             </g>
-
-            <!-- Tube -->
             <g id="m-tube" opacity="0">
               <rect x="190" y="330" width="20" height="55" fill="#1a1a1a" stroke="#c8102e" stroke-width="1"/>
               <rect x="194" y="335" width="12" height="3" fill="#c8102e" opacity="0.6"/>
             </g>
-
-            <!-- Needle (animated) -->
             <g id="m-needle" opacity="0">
               <rect x="198" y="385" width="4" height="50" fill="#c8102e" class="machine-needle"/>
               <polygon points="200,440 196,432 204,432" fill="#c8102e" class="machine-needle"/>
             </g>
-
-            <!-- Spark / energy lines (final state) -->
             <g id="m-spark" opacity="0">
               <line x1="200" y1="450" x2="200" y2="470" stroke="#c8102e" stroke-width="1"/>
               <line x1="180" y1="450" x2="170" y2="465" stroke="#c8102e" stroke-width="0.6" opacity="0.6"/>
               <line x1="220" y1="450" x2="230" y2="465" stroke="#c8102e" stroke-width="0.6" opacity="0.6"/>
               <text x="200" y="490" text-anchor="middle" fill="#c8102e" font-family="Space Mono" font-size="10" letter-spacing="3">// READY</text>
             </g>
-
-            <!-- Scale markers -->
             <g opacity="0.3">
               <line x1="50" y1="100" x2="60" y2="100" stroke="#7a7a7a" stroke-width="0.5"/>
               <line x1="50" y1="200" x2="60" y2="200" stroke="#7a7a7a" stroke-width="0.5"/>
@@ -818,74 +862,118 @@
 
       <div class="process-steps">
         <div class="process-step" data-step="1">
-          <div class="process-step-num">// 01 — CONCEPT</div>
-          <h3 class="process-step-title">Discutăm ideea.</h3>
-          <p class="process-step-desc">Trimite-mi pe Instagram conceptul, referințele sau doar direcția. Stabilim mărimea, plasarea, stilul. Fără cost, fără presiune.</p>
+          <div class="process-step-num">// 01 — <span data-ro="CONCEPT" data-en="CONCEPT">CONCEPT</span></div>
+          <h3 class="process-step-title" data-ro="Discutăm ideea." data-en="We discuss the idea.">Discutăm ideea.</h3>
+          <p class="process-step-desc"
+             data-ro="Trimite-mi pe Instagram conceptul, referințele sau doar direcția. Stabilim mărimea, plasarea, stilul. Fără cost, fără presiune."
+             data-en="Send me the concept, references, or just the direction on Instagram. We set the size, placement, style. No cost, no pressure.">
+            Trimite-mi pe Instagram conceptul, referințele sau doar direcția. Stabilim mărimea, plasarea, stilul. Fără cost, fără presiune.
+          </p>
         </div>
         <div class="process-step" data-step="2">
-          <div class="process-step-num">// 02 — DESIGN</div>
-          <h3 class="process-step-title">Construiesc design-ul.</h3>
-          <p class="process-step-desc">Lucrez digital — schiță, refinare, ajustări până e fix ce vrei. Niciun stencil ridicat din portofoliul altcuiva.</p>
+          <div class="process-step-num">// 02 — <span data-ro="DESIGN" data-en="DESIGN">DESIGN</span></div>
+          <h3 class="process-step-title" data-ro="Construiesc design-ul." data-en="I build the design.">Construiesc design-ul.</h3>
+          <p class="process-step-desc"
+             data-ro="Lucrez digital — schiță, refinare, ajustări până e fix ce vrei. Niciun stencil ridicat din portofoliul altcuiva."
+             data-en="I work digitally — sketch, refinement, adjustments until it is exactly what you want. No stencil lifted from someone else's portfolio.">
+            Lucrez digital — schiță, refinare, ajustări până e fix ce vrei. Niciun stencil ridicat din portofoliul altcuiva.
+          </p>
         </div>
         <div class="process-step" data-step="3">
-          <div class="process-step-num">// 03 — SETUP</div>
-          <h3 class="process-step-title">Pregătesc echipamentul.</h3>
-          <p class="process-step-desc">Sterilizare completă, ace noi sigilate, cerneluri verificate. Setup steril, materiale de calitate, mediu controlat.</p>
+          <div class="process-step-num">// 03 — <span data-ro="SETUP" data-en="SETUP">SETUP</span></div>
+          <h3 class="process-step-title" data-ro="Pregătesc echipamentul." data-en="I prepare the equipment.">Pregătesc echipamentul.</h3>
+          <p class="process-step-desc"
+             data-ro="Sterilizare completă, ace noi sigilate, cerneluri verificate. Setup steril, materiale de calitate, mediu controlat."
+             data-en="Full sterilization, new sealed needles, verified inks. Sterile setup, quality materials, controlled environment.">
+            Sterilizare completă, ace noi sigilate, cerneluri verificate. Setup steril, materiale de calitate, mediu controlat.
+          </p>
         </div>
         <div class="process-step" data-step="4">
-          <div class="process-step-num">// 04 — INK</div>
-          <h3 class="process-step-title">Tatuajul efectiv.</h3>
-          <p class="process-step-desc">Sesiunea propriu-zisă. Pauzele când ai nevoie, comunicare deschisă, focus pe execuție. La final — instrucțiuni complete de aftercare.</p>
+          <div class="process-step-num">// 04 — <span data-ro="INK" data-en="INK">INK</span></div>
+          <h3 class="process-step-title" data-ro="Tatuajul efectiv." data-en="The actual tattoo.">Tatuajul efectiv.</h3>
+          <p class="process-step-desc"
+             data-ro="Sesiunea propriu-zisă. Pauzele când ai nevoie, comunicare deschisă, focus pe execuție. La final — instrucțiuni complete de aftercare."
+             data-en="The session itself. Breaks when you need them, open communication, focus on execution. At the end — complete aftercare instructions.">
+            Sesiunea propriu-zisă. Pauzele când ai nevoie, comunicare deschisă, focus pe execuție. La final — instrucțiuni complete de aftercare.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO CAROUSEL -->
+  <!-- PORTFOLIO CAROUSEL — circular auto-scroll -->
   <section id="portfolio" class="portfolio">
-    <div class="portfolio-header">
-      <div class="reveal">
-        <div class="section-label">Portofoliu</div>
-        <h2 class="section-title">Lucrări <span class="accent">realizate.</span></h2>
-      </div>
-      <div class="portfolio-controls">
-        <button class="ctrl-btn" id="prevBtn" aria-label="Înapoi">←</button>
-        <button class="ctrl-btn" id="nextBtn" aria-label="Înainte">→</button>
-      </div>
+    <div class="portfolio-header reveal">
+      <div class="section-label" data-ro="Portofoliu" data-en="Portfolio">Portofoliu</div>
+      <h2 class="section-title"
+          data-ro-html="Lucrări <span class='accent'>realizate.</span>"
+          data-en-html="Completed <span class='accent'>works.</span>">
+        Lucrări <span class="accent">realizate.</span>
+      </h2>
     </div>
 
-    <div class="carousel" id="carousel">
-      <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">01</span><span class="carousel-item-tag">B&G · REALISM</span></div></div>
-      <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">02</span><span class="carousel-item-tag">PROCESS</span></div></div>
-      <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">03</span><span class="carousel-item-tag">JAPANESE</span></div></div>
-      <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">04</span><span class="carousel-item-tag">BLACKWORK</span></div></div>
-      <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">05</span><span class="carousel-item-tag">PROCESS</span></div></div>
-      <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">06</span><span class="carousel-item-tag">B&G</span></div></div>
-      <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">07</span><span class="carousel-item-tag">CUSTOM</span></div></div>
-      <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">08</span><span class="carousel-item-tag">BLACKWORK</span></div></div>
-      <div class="carousel-item" data-img="img/3.1.jpg"><img src="img/3.1.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">09</span><span class="carousel-item-tag">PROCESS</span></div></div>
-      <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">10</span><span class="carousel-item-tag">PROCESS</span></div></div>
-      <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">11</span><span class="carousel-item-tag">B&G</span></div></div>
-      <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">12</span><span class="carousel-item-tag">B&G</span></div></div>
-      <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">13</span><span class="carousel-item-tag">CUSTOM</span></div></div>
-      <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">14</span><span class="carousel-item-tag">CUSTOM</span></div></div>
-      <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">15</span><span class="carousel-item-tag">CUSTOM</span></div></div>
-      <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">16</span><span class="carousel-item-tag">B&G</span></div></div>
-      <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">17</span><span class="carousel-item-tag">B&G</span></div></div>
-      <div class="carousel-item" data-img="img/H-2222.jpg"><img src="img/H-2222.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">18</span><span class="carousel-item-tag">CUSTOM</span></div></div>
-      <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">19</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Set 1 -->
+        <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.1.jpg"><img src="img/3.1.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/H-2222.jpg"><img src="img/H-2222.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt=""></div>
+        <!-- Set 2 (duplicat pentru loop seamless) -->
+        <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.1.jpg"><img src="img/3.1.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/H-2222.jpg"><img src="img/H-2222.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt=""></div>
+      </div>
     </div>
   </section>
 
   <!-- EQUIPMENT -->
   <section id="equipment" class="equipment">
     <div class="equipment-header reveal">
-      <div class="section-label">Echipament</div>
-      <h2 class="section-title">Doar <span class="accent">profesional.</span></h2>
-      <p class="equipment-desc">Lucrez exclusiv cu mărci recunoscute la nivel internațional. Mașini rotary de top, ace sterile premium, cerneluri vegane sigure pe piele. Calitatea echipamentului = calitatea tatuajului.</p>
+      <div class="section-label" data-ro="Echipament" data-en="Equipment">Echipament</div>
+      <h2 class="section-title"
+          data-ro-html="Doar <span class='accent'>profesional.</span>"
+          data-en-html="Strictly <span class='accent'>professional.</span>">
+        Doar <span class="accent">profesional.</span>
+      </h2>
+      <p class="equipment-desc"
+         data-ro="Lucrez exclusiv cu mărci recunoscute la nivel internațional. Mașini rotary de top, ace sterile premium, cerneluri vegane sigure pe piele. Calitatea echipamentului = calitatea tatuajului."
+         data-en="I work exclusively with internationally recognized brands. Top rotary machines, premium sterile needles, vegan inks safe for skin. Equipment quality = tattoo quality.">
+        Lucrez exclusiv cu mărci recunoscute la nivel internațional. Mașini rotary de top, ace sterile premium, cerneluri vegane sigure pe piele. Calitatea echipamentului = calitatea tatuajului.
+      </p>
     </div>
 
-    <!-- Marquee -->
     <div class="marquee">
       <div class="marquee-track">
         <div class="marquee-item">CHEYENNE<span class="dot"></span></div>
@@ -913,47 +1001,78 @@
       </div>
     </div>
 
-    <!-- Grid -->
     <div class="equipment-grid">
       <div class="eq-card">
-        <div class="eq-card-cat">// MASINA</div>
+        <div class="eq-card-cat">// <span data-ro="MAȘINĂ" data-en="MACHINE">MAȘINĂ</span></div>
         <div class="eq-card-name">Cheyenne</div>
-        <div class="eq-card-desc">Rotary motor brushless — precizie germană, vibrație minimă, control absolut al acului.</div>
+        <div class="eq-card-desc"
+             data-ro="Rotary motor brushless — precizie germană, vibrație minimă, control absolut al acului."
+             data-en="Brushless rotary motor — German precision, minimal vibration, absolute needle control.">
+          Rotary motor brushless — precizie germană, vibrație minimă, control absolut al acului.
+        </div>
       </div>
       <div class="eq-card">
-        <div class="eq-card-cat">// CARTRIDGE</div>
+        <div class="eq-card-cat">// <span data-ro="CARTUȘE" data-en="CARTRIDGES">CARTUȘE</span></div>
         <div class="eq-card-name">EZ · Big Wasp</div>
-        <div class="eq-card-desc">Cartușe sterile pre-asamblate. Ace medicale calibru exact, fără îndoituri, sigilate individual.</div>
+        <div class="eq-card-desc"
+             data-ro="Cartușe sterile pre-asamblate. Ace medicale calibru exact, fără îndoituri, sigilate individual."
+             data-en="Pre-assembled sterile cartridges. Medical needles, exact gauge, no bends, individually sealed.">
+          Cartușe sterile pre-asamblate. Ace medicale calibru exact, fără îndoituri, sigilate individual.
+        </div>
       </div>
       <div class="eq-card">
-        <div class="eq-card-cat">// CERNEALA</div>
+        <div class="eq-card-cat">// <span data-ro="CERNEALĂ" data-en="INK">CERNEALĂ</span></div>
         <div class="eq-card-name">Eternal · Dynamic</div>
-        <div class="eq-card-desc">Vegane, REACH conforme UE, formule stabile. Black & grey care păstrează contrastul în timp.</div>
+        <div class="eq-card-desc"
+             data-ro="Vegane, REACH conforme UE, formule stabile. Black & grey care păstrează contrastul în timp."
+             data-en="Vegan, EU REACH compliant, stable formulas. Black & grey that retains contrast over time.">
+          Vegane, REACH conforme UE, formule stabile. Black & grey care păstrează contrastul în timp.
+        </div>
       </div>
       <div class="eq-card">
         <div class="eq-card-cat">// POWER</div>
         <div class="eq-card-name">Critical</div>
-        <div class="eq-card-desc">Power supply digital, voltaj reglabil precis. Fără variații, fără șocuri — execuție constantă.</div>
+        <div class="eq-card-desc"
+             data-ro="Power supply digital, voltaj reglabil precis. Fără variații, fără șocuri — execuție constantă."
+             data-en="Digital power supply, precisely adjustable voltage. No variations, no shocks — consistent execution.">
+          Power supply digital, voltaj reglabil precis. Fără variații, fără șocuri — execuție constantă.
+        </div>
       </div>
       <div class="eq-card">
-        <div class="eq-card-cat">// STERIL</div>
-        <div class="eq-card-name">Single-use</div>
-        <div class="eq-card-desc">Tot ce intră în contact cu pielea = nou și sigilat. Mănuși, ace, capse, foi de transfer — zero reutilizare.</div>
+        <div class="eq-card-cat">// <span data-ro="STERIL" data-en="STERILE">STERIL</span></div>
+        <div class="eq-card-name" data-ro="Single-use" data-en="Single-use">Single-use</div>
+        <div class="eq-card-desc"
+             data-ro="Tot ce intră în contact cu pielea = nou și sigilat. Mănuși, ace, capse, foi de transfer — zero reutilizare."
+             data-en="Everything that touches skin = new and sealed. Gloves, needles, caps, transfer paper — zero reuse.">
+          Tot ce intră în contact cu pielea = nou și sigilat. Mănuși, ace, capse, foi de transfer — zero reutilizare.
+        </div>
       </div>
       <div class="eq-card">
         <div class="eq-card-cat">// AFTERCARE</div>
-        <div class="eq-card-name">Premium</div>
-        <div class="eq-card-desc">Folie second-skin pentru protecție, balsam de vindecare, instrucțiuni clare scrise. Suport post-tatuaj inclus.</div>
+        <div class="eq-card-name" data-ro="Premium" data-en="Premium">Premium</div>
+        <div class="eq-card-desc"
+             data-ro="Folie second-skin pentru protecție, balsam de vindecare, instrucțiuni clare scrise. Suport post-tatuaj inclus."
+             data-en="Second-skin film for protection, healing balm, clear written instructions. Post-tattoo support included.">
+          Folie second-skin pentru protecție, balsam de vindecare, instrucțiuni clare scrise. Suport post-tatuaj inclus.
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact" class="contact">
-    <div class="contact-inner reveal">
-      <div class="section-label" style="justify-content: center;">Contact</div>
-      <h2 class="contact-title">Hai sa <span class="accent">facem treaba.</span></h2>
-      <p class="contact-desc">Trimite-mi un mesaj pe Instagram cu ideea, referințele sau doar întrebarea. Răspund în 24h. Programări individuale, fiecare client primește atenție completă.</p>
+    <div class="contact-inner">
+      <div class="section-label" style="justify-content: center;" data-ro="Contact" data-en="Contact">Contact</div>
+      <h2 class="contact-title" id="contactTitle"
+          data-ro-html="Hai să <span class='accent'>facem treabă.</span>"
+          data-en-html="Let's <span class='accent'>get it done.</span>">
+        Hai să <span class="accent">facem treabă.</span>
+      </h2>
+      <p class="contact-desc"
+         data-ro="Trimite-mi un mesaj pe Instagram cu ideea, referințele sau doar întrebarea. Răspund în 24h. Programări individuale, fiecare client primește atenție completă."
+         data-en="Send me a message on Instagram with your idea, references, or just a question. I reply within 24h. Individual bookings, every client gets full attention.">
+        Trimite-mi un mesaj pe Instagram cu ideea, referințele sau doar întrebarea. Răspund în 24h. Programări individuale, fiecare client primește atenție completă.
+      </p>
 
       <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="contact-card">
         <svg class="contact-card-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#c8102e"/></svg>
@@ -961,8 +1080,8 @@
       </a>
 
       <div class="contact-meta">
-        Disponibil pentru programări individuale<br/>
-        București · România
+        <span data-ro="Disponibil pentru programări individuale" data-en="Available for individual bookings">Disponibil pentru programări individuale</span><br/>
+        <span data-ro="București · România" data-en="Bucharest · Romania">București · România</span>
       </div>
     </div>
   </section>
@@ -970,12 +1089,11 @@
   <!-- FOOTER -->
   <footer>
     <div>© 2026 · Alexandros Dimosthenous · Tattoo Lab</div>
-    <div><a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener">Instagram</a> · <a href="#hero">Sus ↑</a></div>
   </footer>
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lbClose">Închide</button>
+    <button class="lightbox-close" id="lbClose" data-ro="Închide" data-en="Close">Închide</button>
     <button class="lightbox-nav prev" id="lbPrev">←</button>
     <img id="lbImg" src="" alt="">
     <button class="lightbox-nav next" id="lbNext">→</button>
@@ -1010,32 +1128,49 @@
       navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
+    // ─── LANGUAGE TOGGLE ────────────────────────────────
+    const langButtons = document.querySelectorAll('.lang-btn');
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      // Plain text swaps
+      document.querySelectorAll(`[data-${lang}]`).forEach(el => {
+        const txt = el.getAttribute(`data-${lang}`);
+        if (txt !== null) {
+          // Only set textContent if no children with their own data-attrs
+          const hasChildSwap = el.querySelector('[data-ro], [data-en], [data-ro-html], [data-en-html]');
+          if (!hasChildSwap) el.textContent = txt;
+        }
+      });
+      // HTML swaps (for content with markup like <br>, <span>, <strong>)
+      document.querySelectorAll(`[data-${lang}-html]`).forEach(el => {
+        const html = el.getAttribute(`data-${lang}-html`);
+        if (html !== null) el.innerHTML = html;
+      });
+      // Update buttons
+      langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      try { localStorage.setItem('adlang', lang); } catch (e) {}
+    }
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    });
+    // Restore preference
+    try {
+      const saved = localStorage.getItem('adlang');
+      if (saved && (saved === 'ro' || saved === 'en')) setLang(saved);
+    } catch (e) {}
+
     // ─── REVEAL ON SCROLL ───────────────────────────────
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ─── COUNTERS ───────────────────────────────────────
-    const counters = document.querySelectorAll('[data-counter]');
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting || e.target.dataset.done) return;
-        e.target.dataset.done = '1';
-        const target = parseInt(e.target.dataset.counter);
-        const suffix = e.target.dataset.suffix || '';
-        let cur = 0;
-        const step = Math.max(1, Math.ceil(target / 40));
-        const tick = () => {
-          cur += step;
-          if (cur >= target) { e.target.textContent = target + suffix; return; }
-          e.target.textContent = cur + suffix;
-          requestAnimationFrame(tick);
-        };
-        tick();
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(c => counterObserver.observe(c));
+    // ─── CONTACT TITLE ZOOM-IN ──────────────────────────
+    const contactTitle = document.getElementById('contactTitle');
+    const contactObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.4 });
+    if (contactTitle) contactObserver.observe(contactTitle);
 
     // ─── MACHINE ASSEMBLY (sticky scroll) ──────────────
     const processSection = document.querySelector('.process');
@@ -1054,76 +1189,48 @@
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / total));
 
-      // 4 stages: 0-0.25 body+cable, 0.25-0.5 grip, 0.5-0.75 tube, 0.75-1 needle+spark
       const s1 = Math.max(0, Math.min(1, progress / 0.25));
       const s2 = Math.max(0, Math.min(1, (progress - 0.20) / 0.25));
       const s3 = Math.max(0, Math.min(1, (progress - 0.45) / 0.25));
       const s4 = Math.max(0, Math.min(1, (progress - 0.70) / 0.30));
 
-      // Body
       mBody.setAttribute('opacity', s1);
       mBody.setAttribute('transform', `translate(0,${(1-s1) * -30})`);
-      // Cable
       mCable.setAttribute('opacity', s1);
       mCable.setAttribute('stroke-dashoffset', 200 * (1 - s1));
       mCableEnd.setAttribute('opacity', s1);
-      // Grip
       mGrip.setAttribute('opacity', s2);
       mGrip.setAttribute('transform', `translate(0,${(1-s2) * 30})`);
-      // Tube
       mTube.setAttribute('opacity', s3);
-      // Needle
       mNeedle.setAttribute('opacity', s4);
       mSpark.setAttribute('opacity', s4);
     }
     window.addEventListener('scroll', updateMachine, { passive: true });
     updateMachine();
 
-    // ─── CAROUSEL ───────────────────────────────────────
-    const carousel = document.getElementById('carousel');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const itemWidth = () => carousel.querySelector('.carousel-item').offsetWidth + 16;
-    prevBtn.addEventListener('click', () => carousel.scrollBy({ left: -itemWidth() * 2, behavior: 'smooth' }));
-    nextBtn.addEventListener('click', () => carousel.scrollBy({ left: itemWidth() * 2, behavior: 'smooth' }));
-
-    // Drag to scroll
-    let isDown = false, startX = 0, scrollLeft = 0;
-    carousel.addEventListener('mousedown', (e) => {
-      isDown = true; carousel.style.cursor = 'grabbing';
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    });
-    carousel.addEventListener('mouseleave', () => { isDown = false; });
-    carousel.addEventListener('mouseup', () => { isDown = false; });
-    carousel.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - carousel.offsetLeft;
-      carousel.scrollLeft = scrollLeft - (x - startX) * 1.5;
-    });
-
-    // ─── LIGHTBOX ───────────────────────────────────────
+    // ─── LIGHTBOX (carusel circular) ────────────────────
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lbImg');
     const lbClose = document.getElementById('lbClose');
     const lbPrev = document.getElementById('lbPrev');
     const lbNext = document.getElementById('lbNext');
-    const items = Array.from(document.querySelectorAll('.carousel-item'));
+
+    // Doar primul set unic pentru navigare lightbox (fără duplicate)
+    const allItems = Array.from(document.querySelectorAll('.carousel-item'));
+    const uniqueImgs = [...new Set(allItems.map(i => i.dataset.img))];
     let currentIdx = 0;
 
-    items.forEach((item, idx) => {
-      item.addEventListener('click', (e) => {
-        // ignore click after drag
-        if (Math.abs(carousel.scrollLeft - scrollLeft) > 8) return;
-        currentIdx = idx;
-        lbImg.src = item.dataset.img;
+    allItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        currentIdx = uniqueImgs.indexOf(item.dataset.img);
+        if (currentIdx < 0) currentIdx = 0;
+        lbImg.src = uniqueImgs[currentIdx];
         lightbox.classList.add('active');
       });
     });
     function navLb(dir) {
-      currentIdx = (currentIdx + dir + items.length) % items.length;
-      lbImg.src = items[currentIdx].dataset.img;
+      currentIdx = (currentIdx + dir + uniqueImgs.length) % uniqueImgs.length;
+      lbImg.src = uniqueImgs[currentIdx];
     }
     lbPrev.addEventListener('click', () => navLb(-1));
     lbNext.addEventListener('click', () => navLb(1));
