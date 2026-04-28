@@ -59,20 +59,27 @@
       text-decoration: none;
     }
 
-    .nav-logo img {
-      width: 36px;
-      height: 36px;
+    .nav-logo-badge {
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background: #fff;
-      padding: 2px;
-      display: block;
+      border: 1.5px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--accent);
     }
 
     .nav-logo span {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
       font-weight: 400;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--white);
     }
@@ -121,7 +128,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(3.5rem, 10vw, 8rem);
       font-weight: 300;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       line-height: 1;
       color: var(--white);
       text-transform: uppercase;
@@ -130,10 +137,12 @@
 
     .hero-title span {
       display: block;
-      font-style: italic;
+      font-style: normal;
+      font-weight: 300;
       font-size: clamp(2rem, 5vw, 4rem);
       color: var(--accent);
-      letter-spacing: 0.15em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
     }
 
     .hero-sub {
@@ -213,6 +222,8 @@
       color: var(--white);
       line-height: 1.15;
       margin-bottom: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     /* ── ABOUT ── */
@@ -445,7 +456,7 @@
   <!-- NAV -->
   <nav id="navbar">
     <a href="#hero" class="nav-logo">
-      <img src="img/logo.png" alt="AD Tattoo Lab" />
+      <div class="nav-logo-badge">AD</div>
       <span>AD Tattoo Lab</span>
     </a>
     <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="nav-link">Instagram ↗</a>
@@ -472,7 +483,7 @@
       <div class="about-grid">
         <div class="about-text">
           <p class="section-label">Despre</p>
-          <h2 class="section-title">Black & grey.<br />Fără compromisuri.</h2>
+          <h2 class="section-title">Black & grey.<br />Fara compromisuri.</h2>
           <p>Tatuez în București cu specializare în black & grey realism, blackwork bold și design custom. Fiecare piesă e construită de la zero — nu lucrez cu flash-uri generice.</p>
           <p>Dacă ai o idee — un concept, o referință, sau doar o direcție — hai să o transformăm în ceva permanent și bine executat.</p>
         </div>
