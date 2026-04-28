@@ -4,578 +4,1136 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AD Tattoo Lab — Alexandros Dimosthenous · București</title>
+  <meta name="description" content="Black & grey realism, blackwork și custom design. Tatuaje în București by Alexandros Dimosthenous." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0a0a0a;
-      --bg2:      #111111;
-      --border:   #1e1e1e;
-      --text:     #e8e2d9;
-      --muted:    #6b6560;
-      --accent:   #cc1100;
-      --accent2:  #e82200;
-      --white:    #f0ece8;
+      --red:        #c8102e;
+      --red-bright: #e8132f;
+      --black:      #080808;
+      --dark:       #0e0e0e;
+      --gray:       #161616;
+      --line:       #1f1f1f;
+      --line2:      #2a2a2a;
+      --text:       #ececec;
+      --muted:      #7a7a7a;
+      --muted2:     #555;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: var(--black);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      font-size: 15px;
-      line-height: 1.7;
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+      cursor: none;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.6rem 3rem;
-      background: rgba(10,10,10,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
+    /* Disable custom cursor on touch */
+    @media (hover: none) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
     }
 
-    nav.scrolled { border-bottom-color: var(--border); }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-    }
-
-    .nav-logo-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1.5px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--accent);
-    }
-
-    .nav-logo span {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 400;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--white);
-    }
-
-    .nav-link {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.25s;
-    }
-
-    .nav-link:hover { color: var(--white); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #hero::before {
+    /* Noise overlay */
+    body::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(200,184,154,0.04) 0%, transparent 70%);
-      pointer-events: none;
+      position: fixed; inset: 0; pointer-events: none; z-index: 1000; opacity: 0.5;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
     }
 
-    .hero-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.8rem;
+    /* Custom cursor */
+    .cursor {
+      width: 6px; height: 6px;
+      background: var(--red); border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease-out;
+    }
+    .cursor-ring {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(200,16,46,0.4); border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
+    }
+    .cursor-ring.hover { width: 64px; height: 64px; border-color: var(--red); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--line2); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+    /* ─── NAV ───────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 48px;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.92), rgba(8,8,8,0));
+      transition: background 0.3s, border-bottom 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom-color: var(--line);
+      padding: 14px 48px;
     }
 
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      line-height: 1;
-      color: var(--white);
-      text-transform: uppercase;
-      margin-bottom: 1.6rem;
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-badge {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px; letter-spacing: 1px;
+      color: var(--red);
+      transition: background 0.3s, color 0.3s;
     }
-
-    .hero-title span {
-      display: block;
-      font-style: normal;
-      font-weight: 300;
-      font-size: clamp(2rem, 5vw, 4rem);
-      color: var(--accent);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+    .nav-logo:hover .nav-logo-badge { background: var(--red); color: var(--black); }
+    .nav-logo-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text);
     }
+    .nav-logo-text span { color: var(--red); }
 
-    .hero-sub {
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 3.5rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.9rem 2.4rem;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      transition: background 0.25s, color 0.25s;
-    }
-
-    .btn:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--muted);
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
-      animation: scrollAnim 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollAnim {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50%       { opacity: 1;   transform: scaleY(0.6); }
-    }
-
-    /* ── SECTIONS ── */
-    section { padding: 7rem 2rem; }
-
-    .section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      color: var(--white);
-      line-height: 1.15;
-      margin-bottom: 3rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* ── ABOUT ── */
-    #about { background: var(--bg); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .about-text p {
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 1.2rem;
-    }
-
-    .about-text p:last-child { margin-bottom: 0; }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      padding-left: 2rem;
-      border-left: 1px solid var(--border);
-    }
-
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-
-    .stat-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ── PORTFOLIO ── */
-    #portfolio { background: var(--bg2); }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .portfolio-item {
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.25s;
       position: relative;
-      aspect-ratio: 1;
-      background: var(--bg);
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+      padding: 10px 22px; border: 1px solid var(--line2);
+      transition: all 0.25s;
+    }
+    .nav-cta:hover { background: var(--red); border-color: var(--red); color: var(--black); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 20px; }
+      nav.scrolled { padding: 12px 20px; }
+      .nav-links { display: none; }
+    }
+
+    /* ─── HERO ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden; padding: 0 48px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 75% 50%, rgba(200,16,46,0.12) 0%, transparent 55%),
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.014) 80px, rgba(255,255,255,0.014) 81px);
+    }
+    .hero-machine {
+      position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
+      width: 42vw; max-width: 600px; opacity: 0.85;
+      z-index: 1; pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 4px; color: var(--red);
+      text-transform: uppercase; margin-bottom: 28px;
+      display: flex; align-items: center; gap: 14px;
+      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 32px; height: 1px; background: var(--red);
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 13vw, 200px);
+      line-height: 0.88; letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-title .l1 { display: block; }
+    .hero-title .l2 {
+      display: block;
+      -webkit-text-stroke: 1.5px rgba(232,232,232,0.4);
+      color: transparent;
+    }
+    .hero-title .l3 { display: block; color: var(--red); }
+    .hero-desc {
+      font-size: 18px; font-weight: 300; font-style: italic;
+      color: var(--muted); line-height: 1.6;
+      max-width: 460px; margin-bottom: 48px;
+      opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--red); color: white;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 18px 40px; text-decoration: none; transition: all 0.3s;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary:hover { background: var(--red-bright); transform: translateY(-2px); }
+    .btn-secondary {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; padding: 18px 0;
+      border-bottom: 1px solid var(--line2); transition: all 0.3s;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: var(--red); }
+
+    .scroll-indicator {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: var(--muted); font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      z-index: 3;
+      animation: fadeIn 1s 1.2s forwards; opacity: 0;
+    }
+    .scroll-indicator-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--red), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    /* ─── STATS BAR ──────────────────────────────────── */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin: 0 48px; background: var(--dark);
+    }
+    .stat {
+      padding: 36px 32px; border-right: 1px solid var(--line);
+      position: relative; overflow: hidden;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px; color: var(--red); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase;
+    }
+    @media (max-width: 720px) {
+      .stats { grid-template-columns: repeat(2, 1fr); margin: 0 20px; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+    }
+
+    /* ─── SECTION COMMONS ────────────────────────────── */
+    section { position: relative; }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 4px; color: var(--red);
+      text-transform: uppercase; margin-bottom: 22px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .section-label::before { content: ''; width: 28px; height: 1px; background: var(--red); }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 6vw, 80px);
+      line-height: 0.95; letter-spacing: 0.02em;
+      margin-bottom: 28px;
+    }
+    .section-title .accent { color: var(--red); }
+
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s, transform 0.9s; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ─── ABOUT ─────────────────────────────────────── */
+    .about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; margin: 120px 48px;
+    }
+    .about-left { padding-right: 80px; border-right: 1px solid var(--line); }
+    .about-text {
+      font-size: 17px; font-weight: 300; line-height: 1.85;
+      color: var(--muted); margin-bottom: 24px;
+    }
+    .about-right {
+      padding-left: 80px; display: flex; flex-direction: column;
+      justify-content: center; gap: 28px;
+    }
+    .style-item {
+      display: flex; align-items: flex-start; gap: 22px;
+      padding-bottom: 28px; border-bottom: 1px solid var(--line);
+    }
+    .style-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .style-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px; color: var(--red); opacity: 0.5;
+      line-height: 1; min-width: 44px;
+    }
+    .style-info { flex: 1; }
+    .style-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px; letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .style-desc { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.6; }
+
+    @media (max-width: 900px) {
+      .about { grid-template-columns: 1fr; margin: 80px 20px; gap: 60px; }
+      .about-left { padding-right: 0; border-right: none; }
+      .about-right { padding-left: 0; }
+    }
+
+    /* ─── PROCESS (Sticky scroll machine) ────────────── */
+    .process {
+      position: relative; background: var(--dark);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .process-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .process-sticky {
+      position: sticky; top: 0; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      border-right: 1px solid var(--line);
+    }
+    .process-machine-wrap {
+      width: 80%; max-width: 460px; aspect-ratio: 1/1;
+      position: relative;
+    }
+    .process-machine-wrap svg {
+      width: 100%; height: 100%;
+      filter: drop-shadow(0 0 30px rgba(200,16,46,0.15));
+    }
+    .process-steps { padding: 100px 60px; }
+    .process-step {
+      min-height: 80vh; display: flex; flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px dashed var(--line);
+    }
+    .process-step:last-child { border-bottom: none; }
+    .process-step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px; letter-spacing: 3px; color: var(--red);
+      margin-bottom: 18px;
+    }
+    .process-step-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 4.5vw, 60px);
+      line-height: 1; margin-bottom: 22px;
+    }
+    .process-step-desc {
+      font-size: 16px; line-height: 1.8; color: var(--muted);
+      max-width: 460px;
+    }
+
+    @media (max-width: 900px) {
+      .process-inner { grid-template-columns: 1fr; }
+      .process-sticky { height: 50vh; border-right: none; border-bottom: 1px solid var(--line); position: relative; top: auto; }
+      .process-steps { padding: 40px 20px; }
+      .process-step { min-height: auto; padding: 60px 0; }
+    }
+
+    /* ─── PORTFOLIO CAROUSEL ─────────────────────────── */
+    .portfolio { padding: 120px 0 120px; overflow: hidden; }
+    .portfolio-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 0 48px; margin-bottom: 48px; gap: 32px; flex-wrap: wrap;
+    }
+    .portfolio-controls { display: flex; gap: 12px; }
+    .ctrl-btn {
+      width: 50px; height: 50px;
+      border: 1px solid var(--line2); background: transparent;
+      color: var(--text); cursor: none;
+      transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace; font-size: 18px;
+    }
+    .ctrl-btn:hover { border-color: var(--red); color: var(--red); }
+    .ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .carousel {
+      display: flex; gap: 16px; padding: 0 48px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+    .carousel-item {
+      flex: 0 0 380px; aspect-ratio: 3/4;
+      scroll-snap-align: start;
+      position: relative; overflow: hidden;
+      border: 1px solid var(--line);
+      cursor: none;
+      transition: border-color 0.3s, transform 0.4s;
+    }
+    .carousel-item:hover { border-color: var(--red); }
+    .carousel-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s, filter 0.4s;
+      filter: grayscale(0.15) brightness(0.92);
+    }
+    .carousel-item:hover img { transform: scale(1.06); filter: grayscale(0) brightness(1); }
+    .carousel-item-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 22px;
+      background: linear-gradient(to top, rgba(8,8,8,0.95), transparent);
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .carousel-item-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px; color: var(--red); line-height: 1;
+    }
+    .carousel-item-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .portfolio-header { padding: 0 20px; }
+      .carousel { padding: 0 20px; }
+      .carousel-item { flex: 0 0 280px; }
+    }
+
+    /* ─── EQUIPMENT MARQUEE ──────────────────────────── */
+    .equipment {
+      padding: 100px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
       overflow: hidden;
-      cursor: pointer;
     }
-
-    .portfolio-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s ease, opacity 0.3s;
+    .equipment-header { padding: 0 48px; margin-bottom: 60px; max-width: 1100px; }
+    .equipment-desc {
+      font-size: 17px; color: var(--muted); line-height: 1.8;
+      font-weight: 300; max-width: 600px;
     }
-
-    .portfolio-item:hover img { transform: scale(1.04); }
-
-    .portfolio-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(10,10,10,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s;
+    .marquee {
+      display: flex; gap: 0;
+      overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
     }
-
-    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-
-    .portfolio-overlay span {
-      font-size: 0.72rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--white);
+    .marquee-track {
+      display: flex; gap: 80px; flex-shrink: 0;
+      animation: marquee 35s linear infinite;
+      padding-right: 80px;
     }
-
-    /* Placeholder când nu sunt poze */
-    .portfolio-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      background: var(--bg);
-      color: var(--border);
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 60px; letter-spacing: 0.04em;
+      color: var(--muted2);
+      white-space: nowrap;
       transition: color 0.3s;
+      flex-shrink: 0;
+    }
+    .marquee-item:hover { color: var(--red); }
+    .marquee-item .dot {
+      display: inline-block; width: 8px; height: 8px;
+      background: var(--red); border-radius: 50%;
+      margin: 0 40px; vertical-align: middle;
+      transform: translateY(-4px);
     }
 
-    .portfolio-item:hover .portfolio-placeholder { color: var(--muted); }
-
-    .portfolio-placeholder svg {
-      width: 32px;
-      height: 32px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1;
+    .equipment-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px; background: var(--line);
+      margin: 80px 48px 0; border: 1px solid var(--line);
+    }
+    .eq-card {
+      background: var(--dark); padding: 32px;
+      transition: background 0.3s;
+    }
+    .eq-card:hover { background: var(--gray); }
+    .eq-card-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 3px; color: var(--red);
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .eq-card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    .eq-card-desc {
+      font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.5;
+    }
+    @media (max-width: 720px) {
+      .equipment-header { padding: 0 20px; }
+      .equipment-grid { margin: 60px 20px 0; }
     }
 
-    .portfolio-placeholder span {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .portfolio-cta {
-      margin-top: 3rem;
+    /* ─── CONTACT ────────────────────────────────────── */
+    .contact {
+      padding: 140px 48px;
       text-align: center;
+      position: relative; overflow: hidden;
     }
-
-    .portfolio-cta p {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-bottom: 1.5rem;
+    .contact::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(200,16,46,0.08), transparent 60%);
+      z-index: 0;
     }
-
-    /* ── CONTACT ── */
-    #contact { background: var(--bg); }
-
-    .contact-inner {
-      max-width: 680px;
-      margin: 0 auto;
-      text-align: center;
+    .contact-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+    .contact-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 9vw, 130px);
+      line-height: 0.9; letter-spacing: -0.01em;
+      margin-bottom: 36px;
     }
-
-    .contact-inner .section-title { margin-bottom: 1.2rem; }
-
-    .contact-sub {
-      color: var(--muted);
-      margin-bottom: 3rem;
-      font-size: 0.9rem;
+    .contact-title .accent { color: var(--red); }
+    .contact-desc {
+      font-size: 18px; color: var(--muted); line-height: 1.7;
+      max-width: 540px; margin: 0 auto 56px;
     }
-
     .contact-card {
-      border: 1px solid var(--border);
-      padding: 2.5rem 2rem;
-      margin-bottom: 1.5rem;
+      display: inline-flex; align-items: center; gap: 18px;
+      padding: 28px 42px;
+      border: 1px solid var(--line2);
       text-decoration: none;
-      display: block;
-      transition: border-color 0.25s, background 0.25s;
+      transition: all 0.3s;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
     }
-
     .contact-card:hover {
-      border-color: var(--accent);
-      background: rgba(200,184,154,0.03);
+      border-color: var(--red); background: rgba(200,16,46,0.05);
+      transform: translateY(-2px);
+    }
+    .contact-card-icon {
+      width: 28px; height: 28px;
+      stroke: var(--red); fill: none; stroke-width: 1.5;
+    }
+    .contact-card-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px; letter-spacing: 0.1em; color: var(--text);
+    }
+    .contact-meta {
+      margin-top: 60px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 2px; color: var(--muted2);
+      text-transform: uppercase; line-height: 2;
     }
 
-    .contact-card-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .contact-card-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 400;
-      color: var(--white);
-      letter-spacing: 0.05em;
-    }
-
-    .contact-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    /* ── FOOTER ── */
+    /* ─── FOOTER ─────────────────────────────────────── */
     footer {
-      padding: 2rem 3rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.25em;
+      padding: 36px 48px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 2px;
+      color: var(--muted2);
       text-transform: uppercase;
-      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.25s; }
+    footer a:hover { color: var(--red); }
+    @media (max-width: 720px) {
+      footer { padding: 28px 20px; flex-direction: column; text-align: center; }
     }
 
-    .footer-copy {
-      font-size: 0.72rem;
-      color: var(--border);
-      letter-spacing: 0.1em;
+    /* ─── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.5); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    @keyframes needleVibrate {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(2px); }
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 1.4rem 1.5rem; }
+    /* SVG Machine - parts animation */
+    .machine-needle { animation: needleVibrate 0.08s linear infinite; transform-origin: center; }
 
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-stats { padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 2rem; }
-
-      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-
-      footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 5000;
+      background: rgba(8,8,8,0.96);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
-
-    @media (max-width: 480px) {
-      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-      section { padding: 5rem 1.5rem; }
+    .lightbox.active { display: flex; animation: fadeIn 0.3s; }
+    .lightbox img {
+      max-width: 90vw; max-height: 88vh; object-fit: contain;
+      border: 1px solid var(--line2);
     }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 24px;
+      background: none; border: 1px solid var(--line2); color: var(--text);
+      font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px;
+      padding: 12px 20px; cursor: none; text-transform: uppercase;
+      transition: all 0.25s;
+    }
+    .lightbox-close:hover { border-color: var(--red); color: var(--red); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: 1px solid var(--line2); color: var(--text);
+      width: 48px; height: 48px; cursor: none;
+      font-size: 18px; transition: all 0.25s;
+    }
+    .lightbox-nav:hover { border-color: var(--red); color: var(--red); }
+    .lightbox-nav.prev { left: 24px; }
+    .lightbox-nav.next { right: 24px; }
+
   </style>
 </head>
 <body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- NAV -->
   <nav id="navbar">
     <a href="#hero" class="nav-logo">
       <div class="nav-logo-badge">AD</div>
-      <span>AD Tattoo Lab</span>
+      <div class="nav-logo-text">Tattoo<span>·</span>Lab</div>
     </a>
-    <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="nav-link">Instagram ↗</a>
+    <ul class="nav-links">
+      <li><a href="#about">Despre</a></li>
+      <li><a href="#process">Proces</a></li>
+      <li><a href="#portfolio">Portofoliu</a></li>
+      <li><a href="#equipment">Echipament</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Programează-te</a>
   </nav>
 
   <!-- HERO -->
-  <section id="hero">
-    <p class="hero-eyebrow">Alexandros Dimosthenous · București</p>
-    <h1 class="hero-title">
-      AD
-      <span>Tattoo Lab</span>
-    </h1>
-    <p class="hero-sub">Black & Grey · Blackwork · Custom Design</p>
-    <a href="#contact" class="btn">Programează-te</a>
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
+  <section id="hero" class="hero">
+    <div class="hero-bg"></div>
+
+    <!-- Tattoo Machine SVG (hero) -->
+    <svg class="hero-machine" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="grad-body" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2a2a2a"/>
+          <stop offset="100%" stop-color="#0e0e0e"/>
+        </linearGradient>
+        <linearGradient id="grad-red" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#c8102e"/>
+          <stop offset="100%" stop-color="#8a0a1e"/>
+        </linearGradient>
+      </defs>
+      <!-- Body -->
+      <rect x="140" y="80" width="120" height="180" rx="8" fill="url(#grad-body)" stroke="#c8102e" stroke-width="1.5"/>
+      <rect x="155" y="100" width="90" height="20" fill="#c8102e" opacity="0.85"/>
+      <text x="200" y="115" text-anchor="middle" fill="#080808" font-family="Bebas Neue" font-size="14" letter-spacing="3">AD</text>
+      <!-- Adjustment ring -->
+      <circle cx="200" cy="160" r="28" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
+      <circle cx="200" cy="160" r="22" fill="none" stroke="#c8102e" stroke-width="1" opacity="0.5"/>
+      <circle cx="200" cy="160" r="6" fill="#c8102e"/>
+      <!-- Tube -->
+      <rect x="190" y="260" width="20" height="60" fill="#1a1a1a" stroke="#c8102e" stroke-width="1"/>
+      <!-- Grip -->
+      <rect x="180" y="220" width="40" height="50" rx="4" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+      <line x1="186" y1="230" x2="214" y2="230" stroke="#c8102e" stroke-width="0.5"/>
+      <line x1="186" y1="240" x2="214" y2="240" stroke="#c8102e" stroke-width="0.5"/>
+      <line x1="186" y1="250" x2="214" y2="250" stroke="#c8102e" stroke-width="0.5"/>
+      <line x1="186" y1="260" x2="214" y2="260" stroke="#c8102e" stroke-width="0.5"/>
+      <!-- Needle -->
+      <g class="machine-needle">
+        <rect x="198" y="318" width="4" height="40" fill="#c8102e"/>
+        <polygon points="200,365 196,358 204,358" fill="#c8102e"/>
+      </g>
+      <!-- Cable -->
+      <path d="M 200 80 Q 280 30 320 60" stroke="#c8102e" stroke-width="2" fill="none" opacity="0.6"/>
+      <circle cx="320" cy="60" r="6" fill="#c8102e"/>
+      <!-- Decorative -->
+      <line x1="60" y1="200" x2="120" y2="200" stroke="#c8102e" stroke-width="0.5" opacity="0.4"/>
+      <line x1="280" y1="200" x2="340" y2="200" stroke="#c8102e" stroke-width="0.5" opacity="0.4"/>
+      <text x="60" y="190" fill="#7a7a7a" font-family="Space Mono" font-size="9" letter-spacing="2">ROTARY</text>
+      <text x="280" y="190" fill="#7a7a7a" font-family="Space Mono" font-size="9" letter-spacing="2">001</text>
+    </svg>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Alexandros Dimosthenous · București</div>
+      <h1 class="hero-title">
+        <span class="l1">AD</span>
+        <span class="l2">Tattoo</span>
+        <span class="l3">Lab.</span>
+      </h1>
+      <p class="hero-desc">Black & grey realism. Blackwork bold. Custom design — fără flash-uri generice. Fiecare piesă, construită de la zero.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Programează-te</a>
+        <a href="#portfolio" class="btn-secondary">Vezi portofoliul →</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-indicator-line"></div>
       Scroll
     </div>
   </section>
 
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num" data-counter="3">0</div><div class="stat-label">Stiluri specializate</div></div>
+    <div class="stat"><div class="stat-num" data-counter="100" data-suffix="%">0%</div><div class="stat-label">Custom design</div></div>
+    <div class="stat"><div class="stat-num" data-counter="19" data-suffix="+">0+</div><div class="stat-label">Lucrări realizate</div></div>
+    <div class="stat"><div class="stat-num">BCU</div><div class="stat-label">București — RO</div></div>
+  </div>
+
   <!-- ABOUT -->
-  <section id="about">
-    <div class="section-inner">
-      <div class="about-grid">
-        <div class="about-text">
-          <p class="section-label">Despre</p>
-          <h2 class="section-title">Black & grey.<br />Fara compromisuri.</h2>
-          <p>Tatuez în București cu specializare în black & grey realism, blackwork bold și design custom. Fiecare piesă e construită de la zero — nu lucrez cu flash-uri generice.</p>
-          <p>Dacă ai o idee — un concept, o referință, sau doar o direcție — hai să o transformăm în ceva permanent și bine executat.</p>
+  <section id="about" class="about">
+    <div class="about-left reveal">
+      <div class="section-label">Despre</div>
+      <h2 class="section-title">Black & grey.<br/><span class="accent">Fara compromisuri.</span></h2>
+      <p class="about-text">Tatuez în București cu specializare în <strong style="color:var(--text)">black & grey realism</strong>, <strong style="color:var(--text)">blackwork bold</strong> și <strong style="color:var(--text)">design custom</strong>. Nu lucrez cu flash-uri generice — fiecare piesă e construită de la zero, plecând de la ideea ta.</p>
+      <p class="about-text">Procesul e simplu: discutăm conceptul, propun design-ul, ajustăm până e fix ce vrei, apoi facem treaba bine. Una pe săptămână, calitate maximă.</p>
+    </div>
+    <div class="about-right reveal">
+      <div class="style-item">
+        <div class="style-num">01</div>
+        <div class="style-info">
+          <div class="style-name">Black & Grey Realism</div>
+          <div class="style-desc">Skulls, portrete, scene cu gradient și shading detaliat. Profunzime maximă, contrast precis.</div>
         </div>
-        <div class="about-stats">
-          <div>
-            <div class="stat-number">B&G</div>
-            <div class="stat-label">Realism</div>
-          </div>
-          <div>
-            <div class="stat-number">BW</div>
-            <div class="stat-label">Blackwork</div>
-          </div>
-          <div>
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Custom design</div>
-          </div>
-          <div>
-            <div class="stat-number">BCU</div>
-            <div class="stat-label">București</div>
-          </div>
+      </div>
+      <div class="style-item">
+        <div class="style-num">02</div>
+        <div class="style-info">
+          <div class="style-name">Blackwork</div>
+          <div class="style-desc">Black solid bold, ornamental, neo-tradițional. Linii grele, fill-uri saturate, impact vizual puternic.</div>
+        </div>
+      </div>
+      <div class="style-item">
+        <div class="style-num">03</div>
+        <div class="style-info">
+          <div class="style-name">Custom Design</div>
+          <div class="style-desc">De la concept la stencil — fiecare proiect e unic. Niciun design copiat, niciun flash refolosit.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
-  <section id="portfolio">
-    <div class="section-inner">
-      <p class="section-label">Portofoliu</p>
-      <h2 class="section-title">Lucrări</h2>
-      <div class="portfolio-grid">
+  <!-- PROCESS - Sticky scroll -->
+  <section id="process" class="process">
+    <div class="process-inner">
+      <div class="process-sticky">
+        <div class="process-machine-wrap">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" id="machineSvg" aria-hidden="true">
+            <defs>
+              <linearGradient id="g-body" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2a2a2a"/>
+                <stop offset="100%" stop-color="#0e0e0e"/>
+              </linearGradient>
+            </defs>
+            <!-- Cable -->
+            <path id="m-cable" d="M 200 80 Q 80 50 60 100 Q 40 150 80 180" stroke="#c8102e" stroke-width="2" fill="none" opacity="0" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <circle id="m-cable-end" cx="80" cy="180" r="6" fill="#c8102e" opacity="0"/>
 
-        <div class="portfolio-item"><img src="img/1.1.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/1.2.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/1.3.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/2.1.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/2.2.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/2.3.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/3.1.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/3.2.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/3.3.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/3.4.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/A.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/B.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/C.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/D.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/E.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/F.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/G.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/H-2222.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
-        <div class="portfolio-item"><img src="img/INSTA-1.11.jpg" alt="Tatuaj dimi_ad_ink" loading="lazy"><div class="portfolio-overlay"><span>dimi_ad_ink</span></div></div>
+            <!-- Body -->
+            <g id="m-body" opacity="0" transform="translate(0,-30)">
+              <rect x="140" y="80" width="120" height="180" rx="8" fill="url(#g-body)" stroke="#c8102e" stroke-width="1.5"/>
+              <rect x="155" y="100" width="90" height="20" fill="#c8102e" opacity="0.9"/>
+              <text x="200" y="115" text-anchor="middle" fill="#080808" font-family="Bebas Neue" font-size="14" letter-spacing="3">AD</text>
+              <circle cx="200" cy="160" r="28" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
+              <circle cx="200" cy="160" r="22" fill="none" stroke="#c8102e" stroke-width="1" opacity="0.5"/>
+              <circle cx="200" cy="160" r="6" fill="#c8102e"/>
+              <!-- Adjustment screws -->
+              <circle cx="160" cy="200" r="4" fill="#3a3a3a"/>
+              <circle cx="240" cy="200" r="4" fill="#3a3a3a"/>
+              <circle cx="160" cy="220" r="4" fill="#3a3a3a"/>
+              <circle cx="240" cy="220" r="4" fill="#3a3a3a"/>
+              <!-- Vents -->
+              <line x1="155" y1="240" x2="245" y2="240" stroke="#c8102e" stroke-width="0.4"/>
+              <line x1="155" y1="245" x2="245" y2="245" stroke="#c8102e" stroke-width="0.4"/>
+              <line x1="155" y1="250" x2="245" y2="250" stroke="#c8102e" stroke-width="0.4"/>
+            </g>
 
+            <!-- Grip -->
+            <g id="m-grip" opacity="0" transform="translate(0,30)">
+              <rect x="180" y="270" width="40" height="60" rx="4" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+              <line x1="186" y1="280" x2="214" y2="280" stroke="#c8102e" stroke-width="0.5"/>
+              <line x1="186" y1="290" x2="214" y2="290" stroke="#c8102e" stroke-width="0.5"/>
+              <line x1="186" y1="300" x2="214" y2="300" stroke="#c8102e" stroke-width="0.5"/>
+              <line x1="186" y1="310" x2="214" y2="310" stroke="#c8102e" stroke-width="0.5"/>
+              <line x1="186" y1="320" x2="214" y2="320" stroke="#c8102e" stroke-width="0.5"/>
+            </g>
+
+            <!-- Tube -->
+            <g id="m-tube" opacity="0">
+              <rect x="190" y="330" width="20" height="55" fill="#1a1a1a" stroke="#c8102e" stroke-width="1"/>
+              <rect x="194" y="335" width="12" height="3" fill="#c8102e" opacity="0.6"/>
+            </g>
+
+            <!-- Needle (animated) -->
+            <g id="m-needle" opacity="0">
+              <rect x="198" y="385" width="4" height="50" fill="#c8102e" class="machine-needle"/>
+              <polygon points="200,440 196,432 204,432" fill="#c8102e" class="machine-needle"/>
+            </g>
+
+            <!-- Spark / energy lines (final state) -->
+            <g id="m-spark" opacity="0">
+              <line x1="200" y1="450" x2="200" y2="470" stroke="#c8102e" stroke-width="1"/>
+              <line x1="180" y1="450" x2="170" y2="465" stroke="#c8102e" stroke-width="0.6" opacity="0.6"/>
+              <line x1="220" y1="450" x2="230" y2="465" stroke="#c8102e" stroke-width="0.6" opacity="0.6"/>
+              <text x="200" y="490" text-anchor="middle" fill="#c8102e" font-family="Space Mono" font-size="10" letter-spacing="3">// READY</text>
+            </g>
+
+            <!-- Scale markers -->
+            <g opacity="0.3">
+              <line x1="50" y1="100" x2="60" y2="100" stroke="#7a7a7a" stroke-width="0.5"/>
+              <line x1="50" y1="200" x2="60" y2="200" stroke="#7a7a7a" stroke-width="0.5"/>
+              <line x1="50" y1="300" x2="60" y2="300" stroke="#7a7a7a" stroke-width="0.5"/>
+              <line x1="50" y1="400" x2="60" y2="400" stroke="#7a7a7a" stroke-width="0.5"/>
+              <text x="40" y="103" text-anchor="end" fill="#7a7a7a" font-family="Space Mono" font-size="7">100</text>
+              <text x="40" y="203" text-anchor="end" fill="#7a7a7a" font-family="Space Mono" font-size="7">200</text>
+              <text x="40" y="303" text-anchor="end" fill="#7a7a7a" font-family="Space Mono" font-size="7">300</text>
+              <text x="40" y="403" text-anchor="end" fill="#7a7a7a" font-family="Space Mono" font-size="7">400</text>
+            </g>
+          </svg>
+        </div>
       </div>
-      <div class="portfolio-cta">
-        <p>Mai mult pe Instagram</p>
-        <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="btn">@dimi_ad_ink ↗</a>
+
+      <div class="process-steps">
+        <div class="process-step" data-step="1">
+          <div class="process-step-num">// 01 — CONCEPT</div>
+          <h3 class="process-step-title">Discutăm ideea.</h3>
+          <p class="process-step-desc">Trimite-mi pe Instagram conceptul, referințele sau doar direcția. Stabilim mărimea, plasarea, stilul. Fără cost, fără presiune.</p>
+        </div>
+        <div class="process-step" data-step="2">
+          <div class="process-step-num">// 02 — DESIGN</div>
+          <h3 class="process-step-title">Construiesc design-ul.</h3>
+          <p class="process-step-desc">Lucrez digital — schiță, refinare, ajustări până e fix ce vrei. Niciun stencil ridicat din portofoliul altcuiva.</p>
+        </div>
+        <div class="process-step" data-step="3">
+          <div class="process-step-num">// 03 — SETUP</div>
+          <h3 class="process-step-title">Pregătesc echipamentul.</h3>
+          <p class="process-step-desc">Sterilizare completă, ace noi sigilate, cerneluri verificate. Setup steril, materiale de calitate, mediu controlat.</p>
+        </div>
+        <div class="process-step" data-step="4">
+          <div class="process-step-num">// 04 — INK</div>
+          <h3 class="process-step-title">Tatuajul efectiv.</h3>
+          <p class="process-step-desc">Sesiunea propriu-zisă. Pauzele când ai nevoie, comunicare deschisă, focus pe execuție. La final — instrucțiuni complete de aftercare.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO CAROUSEL -->
+  <section id="portfolio" class="portfolio">
+    <div class="portfolio-header">
+      <div class="reveal">
+        <div class="section-label">Portofoliu</div>
+        <h2 class="section-title">Lucrări <span class="accent">realizate.</span></h2>
+      </div>
+      <div class="portfolio-controls">
+        <button class="ctrl-btn" id="prevBtn" aria-label="Înapoi">←</button>
+        <button class="ctrl-btn" id="nextBtn" aria-label="Înainte">→</button>
+      </div>
+    </div>
+
+    <div class="carousel" id="carousel">
+      <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">01</span><span class="carousel-item-tag">B&G · REALISM</span></div></div>
+      <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">02</span><span class="carousel-item-tag">PROCESS</span></div></div>
+      <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">03</span><span class="carousel-item-tag">JAPANESE</span></div></div>
+      <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">04</span><span class="carousel-item-tag">BLACKWORK</span></div></div>
+      <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">05</span><span class="carousel-item-tag">PROCESS</span></div></div>
+      <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">06</span><span class="carousel-item-tag">B&G</span></div></div>
+      <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">07</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+      <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">08</span><span class="carousel-item-tag">BLACKWORK</span></div></div>
+      <div class="carousel-item" data-img="img/3.1.jpg"><img src="img/3.1.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">09</span><span class="carousel-item-tag">PROCESS</span></div></div>
+      <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">10</span><span class="carousel-item-tag">PROCESS</span></div></div>
+      <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">11</span><span class="carousel-item-tag">B&G</span></div></div>
+      <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">12</span><span class="carousel-item-tag">B&G</span></div></div>
+      <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">13</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+      <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">14</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+      <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">15</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+      <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">16</span><span class="carousel-item-tag">B&G</span></div></div>
+      <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">17</span><span class="carousel-item-tag">B&G</span></div></div>
+      <div class="carousel-item" data-img="img/H-2222.jpg"><img src="img/H-2222.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">18</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+      <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt="Tatuaj AD"><div class="carousel-item-overlay"><span class="carousel-item-num">19</span><span class="carousel-item-tag">CUSTOM</span></div></div>
+    </div>
+  </section>
+
+  <!-- EQUIPMENT -->
+  <section id="equipment" class="equipment">
+    <div class="equipment-header reveal">
+      <div class="section-label">Echipament</div>
+      <h2 class="section-title">Doar <span class="accent">profesional.</span></h2>
+      <p class="equipment-desc">Lucrez exclusiv cu mărci recunoscute la nivel internațional. Mașini rotary de top, ace sterile premium, cerneluri vegane sigure pe piele. Calitatea echipamentului = calitatea tatuajului.</p>
+    </div>
+
+    <!-- Marquee -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <div class="marquee-item">CHEYENNE<span class="dot"></span></div>
+        <div class="marquee-item">EZ CARTRIDGES<span class="dot"></span></div>
+        <div class="marquee-item">BIG WASP<span class="dot"></span></div>
+        <div class="marquee-item">ETERNAL INK<span class="dot"></span></div>
+        <div class="marquee-item">CRITICAL<span class="dot"></span></div>
+        <div class="marquee-item">KWADRON<span class="dot"></span></div>
+        <div class="marquee-item">DYNAMIC INK<span class="dot"></span></div>
+        <div class="marquee-item">FK IRONS<span class="dot"></span></div>
+        <div class="marquee-item">WORLD FAMOUS<span class="dot"></span></div>
+        <div class="marquee-item">INKJECTA<span class="dot"></span></div>
+      </div>
+      <div class="marquee-track" aria-hidden="true">
+        <div class="marquee-item">CHEYENNE<span class="dot"></span></div>
+        <div class="marquee-item">EZ CARTRIDGES<span class="dot"></span></div>
+        <div class="marquee-item">BIG WASP<span class="dot"></span></div>
+        <div class="marquee-item">ETERNAL INK<span class="dot"></span></div>
+        <div class="marquee-item">CRITICAL<span class="dot"></span></div>
+        <div class="marquee-item">KWADRON<span class="dot"></span></div>
+        <div class="marquee-item">DYNAMIC INK<span class="dot"></span></div>
+        <div class="marquee-item">FK IRONS<span class="dot"></span></div>
+        <div class="marquee-item">WORLD FAMOUS<span class="dot"></span></div>
+        <div class="marquee-item">INKJECTA<span class="dot"></span></div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="equipment-grid">
+      <div class="eq-card">
+        <div class="eq-card-cat">// MASINA</div>
+        <div class="eq-card-name">Cheyenne</div>
+        <div class="eq-card-desc">Rotary motor brushless — precizie germană, vibrație minimă, control absolut al acului.</div>
+      </div>
+      <div class="eq-card">
+        <div class="eq-card-cat">// CARTRIDGE</div>
+        <div class="eq-card-name">EZ · Big Wasp</div>
+        <div class="eq-card-desc">Cartușe sterile pre-asamblate. Ace medicale calibru exact, fără îndoituri, sigilate individual.</div>
+      </div>
+      <div class="eq-card">
+        <div class="eq-card-cat">// CERNEALA</div>
+        <div class="eq-card-name">Eternal · Dynamic</div>
+        <div class="eq-card-desc">Vegane, REACH conforme UE, formule stabile. Black & grey care păstrează contrastul în timp.</div>
+      </div>
+      <div class="eq-card">
+        <div class="eq-card-cat">// POWER</div>
+        <div class="eq-card-name">Critical</div>
+        <div class="eq-card-desc">Power supply digital, voltaj reglabil precis. Fără variații, fără șocuri — execuție constantă.</div>
+      </div>
+      <div class="eq-card">
+        <div class="eq-card-cat">// STERIL</div>
+        <div class="eq-card-name">Single-use</div>
+        <div class="eq-card-desc">Tot ce intră în contact cu pielea = nou și sigilat. Mănuși, ace, capse, foi de transfer — zero reutilizare.</div>
+      </div>
+      <div class="eq-card">
+        <div class="eq-card-cat">// AFTERCARE</div>
+        <div class="eq-card-name">Premium</div>
+        <div class="eq-card-desc">Folie second-skin pentru protecție, balsam de vindecare, instrucțiuni clare scrise. Suport post-tatuaj inclus.</div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-inner">
-      <div class="contact-inner">
-        <p class="section-label">Contact</p>
-        <h2 class="section-title">Programează-te</h2>
-        <p class="contact-sub">Trimite-mi un mesaj pe Instagram cu ideea ta. Răspund în 24h.</p>
+  <section id="contact" class="contact">
+    <div class="contact-inner reveal">
+      <div class="section-label" style="justify-content: center;">Contact</div>
+      <h2 class="contact-title">Hai sa <span class="accent">facem treaba.</span></h2>
+      <p class="contact-desc">Trimite-mi un mesaj pe Instagram cu ideea, referințele sau doar întrebarea. Răspund în 24h. Programări individuale, fiecare client primește atenție completă.</p>
 
-        <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="contact-card">
-          <div class="contact-card-label">Instagram</div>
-          <div class="contact-card-value">@dimi_ad_ink</div>
-        </a>
+      <a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener" class="contact-card">
+        <svg class="contact-card-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#c8102e"/></svg>
+        <span class="contact-card-text">@dimi_ad_ink</span>
+      </a>
 
-        <p class="contact-note">
-          Disponibil pentru programări individuale · București<br />
-          Acceptă design custom și referințe
-        </p>
+      <div class="contact-meta">
+        Disponibil pentru programări individuale<br/>
+        București · România
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Alexandros Dimosthenous · Tattoo Lab</div>
-    <div class="footer-copy">© 2026</div>
+    <div>© 2026 · Alexandros Dimosthenous · Tattoo Lab</div>
+    <div><a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener">Instagram</a> · <a href="#hero">Sus ↑</a></div>
   </footer>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose">Închide</button>
+    <button class="lightbox-nav prev" id="lbPrev">←</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lightbox-nav next" id="lbNext">→</button>
+  </div>
+
   <script>
-    // Nav scroll effect
+    // ─── CUSTOM CURSOR ─────────────────────────────────
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button, .carousel-item').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+
+    // ─── NAV SCROLL ─────────────────────────────────────
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ─── REVEAL ON SCROLL ───────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ─── COUNTERS ───────────────────────────────────────
+    const counters = document.querySelectorAll('[data-counter]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting || e.target.dataset.done) return;
+        e.target.dataset.done = '1';
+        const target = parseInt(e.target.dataset.counter);
+        const suffix = e.target.dataset.suffix || '';
+        let cur = 0;
+        const step = Math.max(1, Math.ceil(target / 40));
+        const tick = () => {
+          cur += step;
+          if (cur >= target) { e.target.textContent = target + suffix; return; }
+          e.target.textContent = cur + suffix;
+          requestAnimationFrame(tick);
+        };
+        tick();
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    // ─── MACHINE ASSEMBLY (sticky scroll) ──────────────
+    const processSection = document.querySelector('.process');
+    const mCable = document.getElementById('m-cable');
+    const mCableEnd = document.getElementById('m-cable-end');
+    const mBody = document.getElementById('m-body');
+    const mGrip = document.getElementById('m-grip');
+    const mTube = document.getElementById('m-tube');
+    const mNeedle = document.getElementById('m-needle');
+    const mSpark = document.getElementById('m-spark');
+
+    function updateMachine() {
+      if (!processSection) return;
+      const rect = processSection.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / total));
+
+      // 4 stages: 0-0.25 body+cable, 0.25-0.5 grip, 0.5-0.75 tube, 0.75-1 needle+spark
+      const s1 = Math.max(0, Math.min(1, progress / 0.25));
+      const s2 = Math.max(0, Math.min(1, (progress - 0.20) / 0.25));
+      const s3 = Math.max(0, Math.min(1, (progress - 0.45) / 0.25));
+      const s4 = Math.max(0, Math.min(1, (progress - 0.70) / 0.30));
+
+      // Body
+      mBody.setAttribute('opacity', s1);
+      mBody.setAttribute('transform', `translate(0,${(1-s1) * -30})`);
+      // Cable
+      mCable.setAttribute('opacity', s1);
+      mCable.setAttribute('stroke-dashoffset', 200 * (1 - s1));
+      mCableEnd.setAttribute('opacity', s1);
+      // Grip
+      mGrip.setAttribute('opacity', s2);
+      mGrip.setAttribute('transform', `translate(0,${(1-s2) * 30})`);
+      // Tube
+      mTube.setAttribute('opacity', s3);
+      // Needle
+      mNeedle.setAttribute('opacity', s4);
+      mSpark.setAttribute('opacity', s4);
+    }
+    window.addEventListener('scroll', updateMachine, { passive: true });
+    updateMachine();
+
+    // ─── CAROUSEL ───────────────────────────────────────
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const itemWidth = () => carousel.querySelector('.carousel-item').offsetWidth + 16;
+    prevBtn.addEventListener('click', () => carousel.scrollBy({ left: -itemWidth() * 2, behavior: 'smooth' }));
+    nextBtn.addEventListener('click', () => carousel.scrollBy({ left: itemWidth() * 2, behavior: 'smooth' }));
+
+    // Drag to scroll
+    let isDown = false, startX = 0, scrollLeft = 0;
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true; carousel.style.cursor = 'grabbing';
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+    carousel.addEventListener('mouseleave', () => { isDown = false; });
+    carousel.addEventListener('mouseup', () => { isDown = false; });
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      carousel.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+
+    // ─── LIGHTBOX ───────────────────────────────────────
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    const items = Array.from(document.querySelectorAll('.carousel-item'));
+    let currentIdx = 0;
+
+    items.forEach((item, idx) => {
+      item.addEventListener('click', (e) => {
+        // ignore click after drag
+        if (Math.abs(carousel.scrollLeft - scrollLeft) > 8) return;
+        currentIdx = idx;
+        lbImg.src = item.dataset.img;
+        lightbox.classList.add('active');
+      });
+    });
+    function navLb(dir) {
+      currentIdx = (currentIdx + dir + items.length) % items.length;
+      lbImg.src = items[currentIdx].dataset.img;
+    }
+    lbPrev.addEventListener('click', () => navLb(-1));
+    lbNext.addEventListener('click', () => navLb(1));
+    lbClose.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') lightbox.classList.remove('active');
+      if (e.key === 'ArrowRight') navLb(1);
+      if (e.key === 'ArrowLeft') navLb(-1);
     });
   </script>
 
