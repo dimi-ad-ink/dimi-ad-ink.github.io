@@ -170,33 +170,31 @@
       display: flex; align-items: center; gap: 60px;
     }
 
-    /* Titlu vertical, Roboto Condensed, zoom de la mare la normal */
+    /* Titlu pe 3 rânduri, Roboto Condensed, zoom de la mare la normal */
     .hero-title {
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 300;
-      font-size: clamp(54px, 8vw, 120px);
-      line-height: 1.0;
-      letter-spacing: 0.08em;
+      font-size: clamp(64px, 11vw, 160px);
+      line-height: 0.95;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text);
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      transform: rotate(180deg);
-      white-space: nowrap;
 
       /* Zoom-out: începe foarte mare, ajunge la normal */
       opacity: 0;
-      transform: rotate(180deg) scale(2.6);
+      transform: scale(2.6);
       filter: blur(14px);
+      transform-origin: left center;
       transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
                   opacity 1.0s ease-out,
                   filter 1.2s ease-out;
     }
     .hero-title.in {
       opacity: 1;
-      transform: rotate(180deg) scale(1);
+      transform: scale(1);
       filter: blur(0);
     }
+    .hero-title span { display: block; }
     .hero-title .accent { color: var(--red); font-weight: 400; }
 
     .hero-text-block { flex: 1; max-width: 600px; }
@@ -226,12 +224,7 @@
 
     @media (max-width: 900px) {
       .hero-content { flex-direction: column; align-items: flex-start; gap: 40px; }
-      .hero-title {
-        writing-mode: horizontal-tb;
-        font-size: clamp(48px, 11vw, 80px);
-        transform: scale(2.6);
-      }
-      .hero-title.in { transform: scale(1); }
+      .hero-title { font-size: clamp(56px, 14vw, 100px); }
     }
     @media (max-width: 720px) {
       .hero { padding: 120px 20px 80px; }
@@ -712,7 +705,9 @@
 
     <div class="hero-content">
       <h1 class="hero-title" id="heroTitle">
-        AD <span class="accent">Tattoo</span> Lab
+        <span>AD</span>
+        <span class="accent">Tattoo</span>
+        <span>Lab</span>
       </h1>
       <div class="hero-text-block">
         <p class="hero-desc"
