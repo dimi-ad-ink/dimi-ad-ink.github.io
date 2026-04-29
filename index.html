@@ -395,11 +395,33 @@
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 300;
       font-size: 22px;
-      line-height: 1; letter-spacing: 0.06em;
+      line-height: 1.4; letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--red);
       display: inline-block;
+      overflow: hidden;
+      padding: 4px 0;
     }
+    .etape-title .ltr {
+      display: inline-block;
+      transform: translateY(110%) rotate(8deg);
+      opacity: 0;
+      filter: blur(6px);
+      transition: transform 0.7s cubic-bezier(0.2, 0.85, 0.2, 1),
+                  opacity 0.5s ease,
+                  filter 0.5s ease;
+    }
+    .etape-title.in .ltr {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      filter: blur(0);
+    }
+    /* underline accent slide */
+    .etape-title::after {
+      content: ''; display: block; height: 1px; background: var(--red);
+      width: 0; margin: 8px auto 0; transition: width 0.8s 0.3s cubic-bezier(0.2, 0.85, 0.2, 1);
+    }
+    .etape-title.in::after { width: 60%; }
 
     /* ─── PROCESS (sticky scroll cu poză cinematic) ────────────── */
     .process {
@@ -974,7 +996,7 @@
   </section>
 
   <!-- ETAPE -->
-  <div class="etape-header reveal">
+  <div class="etape-header">
     <h2 class="etape-title" data-ro="Etape" data-en="Stages">Etape</h2>
   </div>
 
@@ -984,7 +1006,6 @@
       <div class="process-sticky">
         <div class="process-photo-wrap">
           <div class="process-photo" id="processPhoto"></div>
-          <div class="process-photo-label">REC · LIVE · BCU</div>
           <div class="process-photo-coord">
             FRAME · <span>03/04</span><br/>
             DEPTH · <span>0.8MM</span><br/>
@@ -1315,6 +1336,43 @@
       }, { threshold });
       obs.observe(el);
     });
+
+    // ─── ETAPE TITLE — letter-by-letter, re-trigger pe fiecare scroll ──
+    const etapeTitle = document.querySelector('.etape-title');
+    function splitEtapeLetters() {
+      if (!etapeTitle) return;
+      const txt = etapeTitle.textContent || '';
+      etapeTitle.innerHTML = '';
+      [...txt].forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'ltr';
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        span.style.transitionDelay = (0.04 * i) + 's';
+        etapeTitle.appendChild(span);
+      });
+    }
+    splitEtapeLetters();
+    // Re-split after lang change (text gets replaced by setLang)
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // setLang replaces textContent → re-split letters next tick
+        setTimeout(splitEtapeLetters, 50);
+      });
+    });
+    if (etapeTitle) {
+      const etapeObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            etapeTitle.classList.remove('in');
+            void etapeTitle.offsetWidth;
+            etapeTitle.classList.add('in');
+          } else {
+            etapeTitle.classList.remove('in');
+          }
+        });
+      }, { threshold: 0.5 });
+      etapeObs.observe(etapeTitle);
+    }
 
     // ─── PROCESS PHOTO PARALLAX (sticky scroll) ──────────────
     const processSection = document.querySelector('.process');
