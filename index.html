@@ -88,23 +88,12 @@
       padding: 14px 48px;
     }
 
-    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo-badge {
-      width: 38px; height: 38px; border-radius: 50%;
-      border: 1.5px solid var(--red);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 14px; letter-spacing: 1px;
-      color: var(--red);
-      transition: background 0.3s, color 0.3s;
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-logo-img {
+      height: 42px; width: auto; display: block;
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
-    .nav-logo:hover .nav-logo-badge { background: var(--red); color: var(--black); }
-    .nav-logo-text {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--text);
-    }
-    .nav-logo-text span { color: var(--red); }
+    .nav-logo:hover .nav-logo-img { transform: scale(1.04); filter: brightness(1.15); }
 
     .nav-center { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-center a {
@@ -148,169 +137,99 @@
       .nav-cta { display: none; }
     }
 
-    /* ─── HERO (Tech) ────────────────────────────────── */
+    /* ─── HERO (Lando-style) ────────────────────────────────── */
     .hero {
       min-height: 100vh; display: flex; align-items: center;
       position: relative; overflow: hidden;
-      padding: 120px 8vw 80px;
+      padding: 120px 5vw 80px;
+      gap: 4vw;
+    }
+    .hero-left {
+      flex: 1 1 50%; z-index: 3; position: relative;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hero-right-img {
+      flex: 1 1 50%; z-index: 2; position: relative;
+      align-self: stretch;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 60vh;
+    }
+    .hero-portrait {
+      width: 100%; height: 100%;
+      max-height: 78vh;
+      object-fit: cover; object-position: center;
+      filter: contrast(1.1) saturate(0.92);
+      animation: heroImgReveal 1.2s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes heroImgReveal {
+      from { opacity: 0; clip-path: inset(15% 0 15% 0); transform: scale(1.06); }
+      to   { opacity: 1; clip-path: inset(0 0 0 0); transform: scale(1); }
     }
 
-    /* Grid overlay */
-    .hero-grid {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(ellipse at 55% 50%, black 30%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse at 55% 50%, black 30%, transparent 80%);
-    }
-
-    /* Corner brackets */
-    .hero-corner-tl {
-      position: absolute; top: 72px; left: 48px;
-      width: 20px; height: 20px;
-      border-left: 1.5px solid var(--red);
-      border-top: 1.5px solid var(--red);
-      opacity: 0; animation: heroFade 0.5s 0.1s forwards;
-    }
-    .hero-corner-br {
-      position: absolute; bottom: 48px; right: 120px;
-      width: 20px; height: 20px;
-      border-right: 1.5px solid rgba(200,16,46,0.4);
-      border-bottom: 1.5px solid rgba(200,16,46,0.4);
-      opacity: 0; animation: heroFade 0.5s 0.3s forwards;
-    }
-
-    /* Scan line */
-    .hero-scan {
-      position: absolute; left: 0; top: 72px;
-      width: 3px; height: 0;
-      background: linear-gradient(to bottom, transparent, var(--red), transparent);
-      animation: heroScan 2s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      pointer-events: none;
-    }
-    @keyframes heroScan {
-      from { height: 0; top: 72px; opacity: 1; }
-      to   { height: calc(100vh - 72px); opacity: 0.4; }
-    }
-
-    /* System indicator */
-    .hero-sys {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 4px; color: var(--red);
-      text-transform: uppercase; margin-bottom: 28px;
-      display: flex; align-items: center; gap: 16px;
-      opacity: 0; animation: heroSlide 0.5s 0.15s forwards;
-    }
-    .hero-sys-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--red);
-      animation: heroBlink 1.4s ease-in-out infinite;
-    }
-    .hero-sys-line { width: 32px; height: 1px; background: var(--line); }
-
-    /* Title */
+    /* Title — big mixed weights, Lando style */
     .hero-title {
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 400;
       text-transform: uppercase;
-      line-height: 1.0;
-      letter-spacing: 0.06em;
+      line-height: 0.95;
+      letter-spacing: 0.01em;
       position: relative;
+      margin-bottom: 32px;
     }
     .hero-title-row {
-      display: flex; align-items: baseline; gap: 24px;
       overflow: hidden;
+      display: block;
     }
     .hero-title-text {
       display: block;
-      font-size: clamp(72px, 11vw, 160px);
-      animation: heroReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      font-size: clamp(64px, 9vw, 130px);
+      animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    .hero-title-row:nth-child(1) .hero-title-text { animation-delay: 0.25s; color: var(--text); }
-    .hero-title-row:nth-child(2) .hero-title-text { animation-delay: 0.4s;  color: var(--red); }
-    .hero-title-row:nth-child(3) .hero-title-text { animation-delay: 0.55s; color: var(--text); }
+    .hero-title-row:nth-child(1) .hero-title-text { animation-delay: 0.15s; color: var(--text); font-weight: 300; }
+    .hero-title-row:nth-child(2) .hero-title-text { animation-delay: 0.3s;  color: var(--red); font-weight: 700; font-style: italic; }
+    .hero-title-row:nth-child(3) .hero-title-text { animation-delay: 0.45s; color: var(--text); font-weight: 300; }
 
-    .hero-annotation {
+    /* Hero meta below title */
+    .hero-meta {
+      display: flex; flex-direction: column; gap: 14px;
+      max-width: 460px;
+      opacity: 0; animation: heroFadeUp 0.8s 0.8s forwards;
+    }
+    .hero-meta-line {
       font-family: 'Space Mono', monospace;
-      font-size: 8px; letter-spacing: 2px; color: var(--muted);
-      text-transform: uppercase; align-self: center;
-      opacity: 0; animation: heroFade 0.5s 0.9s forwards;
+      font-size: 11px; letter-spacing: 3px;
+      color: var(--muted); text-transform: uppercase;
+      display: flex; align-items: center; gap: 14px;
     }
-    .hero-annotation-red { color: rgba(200,16,46,0.5); }
-
-    /* Bottom coords + desc */
-    .hero-bottom {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-top: 40px;
-      opacity: 0; animation: heroSlide 0.6s 0.9s forwards;
+    .hero-meta-line::before {
+      content: ''; width: 28px; height: 1px; background: var(--red);
     }
-    .hero-coords {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; color: var(--muted2);
-      text-transform: uppercase; line-height: 1.8;
-    }
-    .hero-coords span { color: var(--red); }
-    .hero-desc {
+    .hero-meta-desc {
       font-family: 'Roboto Condensed', sans-serif;
-      font-weight: 300; font-size: 13px;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); max-width: 280px;
-      text-align: right; line-height: 1.8;
+      font-size: 14px; line-height: 1.7;
+      color: var(--muted); font-weight: 300;
+      letter-spacing: 0.04em;
     }
-
-    /* Right vertical strip */
-    .hero-strip {
-      position: absolute; right: 48px; top: 50%;
-      transform: translateY(-50%);
-      display: flex; flex-direction: column; align-items: center;
-      gap: 16px; z-index: 2;
-      opacity: 0; animation: heroFade 0.8s 1s forwards;
+    .hero-meta-tags {
+      display: flex; gap: 18px; flex-wrap: wrap;
+      margin-top: 8px;
     }
-    .hero-strip-line { width: 1px; height: 80px; background: var(--line); }
-    .hero-strip-txt {
+    .hero-meta-tag {
       font-family: 'Space Mono', monospace;
-      font-size: 8px; letter-spacing: 4px; color: var(--muted);
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
+      font-size: 10px; letter-spacing: 2px;
+      color: var(--text); text-transform: uppercase;
+      padding: 8px 14px; border: 1px solid var(--line2);
     }
-    .hero-strip-dot { width: 4px; height: 4px; background: var(--red); border-radius: 50%; }
-    .hero-strip-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 2px; color: rgba(200,16,46,0.5);
-      writing-mode: vertical-rl;
-    }
+    .hero-meta-tag.accent { border-color: var(--red); color: var(--red); }
 
-    /* Scroll indicator */
-    .scroll-indicator {
-      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      color: var(--muted); font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      z-index: 3;
-      animation: heroFade 1s 1.2s forwards; opacity: 0;
-    }
-    .scroll-indicator-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--red), transparent);
-      animation: scrollLine 2s ease-in-out infinite;
-    }
-
-    @keyframes heroFade   { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes heroSlide  { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes heroBlink  { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     @keyframes heroReveal { from { transform: translateY(110%); } to { transform: translateY(0); } }
+    @keyframes heroFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-    @media (max-width: 1100px) { .hero-strip { display: none; } }
-    @media (max-width: 900px) {
-      .hero-annotation { display: none; }
-      .hero-bottom { flex-direction: column; gap: 24px; }
-      .hero-desc { text-align: left; }
-    }
-    @media (max-width: 720px) {
-      .hero { padding: 100px 20px 80px; }
-      .hero-corner-tl { left: 20px; }
+    @media (max-width: 1000px) {
+      .hero { flex-direction: column; gap: 40px; padding: 110px 24px 60px; }
+      .hero-left, .hero-right-img { flex: 1 1 100%; }
+      .hero-right-img { min-height: 52vh; }
+      .hero-title-text { font-size: clamp(56px, 14vw, 110px); }
     }
 
     /* ─── SECTION COMMONS ────────────────────────────── */
@@ -339,7 +258,7 @@
     /* ─── ABOUT ──────────────────────────────────────── */
     .about {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0; margin: 120px 48px;
+      gap: 0; margin: 220px 48px 200px;
       position: relative; z-index: 1;
     }
     .about-left { padding-right: 80px; border-right: 1px solid var(--line); }
@@ -388,40 +307,97 @@
     /* ─── ETAPE ──────────────────────────────────────── */
     .etape-header {
       max-width: 1400px; margin: 0 auto;
-      padding: 80px 60px 0;
+      padding: 120px 60px 60px;
       text-align: center;
+      position: relative;
+    }
+    .etape-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 4px;
+      color: var(--muted); text-transform: uppercase;
+      margin-bottom: 26px;
+      display: inline-flex; align-items: center; gap: 14px;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.7s 0.05s ease, transform 0.7s 0.05s cubic-bezier(0.2, 0.85, 0.2, 1);
+    }
+    .etape-eyebrow.in { opacity: 1; transform: translateY(0); }
+    .etape-eyebrow::before, .etape-eyebrow::after {
+      content: ''; width: 36px; height: 1px; background: var(--red);
     }
     .etape-title {
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 300;
-      font-size: 22px;
-      line-height: 1.4; letter-spacing: 0.06em;
+      font-size: clamp(80px, 12vw, 180px);
+      line-height: 0.95; letter-spacing: 0.02em;
       text-transform: uppercase;
-      color: var(--red);
-      display: inline-block;
-      overflow: hidden;
+      color: var(--text);
+      display: block;
+      position: relative;
       padding: 4px 0;
+      margin: 0 auto;
     }
     .etape-title .ltr {
       display: inline-block;
-      transform: translateY(110%) rotate(8deg);
+      transform: translateY(120%) scaleY(0.85);
       opacity: 0;
-      filter: blur(6px);
-      transition: transform 0.7s cubic-bezier(0.2, 0.85, 0.2, 1),
-                  opacity 0.5s ease,
-                  filter 0.5s ease;
+      filter: blur(8px);
+      transition: transform 0.95s cubic-bezier(0.2, 0.85, 0.2, 1),
+                  opacity 0.7s ease,
+                  filter 0.7s ease;
     }
     .etape-title.in .ltr {
-      transform: translateY(0) rotate(0deg);
+      transform: translateY(0) scaleY(1);
       opacity: 1;
       filter: blur(0);
     }
-    /* underline accent slide */
+    /* Red accent strikethrough that draws across the title */
     .etape-title::after {
-      content: ''; display: block; height: 1px; background: var(--red);
-      width: 0; margin: 8px auto 0; transition: width 0.8s 0.3s cubic-bezier(0.2, 0.85, 0.2, 1);
+      content: ''; position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%) scaleX(0);
+      transform-origin: left center;
+      width: 100%; height: 6px; background: var(--red);
+      mix-blend-mode: difference;
+      transition: transform 1.1s 0.55s cubic-bezier(0.85, 0, 0.15, 1);
     }
-    .etape-title.in::after { width: 60%; }
+    .etape-title.in::after { transform: translate(-50%, -50%) scaleX(1); }
+    /* Wrapper holds title + italic shadow overlapped */
+    .etape-title-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0.95;
+    }
+    /* Italic outline overlay sits behind title, slides into place */
+    .etape-title-shadow {
+      position: absolute;
+      inset: 0;
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-weight: 300;
+      font-size: clamp(80px, 12vw, 180px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200, 16, 46, 0.35);
+      pointer-events: none;
+      transform: translate(-30px, 22px);
+      opacity: 0;
+      transition: opacity 1s 0.7s ease, transform 1.2s 0.7s cubic-bezier(0.2, 0.85, 0.2, 1);
+      z-index: 0;
+    }
+    .etape-title { position: relative; z-index: 1; }
+    .etape-header.in .etape-title-shadow { opacity: 1; transform: translate(0, 0); }
+    .etape-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; letter-spacing: 3px;
+      color: var(--muted); text-transform: uppercase;
+      margin-top: 28px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.7s 0.85s ease, transform 0.7s 0.85s cubic-bezier(0.2, 0.85, 0.2, 1);
+    }
+    .etape-subtitle.in { opacity: 1; transform: translateY(0); }
+    .etape-subtitle .num { color: var(--red); }
 
     /* ─── PROCESS (sticky scroll cu poză cinematic) ────────────── */
     .process {
@@ -429,7 +405,8 @@
       background: var(--black);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
-      padding-top: 60px;
+      padding-top: 80px;
+      margin-bottom: 200px;
       overflow: hidden;
     }
     .process-inner {
@@ -517,13 +494,140 @@
 
     @media (max-width: 900px) {
       .process-inner { grid-template-columns: 1fr; }
-      .process-sticky { height: 50vh; border-right: none; border-bottom: 1px solid var(--line); position: relative; top: auto; }
+      .process-sticky { height: 60vh; border-right: none; border-bottom: 1px solid var(--line); position: relative; top: auto; }
       .process-steps { padding: 40px 20px; }
       .process-step { min-height: auto; padding: 60px 0; }
     }
 
+    /* ─── GRAPH VIEW (Obsidian-style) — overlays on sticky photo ──────────── */
+    .graph-view {
+      position: absolute; inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .graph-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .graph-svg .gv-link {
+      stroke: rgba(200, 16, 46, 0.35);
+      stroke-width: 1.2;
+      fill: none;
+      stroke-dasharray: 4 4;
+      animation: gvLinkPulse 3.5s ease-in-out infinite;
+    }
+    @keyframes gvLinkPulse {
+      0%, 100% { stroke-opacity: 0.35; }
+      50% { stroke-opacity: 0.8; }
+    }
+    .graph-svg .gv-link.active {
+      stroke: var(--red);
+      stroke-width: 1.8;
+      stroke-dasharray: none;
+      stroke-opacity: 1 !important;
+      filter: drop-shadow(0 0 6px rgba(200, 16, 46, 0.7));
+    }
+    .gv-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .gv-node-dot {
+      width: var(--gv-size, 16px); height: var(--gv-size, 16px);
+      border-radius: 50%;
+      background: var(--gv-color, var(--text));
+      border: 1.5px solid rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 4px rgba(8,8,8,0.7), 0 0 18px rgba(0,0,0,0.6);
+      transition: transform 0.45s cubic-bezier(0.34, 1.6, 0.64, 1),
+                  background-color 0.35s ease,
+                  box-shadow 0.35s ease;
+    }
+    .gv-node.satellite .gv-node-dot {
+      background: rgba(255,255,255,0.22);
+      width: 7px; height: 7px;
+      box-shadow: 0 0 0 2px rgba(8,8,8,0.6);
+    }
+    .gv-node.main .gv-node-dot {
+      background: var(--red);
+      box-shadow: 0 0 0 5px rgba(8,8,8,0.85), 0 0 22px rgba(200,16,46,0.55);
+    }
+    .gv-node.main.active .gv-node-dot,
+    .gv-node.main:hover .gv-node-dot {
+      transform: scale(2.1);
+      box-shadow: 0 0 0 6px rgba(8,8,8,0.9), 0 0 38px rgba(200,16,46,0.95);
+    }
+    .gv-node-label {
+      position: absolute;
+      left: 50%; top: calc(100% + 12px);
+      transform: translateX(-50%);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 2.5px;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.6, 0.64, 1);
+      pointer-events: none;
+    }
+    .gv-node.main.active .gv-node-label,
+    .gv-node.main:hover .gv-node-label {
+      color: var(--red);
+      transform: translateX(-50%) translateY(8px) scale(1.15);
+    }
+    .gv-node.satellite .gv-node-label { display: none; }
+    /* Photo popup near node */
+    .gv-node-photo {
+      position: absolute;
+      left: 50%; top: -16px;
+      transform: translate(-50%, -100%) scale(0.85);
+      width: 200px; height: 140px;
+      background-size: cover; background-position: center;
+      border: 1px solid var(--red);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.85),
+                  0 0 24px rgba(200,16,46,0.45);
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+      pointer-events: none;
+      z-index: 4;
+    }
+    .gv-node-photo::after {
+      content: '';
+      position: absolute; bottom: -8px; left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px; height: 12px;
+      background: var(--black);
+      border-right: 1px solid var(--red);
+      border-bottom: 1px solid var(--red);
+    }
+    .gv-node.main.active .gv-node-photo,
+    .gv-node.main:hover .gv-node-photo {
+      opacity: 1;
+      transform: translate(-50%, -100%) scale(1);
+    }
+    /* Graph caption (top-left corner) */
+    .gv-caption {
+      position: absolute; top: 22px; left: 22px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 2.5px;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      z-index: 5;
+      pointer-events: none;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .gv-caption::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red); box-shadow: 0 0 8px var(--red);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @media (max-width: 900px) {
+      .gv-node-photo { width: 140px; height: 100px; top: -10px; }
+      .gv-node-label { font-size: 9px; }
+    }
+
     /* ─── PORTFOLIO — circular auto-scroll ───────────── */
-    .portfolio { padding: 120px 0 120px; overflow: hidden; position: relative; z-index: 1; }
+    .portfolio { padding: 200px 0 200px; overflow: hidden; position: relative; z-index: 1; }
     .portfolio-header {
       padding: 0 48px; margin-bottom: 56px;
     }
@@ -570,7 +674,8 @@
 
     /* ─── EQUIPMENT MARQUEE ──────────────────────────── */
     .equipment {
-      padding: 100px 0;
+      padding: 160px 0;
+      margin-bottom: 100px;
       background: var(--dark);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
@@ -645,7 +750,7 @@
 
     /* ─── CONTACT (zoom-in title) ────────────────────── */
     .contact {
-      padding: 160px 48px;
+      padding: 240px 48px 200px;
       text-align: center;
       position: relative; z-index: 1; overflow: hidden;
     }
@@ -790,60 +895,35 @@
       z-index: 0; pointer-events: none;
     }
 
-    /* ─── HERO LAYOUT (left + right) ────────────────── */
-    .hero-left {
-      position: relative; z-index: 2;
-      flex: 1; min-width: 0;
+    /* ─── FOOTER BAND (sticky bottom, always visible) ── */
+    .footer-band {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 38px; z-index: 90;
+      background: rgba(8, 8, 8, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--red);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 30px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 2.5px;
+      color: var(--muted); text-transform: uppercase;
     }
-    .hero-right {
-      flex: 0 0 44%;
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+    .footer-band-left, .footer-band-right { display: flex; align-items: center; gap: 18px; }
+    .footer-band a { color: var(--text); text-decoration: none; transition: color 0.25s; }
+    .footer-band a:hover { color: var(--red); }
+    .footer-band .red-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--red);
+      animation: heroBlink 1.6s ease-in-out infinite;
     }
+    @keyframes heroBlink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* ─── LOGO PNG ───────────────────────────────────── */
-    .logo-wrap {
-      position: relative;
-      width: clamp(220px, 34vw, 400px);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      overflow: hidden;          /* limităm shine-ul la cerc */
-    }
-    .logo-img {
-      width: 100%; height: 100%;
-      display: block;
-      object-fit: contain;
-      opacity: 0;
-      transform: scale(0.72);
-      will-change: opacity, transform;
-    }
-    .logo-shine-div {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        108deg,
-        transparent 35%,
-        rgba(255,255,255,0.75) 50%,
-        transparent 65%
-      );
-      opacity: 0;
-      transform: translateX(-140%);
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
+    /* extra padding ca content-ul să nu fie acoperit de banda jos */
+    body { padding-bottom: 38px; }
 
-    @media (max-width: 1200px) {
-      .hero-right { flex: 0 0 42%; }
-    }
-    @media (max-width: 900px) {
-      .hero { flex-wrap: wrap; }
-      .hero-left { flex: 1 1 100%; }
-      .hero-right { flex: 1 1 100%; justify-content: flex-start; padding-top: 24px; }
-      .logo-wrap { width: clamp(180px, 52vw, 300px); }
-      #machineCanvas { display: none; }
-    }
     @media (max-width: 720px) {
-      .logo-wrap { width: clamp(160px, 58vw, 240px); }
+      .footer-band { font-size: 8px; letter-spacing: 1.5px; padding: 0 14px; }
+      .footer-band-right span:not(.red-dot) { display: none; }
     }
   </style>
 </head>
@@ -859,8 +939,7 @@
   <!-- NAV -->
   <nav id="navbar">
     <a href="#hero" class="nav-logo">
-      <div class="nav-logo-badge">AD</div>
-      <div class="nav-logo-text">Tattoo<span>·</span>Lab</div>
+      <img src="img/logo-clean.png" alt="AD Tattoo Lab" class="nav-logo-img" />
     </a>
     <ul class="nav-center">
       <li><a href="#about" data-ro="Despre" data-en="About">Despre</a></li>
@@ -879,57 +958,31 @@
 
   <!-- HERO -->
   <section id="hero" class="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-scan"></div>
-    <div class="hero-corner-tl"></div>
-    <div class="hero-corner-br"></div>
-
-    <!-- LEFT: title + sys info -->
+    <!-- LEFT: title + meta -->
     <div class="hero-left">
-      <div class="hero-sys">
-        <div class="hero-sys-dot"></div>
-        <span>System · Online</span>
-        <div class="hero-sys-line"></div>
-        <span style="color:var(--muted)">AD-LAB-BCU-001</span>
-      </div>
-
       <h1 class="hero-title" id="heroTitle">
-        <div class="hero-title-row">
-          <span class="hero-title-text">AD</span>
-          <span class="hero-annotation">// LINE 01 · IDENT</span>
-        </div>
-        <div class="hero-title-row">
-          <span class="hero-title-text">Tattoo</span>
-          <span class="hero-annotation hero-annotation-red">// LINE 02 · ACCENT</span>
-        </div>
-        <div class="hero-title-row">
-          <span class="hero-title-text">Lab</span>
-          <span class="hero-annotation">// LINE 03 · CLOSE</span>
-        </div>
+        <span class="hero-title-row"><span class="hero-title-text">AD</span></span>
+        <span class="hero-title-row"><span class="hero-title-text">Tattoo</span></span>
+        <span class="hero-title-row"><span class="hero-title-text">Lab</span></span>
       </h1>
 
-      <div class="hero-bottom">
-        <div class="hero-coords">
-          LAT <span>44.4268° N</span><br/>
-          LON <span>26.1025° E</span><br/>
-          LOC <span>București · RO</span>
-        </div>
-        <p class="hero-desc"
+      <div class="hero-meta">
+        <span class="hero-meta-line">București · România</span>
+        <p class="hero-meta-desc"
            data-ro="Black &amp; grey realism · Blackwork · Custom design"
            data-en="Black &amp; grey realism · Blackwork · Custom design">
           Black &amp; grey realism · Blackwork · Custom design
         </p>
+        <div class="hero-meta-tags">
+          <span class="hero-meta-tag accent" data-ro="Disponibil 2026" data-en="Available 2026">Disponibil 2026</span>
+          <span class="hero-meta-tag" data-ro="Doar pe programare" data-en="By appointment">Doar pe programare</span>
+        </div>
       </div>
     </div>
 
-    <!-- RIGHT: Logo PNG animat + Coil Machine 3D -->
-    <div class="hero-right">
-      <div class="logo-wrap">
-        <img src="img/logo-clean.png" alt="AD Tattoo Lab" class="logo-img" id="logoImg" />
-        <!-- Shine overlay (efect metalic) -->
-        <div class="logo-shine-div" id="logoShine"></div>
-      </div>
-
+    <!-- RIGHT: portrait photo (Lando-style) -->
+    <div class="hero-right-img">
+      <img src="img/hero-portrait.jpg" alt="AD la lucru" class="hero-portrait" />
     </div>
 
     <div class="scroll-indicator">
@@ -997,7 +1050,12 @@
 
   <!-- ETAPE -->
   <div class="etape-header">
-    <h2 class="etape-title" data-ro="Etape" data-en="Stages">Etape</h2>
+    <span class="etape-eyebrow" data-ro="Procesul · 4 etape" data-en="The process · 4 stages">Procesul · 4 etape</span>
+    <div class="etape-title-wrap">
+      <span class="etape-title-shadow" aria-hidden="true">Etape</span>
+      <h2 class="etape-title" data-ro="Etape" data-en="Stages">Etape</h2>
+    </div>
+    <div class="etape-subtitle" data-ro-html="De la <span class='num'>idee</span> la <span class='num'>tatuaj</span>" data-en-html="From <span class='num'>idea</span> to <span class='num'>ink</span>">De la <span class="num">idee</span> la <span class="num">tatuaj</span></div>
   </div>
 
   <!-- PROCESS -->
@@ -1011,6 +1069,62 @@
             DEPTH · <span>0.8MM</span><br/>
             HZ · <span>120</span>
           </div>
+        </div>
+
+        <!-- GRAPH VIEW (Obsidian-style) -->
+        <div class="graph-view" id="graphView">
+          <div class="gv-caption">Graph View · Process</div>
+
+          <svg class="graph-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- Main connections between the 4 process nodes -->
+            <line class="gv-link" data-link="1-2" x1="22" y1="22" x2="78" y2="32" />
+            <line class="gv-link" data-link="2-3" x1="78" y1="32" x2="78" y2="68" />
+            <line class="gv-link" data-link="3-4" x1="78" y1="68" x2="22" y2="78" />
+            <line class="gv-link" data-link="4-1" x1="22" y1="78" x2="22" y2="22" />
+
+            <!-- Cross / diagonal -->
+            <line class="gv-link" data-link="1-3" x1="22" y1="22" x2="78" y2="68" />
+
+            <!-- Satellite connections (decorative) -->
+            <line class="gv-link" x1="22" y1="22" x2="10" y2="12" />
+            <line class="gv-link" x1="22" y1="22" x2="38" y2="8" />
+            <line class="gv-link" x1="78" y1="32" x2="92" y2="20" />
+            <line class="gv-link" x1="78" y1="32" x2="90" y2="48" />
+            <line class="gv-link" x1="78" y1="68" x2="92" y2="82" />
+            <line class="gv-link" x1="22" y1="78" x2="8"  y2="88" />
+            <line class="gv-link" x1="22" y1="78" x2="36" y2="92" />
+          </svg>
+
+          <!-- Main nodes -->
+          <div class="gv-node main" data-step="1" style="left:22%; top:22%;">
+            <div class="gv-node-photo" style="background-image:url('img/3.1.jpg');"></div>
+            <div class="gv-node-dot"></div>
+            <div class="gv-node-label" data-ro="01 · Concept" data-en="01 · Concept">01 · Concept</div>
+          </div>
+          <div class="gv-node main" data-step="2" style="left:78%; top:32%;">
+            <div class="gv-node-photo" style="background-image:url('img/A.jpg');"></div>
+            <div class="gv-node-dot"></div>
+            <div class="gv-node-label" data-ro="02 · Design" data-en="02 · Design">02 · Design</div>
+          </div>
+          <div class="gv-node main" data-step="3" style="left:78%; top:68%;">
+            <div class="gv-node-photo" style="background-image:url('img/3.2.jpg');"></div>
+            <div class="gv-node-dot"></div>
+            <div class="gv-node-label" data-ro="03 · Setup" data-en="03 · Setup">03 · Setup</div>
+          </div>
+          <div class="gv-node main" data-step="4" style="left:22%; top:78%;">
+            <div class="gv-node-photo" style="background-image:url('img/2.1.jpg');"></div>
+            <div class="gv-node-dot"></div>
+            <div class="gv-node-label" data-ro="04 · Ink" data-en="04 · Ink">04 · Ink</div>
+          </div>
+
+          <!-- Satellite nodes (decorative, no interaction) -->
+          <div class="gv-node satellite" style="left:10%; top:12%;"><div class="gv-node-dot"></div></div>
+          <div class="gv-node satellite" style="left:38%; top:8%;"><div class="gv-node-dot"></div></div>
+          <div class="gv-node satellite" style="left:92%; top:20%;"><div class="gv-node-dot"></div></div>
+          <div class="gv-node satellite" style="left:90%; top:48%;"><div class="gv-node-dot"></div></div>
+          <div class="gv-node satellite" style="left:92%; top:82%;"><div class="gv-node-dot"></div></div>
+          <div class="gv-node satellite" style="left:8%; top:88%;"><div class="gv-node-dot"></div></div>
+          <div class="gv-node satellite" style="left:36%; top:92%;"><div class="gv-node-dot"></div></div>
         </div>
       </div>
 
@@ -1245,6 +1359,18 @@
     <div>© 2026 · Alexandros Dimosthenous · Tattoo Lab</div>
   </footer>
 
+  <!-- FIXED FOOTER BAND (always visible, Lando-style) -->
+  <div class="footer-band">
+    <div class="footer-band-left">
+      <span class="red-dot"></span>
+      <span>© 2026 · AD Tattoo Lab</span>
+    </div>
+    <div class="footer-band-right">
+      <span data-ro="București · RO" data-en="Bucharest · RO">București · RO</span>
+      <a href="https://instagram.com/dimi_ad_ink" target="_blank" rel="noopener">@DIMI_AD_INK</a>
+    </div>
+  </div>
+
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lbClose" data-ro="Închide" data-en="Close">Închide</button>
@@ -1253,8 +1379,7 @@
     <button class="lightbox-nav next" id="lbNext">→</button>
   </div>
 
-  <!-- CDN: Three.js + GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <!-- CDN: GSAP + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -1337,8 +1462,13 @@
       obs.observe(el);
     });
 
-    // ─── ETAPE TITLE — letter-by-letter, re-trigger pe fiecare scroll ──
-    const etapeTitle = document.querySelector('.etape-title');
+    // ─── ETAPE TITLE — block reveal + shadow slide + sub anim ──
+    const etapeHeader  = document.querySelector('.etape-header');
+    const etapeTitle   = document.querySelector('.etape-title');
+    const etapeEyebrow = document.querySelector('.etape-eyebrow');
+    const etapeSub     = document.querySelector('.etape-subtitle');
+    const etapeShadow  = document.querySelector('.etape-title-shadow');
+
     function splitEtapeLetters() {
       if (!etapeTitle) return;
       const txt = etapeTitle.textContent || '';
@@ -1347,32 +1477,86 @@
         const span = document.createElement('span');
         span.className = 'ltr';
         span.textContent = ch === ' ' ? '\u00A0' : ch;
-        span.style.transitionDelay = (0.04 * i) + 's';
+        // Stagger: each letter 60ms apart for big bold reveal
+        span.style.transitionDelay = (0.06 * i + 0.1) + 's';
         etapeTitle.appendChild(span);
       });
+      // Sync shadow text with main title
+      if (etapeShadow) etapeShadow.textContent = txt;
     }
     splitEtapeLetters();
     // Re-split after lang change (text gets replaced by setLang)
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        // setLang replaces textContent → re-split letters next tick
         setTimeout(splitEtapeLetters, 50);
       });
     });
-    if (etapeTitle) {
+    if (etapeHeader) {
       const etapeObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
+          const els = [etapeEyebrow, etapeTitle, etapeSub, etapeShadow].filter(Boolean);
           if (e.isIntersecting) {
-            etapeTitle.classList.remove('in');
-            void etapeTitle.offsetWidth;
-            etapeTitle.classList.add('in');
+            els.forEach(el => el.classList.remove('in'));
+            etapeHeader.classList.remove('in');
+            void etapeHeader.offsetWidth;
+            els.forEach(el => el.classList.add('in'));
+            etapeHeader.classList.add('in');
           } else {
-            etapeTitle.classList.remove('in');
+            els.forEach(el => el.classList.remove('in'));
+            etapeHeader.classList.remove('in');
           }
         });
-      }, { threshold: 0.5 });
-      etapeObs.observe(etapeTitle);
+      }, { threshold: 0.4 });
+      etapeObs.observe(etapeHeader);
     }
+
+    // ─── GRAPH VIEW (Obsidian-style) — interactivitate + scroll-sync ──
+    (function() {
+      const graphView = document.getElementById('graphView');
+      if (!graphView) return;
+
+      const mainNodes = graphView.querySelectorAll('.gv-node.main');
+      const links     = graphView.querySelectorAll('.gv-link');
+      const steps     = document.querySelectorAll('.process-step');
+
+      // Activează linkurile conectate la nodul activ
+      function activateNode(stepIdx) {
+        mainNodes.forEach(n => n.classList.toggle('active', Number(n.dataset.step) === stepIdx));
+        links.forEach(link => {
+          const ld = link.dataset.link || '';
+          const [a, b] = ld.split('-').map(Number);
+          link.classList.toggle('active', a === stepIdx || b === stepIdx);
+        });
+      }
+
+      // Hover pe nod = activează vizual (tooltip + photo apare prin CSS)
+      mainNodes.forEach(node => {
+        node.addEventListener('mouseenter', () => {
+          const step = Number(node.dataset.step);
+          activateNode(step);
+        });
+        node.addEventListener('mouseleave', () => {
+          // recalculate based on scroll position
+          updateActiveFromScroll();
+        });
+      });
+
+      // Sincronizare cu scroll: care .process-step e cel mai aproape de mijlocul ecranului
+      function updateActiveFromScroll() {
+        if (!steps.length) return;
+        const mid = window.innerHeight * 0.5;
+        let bestIdx = 1, bestDist = Infinity;
+        steps.forEach(step => {
+          const r = step.getBoundingClientRect();
+          const c = (r.top + r.bottom) / 2;
+          const d = Math.abs(c - mid);
+          if (d < bestDist) { bestDist = d; bestIdx = Number(step.dataset.step); }
+        });
+        activateNode(bestIdx);
+      }
+      window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+      updateActiveFromScroll();
+    })();
 
     // ─── PROCESS PHOTO PARALLAX (sticky scroll) ──────────────
     const processSection = document.querySelector('.process');
@@ -1476,161 +1660,23 @@
     })();
 
     // ═══════════════════════════════════════════════════
-    // LOGO PNG — stamp reveal + shine metalic
+    // HERO PORTRAIT — parallax subtil pe scroll (Lando-style)
     // ═══════════════════════════════════════════════════
     (function() {
-      const img   = document.getElementById('logoImg');
-      const shine = document.getElementById('logoShine');
-      const wrap  = document.querySelector('.logo-wrap');
-      if (!img) return;
-
-      // Stamp reveal: scale 0.72→1 + fade in
-      setTimeout(() => {
-        img.style.transition = 'opacity 0.9s ease, transform 1.1s cubic-bezier(0.34,1.42,0.64,1)';
-        img.style.opacity    = '1';
-        img.style.transform  = 'scale(1)';
-      }, 280);
-
-      // Shine sweep (efect metalic) — prima dată după reveal, apoi periodic
-      function doShine() {
-        if (!shine) return;
-        shine.style.transition = 'none';
-        shine.style.opacity    = '1';
-        shine.style.transform  = 'translateX(-140%)';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          shine.style.transition = 'transform 1.35s cubic-bezier(0.38,0,0.2,1)';
-          shine.style.transform  = 'translateX(140%)';
-          setTimeout(() => { shine.style.opacity = '0'; }, 1350);
-        }));
-      }
-      setTimeout(doShine, 1600);
-      setInterval(doShine, 7500);
-
-      // Scroll: logo fade/scale-out când dai scroll
+      const portrait = document.querySelector('.hero-portrait');
+      if (!portrait) return;
       let raf = false;
       window.addEventListener('scroll', () => {
         if (raf) return; raf = true;
         requestAnimationFrame(() => {
-          const p = Math.min(1, window.scrollY / (window.innerHeight * 0.65));
-          if (wrap) {
-            wrap.style.opacity   = String(1 - p);
-            wrap.style.transform = `scale(${1 - p * 0.1}) translateY(${-p * 36}px)`;
-          }
+          const p = Math.min(1, window.scrollY / (window.innerHeight * 0.9));
+          portrait.style.transform = `scale(${1 - p * 0.04}) translateY(${p * 40}px)`;
+          portrait.style.opacity = String(1 - p * 0.55);
           raf = false;
         });
-      });
+      }, { passive: true });
     })();
 
-    // ═══════════════════════════════════════════════════
-    // THREE.JS — mașina coil din hero (DEZACTIVATĂ — folosim doar logo-ul mare)
-    // ═══════════════════════════════════════════════════
-    (function() {
-      return;  // dezactivat: așteptăm model GLTF real de pe Sketchfab
-      const canvas = document.getElementById('machineCanvas');
-      if (!canvas || typeof THREE === 'undefined') return;
-      const CW = 220, CH = 300;
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(CW, CH);
-      renderer.setClearColor(0x000000, 0);
-      const scene  = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(42, CW/CH, 0.1, 100);
-      camera.position.set(0, 0, 7);
-
-      // Lumini
-      scene.add(new THREE.AmbientLight(0xffffff, 0.32));
-      const key  = new THREE.PointLight(0xffffff, 2.4, 20); key.position.set(5,8,8); scene.add(key);
-      const fill = new THREE.PointLight(0xc8102e, 2.0, 14); fill.position.set(-4,-2,6); scene.add(fill);
-      const rim  = new THREE.PointLight(0xaaccff, 0.55, 10); rim.position.set(0,-6,3); scene.add(rim);
-
-      // Materiale
-      const M = (col, met, rou) => new THREE.MeshStandardMaterial({ color: col, metalness: met, roughness: rou });
-      const metalMat  = M(0x909090, 0.9, 0.14);
-      const darkMat   = M(0x252525, 0.88, 0.18);
-      const coilMat   = M(0x343434, 0.62, 0.48);
-      const redMat    = new THREE.MeshStandardMaterial({ color:0xc8102e, metalness:0.72, roughness:0.28, emissive:0x250000 });
-      const copperMat = M(0xB87333, 0.83, 0.24);
-      const rubberMat = M(0x111111, 0.05, 0.95);
-
-      const mach = new THREE.Group();
-
-      // Frame body
-      const body = new THREE.Mesh(new THREE.BoxGeometry(1.4,2.2,0.52), darkMat);
-      body.position.set(0,0.3,0); mach.add(body);
-      // Side rails
-      [-0.65,0.65].forEach(x => {
-        const r = new THREE.Mesh(new THREE.BoxGeometry(0.07,2.2,0.07), metalMat);
-        r.position.set(x,0.3,0.29); mach.add(r);
-      });
-
-      // Doua bobine (coils)
-      [[0,0.72],[0,-0.1]].forEach(([x,y]) => {
-        const c = new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.42,0.31,32), coilMat);
-        c.rotation.x = Math.PI/2; c.position.set(x,y,0.39); mach.add(c);
-        const core = new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.47,16), metalMat);
-        core.rotation.x = Math.PI/2; core.position.set(x,y,0.43); mach.add(core);
-        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.36,0.044,8,32), copperMat);
-        ring.rotation.x = Math.PI/2; ring.position.set(x,y,0.31); mach.add(ring);
-      });
-
-      // Eticheta rosie AD
-      const lbl = new THREE.Mesh(new THREE.BoxGeometry(0.74,0.21,0.02), redMat);
-      lbl.position.set(0,1.2,0.29); mach.add(lbl);
-
-      // Armature bar (bara superioara)
-      const arm = new THREE.Mesh(new THREE.BoxGeometry(1.02,0.09,0.07), metalMat);
-      arm.position.set(0,1.42,0.43); mach.add(arm);
-
-      // Spring torus
-      const spr = new THREE.Mesh(new THREE.TorusGeometry(0.11,0.027,8,18), metalMat);
-      spr.position.set(0.37,1.42,0.47); mach.add(spr);
-
-      // Contact screw
-      const scr = new THREE.Mesh(new THREE.CylinderGeometry(0.054,0.054,0.27,8), metalMat);
-      scr.position.set(0.37,1.58,0.47); mach.add(scr);
-
-      // Grip cilindric
-      const grip = new THREE.Mesh(new THREE.CylinderGeometry(0.21,0.17,1.3,32), darkMat);
-      grip.position.set(0,-1.25,0); mach.add(grip);
-      for (let i=0;i<5;i++) {
-        const k = new THREE.Mesh(new THREE.TorusGeometry(0.19,0.023,6,24), metalMat);
-        k.position.set(0,-0.78-i*0.15,0); mach.add(k);
-      }
-
-      // Tub
-      const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.55,16), metalMat);
-      tube.position.set(0,-1.97,0); mach.add(tube);
-
-      // Needle group (animat)
-      const needleGrp = new THREE.Group(); needleGrp.position.set(0,-2.3,0);
-      needleGrp.add(new THREE.Mesh(new THREE.CylinderGeometry(0.013,0.003,0.44,8), metalMat));
-      mach.add(needleGrp);
-
-      // Cablu alimentare
-      const cable = new THREE.Mesh(new THREE.TorusGeometry(0.23,0.038,6,20,Math.PI), rubberMat);
-      cable.position.set(-0.64,1.24,0); cable.rotation.z = Math.PI/2; mach.add(cable);
-
-      scene.add(mach);
-      mach.position.set(0,0.2,0);
-      mach.rotation.set(0.18,-0.2,0);
-
-      // Fade in dupa ce logo incepe sa apara
-      setTimeout(() => { canvas.style.transition='opacity 1.8s ease'; canvas.style.opacity='1'; }, 1800);
-
-      let scrollY = 0, targetRotY = -0.2;
-      window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-
-      const clock = new THREE.Clock();
-      (function loop() {
-        requestAnimationFrame(loop);
-        const e = clock.getElapsedTime();
-        targetRotY = -0.2 + scrollY * 0.0024;
-        mach.rotation.y += (targetRotY - mach.rotation.y) * 0.06;
-        mach.rotation.x = 0.18 + Math.sin(e * 0.38) * 0.024;
-        needleGrp.position.y = -2.3 + Math.sin(e * 46) * 0.013;
-        renderer.render(scene, camera);
-      })();
-    })();
 
     // ═══════════════════════════════════════════════════
     // GSAP SCROLL ANIMATIONS — toate elementele animate
