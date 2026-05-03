@@ -148,22 +148,54 @@
       flex: 1 1 50%; z-index: 3; position: relative;
       display: flex; flex-direction: column; justify-content: center;
     }
-    .hero-right-img {
+    .hero-right {
       flex: 1 1 50%; z-index: 2; position: relative;
-      align-self: stretch;
       display: flex; align-items: center; justify-content: center;
       min-height: 60vh;
     }
-    .hero-portrait {
-      width: 100%; height: 100%;
-      max-height: 78vh;
-      object-fit: cover; object-position: center;
-      filter: contrast(1.1) saturate(0.92);
-      animation: heroImgReveal 1.2s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    .logo-wrap {
+      position: relative;
+      width: min(560px, 42vw);
+      aspect-ratio: 1 / 1;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
     }
-    @keyframes heroImgReveal {
-      from { opacity: 0; clip-path: inset(15% 0 15% 0); transform: scale(1.06); }
-      to   { opacity: 1; clip-path: inset(0 0 0 0); transform: scale(1); }
+    .logo-img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.72);
+      filter: drop-shadow(0 0 36px rgba(200, 16, 46, 0.35))
+              drop-shadow(0 0 14px rgba(200, 16, 46, 0.5));
+      will-change: opacity, transform;
+    }
+    /* Shine overlay - efect metalic */
+    .logo-shine-div {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        110deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.18) 48%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0.18) 52%,
+        transparent 70%
+      );
+      mix-blend-mode: screen;
+      transform: translateX(-140%);
+      opacity: 0;
+    }
+    /* Pulsation ring around logo */
+    .logo-wrap::before {
+      content: ''; position: absolute; inset: 6%;
+      border: 1px solid rgba(200, 16, 46, 0.18);
+      border-radius: 50%;
+      animation: logoPulseRing 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes logoPulseRing {
+      0%, 100% { transform: scale(1); opacity: 0.18; }
+      50% { transform: scale(1.06); opacity: 0.55; }
     }
 
     /* Title — big mixed weights, Lando style */
@@ -227,8 +259,9 @@
 
     @media (max-width: 1000px) {
       .hero { flex-direction: column; gap: 40px; padding: 110px 24px 60px; }
-      .hero-left, .hero-right-img { flex: 1 1 100%; }
-      .hero-right-img { min-height: 52vh; }
+      .hero-left, .hero-right { flex: 1 1 100%; }
+      .hero-right { min-height: 50vh; }
+      .logo-wrap { width: min(380px, 70vw); }
       .hero-title-text { font-size: clamp(56px, 14vw, 110px); }
     }
 
@@ -980,9 +1013,12 @@
       </div>
     </div>
 
-    <!-- RIGHT: portrait photo (Lando-style) -->
-    <div class="hero-right-img">
-      <img src="img/hero-portrait.jpg" alt="AD la lucru" class="hero-portrait" />
+    <!-- RIGHT: big shiny AD logo -->
+    <div class="hero-right">
+      <div class="logo-wrap">
+        <img src="img/logo-clean.png" alt="AD Tattoo Lab" class="logo-img" id="logoImg" />
+        <div class="logo-shine-div" id="logoShine"></div>
+      </div>
     </div>
 
     <div class="scroll-indicator">
@@ -1664,18 +1700,46 @@
     })();
 
     // ═══════════════════════════════════════════════════
-    // HERO PORTRAIT — parallax subtil pe scroll (Lando-style)
+    // LOGO PNG — stamp reveal + shine metalic + scroll fade
     // ═══════════════════════════════════════════════════
     (function() {
-      const portrait = document.querySelector('.hero-portrait');
-      if (!portrait) return;
+      const img   = document.getElementById('logoImg');
+      const shine = document.getElementById('logoShine');
+      const wrap  = document.querySelector('.logo-wrap');
+      if (!img) return;
+
+      // Stamp reveal: scale 0.72 -> 1 + fade in
+      setTimeout(() => {
+        img.style.transition = 'opacity 0.9s ease, transform 1.1s cubic-bezier(0.34,1.42,0.64,1)';
+        img.style.opacity    = '1';
+        img.style.transform  = 'scale(1)';
+      }, 280);
+
+      // Shine sweep (efect metalic) - prima data dupa reveal, apoi periodic
+      function doShine() {
+        if (!shine) return;
+        shine.style.transition = 'none';
+        shine.style.opacity    = '1';
+        shine.style.transform  = 'translateX(-140%)';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          shine.style.transition = 'transform 1.35s cubic-bezier(0.38,0,0.2,1)';
+          shine.style.transform  = 'translateX(140%)';
+          setTimeout(() => { shine.style.opacity = '0'; }, 1350);
+        }));
+      }
+      setTimeout(doShine, 1600);
+      setInterval(doShine, 7500);
+
+      // Scroll: logo fade/scale-out cand dai scroll
       let raf = false;
       window.addEventListener('scroll', () => {
         if (raf) return; raf = true;
         requestAnimationFrame(() => {
-          const p = Math.min(1, window.scrollY / (window.innerHeight * 0.9));
-          portrait.style.transform = `scale(${1 - p * 0.04}) translateY(${p * 40}px)`;
-          portrait.style.opacity = String(1 - p * 0.55);
+          const p = Math.min(1, window.scrollY / (window.innerHeight * 0.65));
+          if (wrap) {
+            wrap.style.opacity   = String(1 - p);
+            wrap.style.transform = `scale(${1 - p * 0.1}) translateY(${-p * 36}px)`;
+          }
           raf = false;
         });
       }, { passive: true });
