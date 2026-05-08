@@ -1243,6 +1243,7 @@
       position: fixed; inset: 0;
       width: 100vw; height: 100vh;
       z-index: 0; pointer-events: none;
+      background: #080808;
     }
 
     /* ─── FOOTER BAND (sticky bottom, always visible) ── */
@@ -2064,7 +2065,12 @@
       if (!fc) return;
       const ctx = fc.getContext('2d');
       let W, H;
-      function resize() { W = fc.width = window.innerWidth; H = fc.height = window.innerHeight; }
+      function resize() {
+        W = fc.width = window.innerWidth;
+        H = fc.height = window.innerHeight;
+        ctx.fillStyle = '#080808';
+        ctx.fillRect(0, 0, W, H);
+      }
       resize();
       window.addEventListener('resize', resize);
       const N = 65;
@@ -2080,7 +2086,7 @@
         return { dx: Math.cos(a) * 0.42, dy: Math.sin(a) * 0.42 };
       }
       function draw() {
-        ctx.fillStyle = 'rgba(8,8,8,0.045)'; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = 'rgba(8,8,8,0.09)'; ctx.fillRect(0, 0, W, H);
         t += 0.005;
         pts.forEach(p => {
           const { dx, dy } = dir(p.x, p.y, t);
