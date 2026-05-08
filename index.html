@@ -3,8 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AD Tattoo Lab — Alexandros Dimosthenous · București</title>
-  <meta name="description" content="Black & grey realism, blackwork și custom design. Tatuaje în București by Alexandros Dimosthenous." />
+  <title>AD Tattoo Lab — Alexandros Dimosthenous · Tattoo Artist · București</title>
+  <meta name="description" content="Black & grey realism, blackwork și custom design. Tatuaje custom în București — fiecare piesă construită de la zero. Doar pe programare." />
+  <meta name="keywords" content="tatuaje București, black and grey tattoo, blackwork, custom tattoo, tatuator București, realism tattoo, AD Tattoo Lab, Alexandros Dimosthenous" />
+  <meta name="author" content="Alexandros Dimosthenous" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#080808" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://dimi-ad-ink.github.io/" />
+  <link rel="icon" type="image/png" href="img/logo-clean.png" />
+  <link rel="apple-touch-icon" href="img/logo-clean.png" />
+
+  <!-- Open Graph / Facebook / WhatsApp / Discord -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dimi-ad-ink.github.io/" />
+  <meta property="og:site_name" content="AD Tattoo Lab" />
+  <meta property="og:title" content="AD Tattoo Lab — Black & grey realism · București" />
+  <meta property="og:description" content="Tatuaje custom — black & grey realism, blackwork, design unic. Fiecare piesă construită de la zero. Doar pe programare." />
+  <meta property="og:image" content="https://dimi-ad-ink.github.io/img/hero-portrait.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AD Tattoo Lab — black & grey realism" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AD Tattoo Lab — Black & grey realism · București" />
+  <meta name="twitter:description" content="Tatuaje custom — black & grey realism, blackwork, design unic. Doar pe programare." />
+  <meta name="twitter:image" content="https://dimi-ad-ink.github.io/img/hero-portrait.jpg" />
+
+  <!-- Schema.org — Person (artist), NU LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alexandros Dimosthenous",
+    "alternateName": "AD",
+    "jobTitle": "Tattoo Artist",
+    "url": "https://dimi-ad-ink.github.io/",
+    "image": "https://dimi-ad-ink.github.io/img/hero-portrait.jpg",
+    "sameAs": [
+      "https://www.instagram.com/dimi_ad_ink"
+    ],
+    "knowsAbout": [
+      "Black and grey realism tattoo",
+      "Blackwork tattoo",
+      "Custom tattoo design"
+    ],
+    "areaServed": {
+      "@type": "City",
+      "name": "Bucharest",
+      "addressCountry": "RO"
+    }
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -985,6 +1038,134 @@
       .equipment-grid { margin: 60px 20px 0; }
     }
 
+    /* ─── TESTIMONIALE ────────────────────────────────── */
+    .testimoniale {
+      padding: 140px 48px 120px;
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--line);
+      background: var(--black);
+    }
+    .testimoniale-header {
+      max-width: 1400px; margin: 0 auto 80px;
+    }
+    .testimoniale-grid {
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .testimonial-card {
+      position: relative;
+      background: var(--gray);
+      border: 1px solid var(--line);
+      padding: 36px 32px 28px;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .testimonial-card:hover {
+      border-color: var(--red);
+      transform: translateY(-4px);
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute; top: -10px; left: 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 80px; line-height: 1;
+      color: var(--red); opacity: 0.4;
+    }
+    .testimonial-quote {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300; font-size: 16px;
+      line-height: 1.65; color: var(--text);
+      margin-bottom: 28px;
+    }
+    .testimonial-stars {
+      display: flex; gap: 4px; margin-bottom: 16px;
+      color: var(--red); font-size: 14px; letter-spacing: 2px;
+    }
+    .testimonial-meta {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 1.5px;
+    }
+    .testimonial-author { color: var(--text); font-weight: 700; }
+    .testimonial-piece { color: var(--muted); }
+    @media (max-width: 900px) {
+      .testimoniale { padding: 100px 20px 80px; }
+      .testimoniale-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── FAQ ─────────────────────────────────────────── */
+    .faq {
+      padding: 140px 48px 140px;
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--line);
+      background: var(--black);
+    }
+    .faq-header {
+      max-width: 1100px; margin: 0 auto 70px;
+    }
+    .faq-list {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-direction: column;
+      border-top: 1px solid var(--line);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+    .faq-item summary {
+      list-style: none;
+      padding: 28px 8px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 24px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 500; font-size: 19px; color: var(--text);
+      transition: color 0.25s ease, padding 0.25s ease;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::marker { display: none; }
+    .faq-item summary:hover { color: var(--red); padding-left: 16px; }
+    .faq-item .faq-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; color: var(--muted);
+      letter-spacing: 1.5px;
+      flex-shrink: 0; width: 48px;
+    }
+    .faq-item .faq-q {
+      flex: 1;
+    }
+    .faq-item .faq-icon {
+      width: 18px; height: 18px;
+      position: relative; flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .faq-item .faq-icon::before,
+    .faq-item .faq-icon::after {
+      content: ''; position: absolute;
+      background: var(--text);
+      transition: background 0.25s ease, transform 0.3s ease;
+    }
+    .faq-item .faq-icon::before { top: 50%; left: 0; right: 0; height: 1.5px; transform: translateY(-50%); }
+    .faq-item .faq-icon::after  { left: 50%; top: 0; bottom: 0; width: 1.5px; transform: translateX(-50%); }
+    .faq-item summary:hover .faq-icon::before,
+    .faq-item summary:hover .faq-icon::after { background: var(--red); }
+    .faq-item[open] summary { color: var(--red); padding-left: 16px; }
+    .faq-item[open] .faq-icon::after { transform: translateX(-50%) scaleY(0); }
+    .faq-item .faq-answer {
+      padding: 0 8px 32px 56px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 1.7;
+      color: var(--muted);
+      max-width: 820px;
+    }
+    .faq-item .faq-answer strong { color: var(--text); font-weight: 500; }
+    @media (max-width: 720px) {
+      .faq { padding: 100px 20px; }
+      .faq-item summary { font-size: 16px; padding: 22px 4px; }
+      .faq-item .faq-num { width: 36px; font-size: 10px; }
+      .faq-item .faq-answer { padding: 0 4px 24px 40px; font-size: 14px; }
+    }
+
     /* ─── CONTACT (zoom-in title) ────────────────────── */
     .contact {
       padding: 160px 48px 140px;
@@ -1058,18 +1239,86 @@
 
     /* ─── FOOTER ─────────────────────────────────────── */
     footer {
-      padding: 36px 48px;
+      padding: 80px 48px 48px;
       border-top: 1px solid var(--line);
-      display: flex; justify-content: center; align-items: center;
+      background: var(--black);
+      position: relative; z-index: 1;
+    }
+    .footer-grid {
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--line);
+    }
+    .footer-brand {
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .footer-brand-logo {
+      display: flex; align-items: center; gap: 14px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 4px; color: var(--text);
+    }
+    .footer-brand-logo img { height: 36px; width: auto; }
+    .footer-brand-tag {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300; font-size: 14px; line-height: 1.6;
+      color: var(--muted); max-width: 320px;
+    }
+    .footer-col-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red); margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a, .footer-col details summary, .footer-col span.footer-link {
+      color: var(--muted); text-decoration: none;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300; font-size: 14px;
+      transition: color 0.25s ease;
+      cursor: pointer;
+    }
+    .footer-col a:hover, .footer-col details:hover summary, .footer-col span.footer-link:hover { color: var(--red); }
+    .footer-col details {
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+    .footer-col details summary {
+      list-style: none;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .footer-col details summary::-webkit-details-marker { display: none; }
+    .footer-col details summary::after { content: '+'; color: var(--muted); font-weight: 300; }
+    .footer-col details[open] summary::after { content: '−'; }
+    .footer-col details .legal-text {
+      margin-top: 14px; padding: 14px; background: var(--gray);
+      border: 1px solid var(--line);
+      font-size: 12px; line-height: 1.6; color: var(--muted);
+      max-width: 280px;
+    }
+    .footer-bottom {
+      max-width: 1400px; margin: 0 auto;
+      padding-top: 32px;
+      display: flex; justify-content: space-between; align-items: center;
       flex-wrap: wrap; gap: 16px;
       font-family: 'Space Mono', monospace;
       font-size: 10px; letter-spacing: 2px;
       color: var(--muted2);
       text-transform: uppercase;
-      text-align: center;
     }
-    @media (max-width: 720px) {
-      footer { padding: 28px 20px; }
+    .footer-bottom a { color: var(--muted2); text-decoration: none; transition: color 0.25s; }
+    .footer-bottom a:hover { color: var(--red); }
+    @media (max-width: 900px) {
+      footer { padding: 60px 20px 32px; }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr; gap: 32px;
+        padding-bottom: 40px;
+      }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 540px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
 
     /* ─── ANIMATIONS ─────────────────────────────────── */
@@ -1185,13 +1434,14 @@
       <li><a href="#process" data-ro="Proces" data-en="Process">Proces</a></li>
       <li><a href="#portfolio" data-ro="Portofoliu" data-en="Portfolio">Portofoliu</a></li>
       <li><a href="#equipment" data-ro="Echipament" data-en="Equipment">Echipament</a></li>
+      <li><a href="#faq" data-ro="FAQ" data-en="FAQ">FAQ</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language">
         <button class="lang-btn active" data-lang="ro">RO</button>
         <button class="lang-btn" data-lang="en">EN</button>
       </div>
-      <a href="#contact" class="nav-cta" data-ro="Programează-te" data-en="Book now">Programează-te</a>
+      <a href="#contact" class="nav-cta" data-ro="Aplică pentru 2026" data-en="Apply for 2026">Aplică pentru 2026</a>
     </div>
   </nav>
 
@@ -1230,8 +1480,8 @@
           Black &amp; grey realism · Blackwork · Custom design
         </p>
         <div class="hero-meta-tags">
-          <span class="hero-meta-tag accent" data-ro="Disponibil 2026" data-en="Available 2026">Disponibil 2026</span>
-          <span class="hero-meta-tag" data-ro="Doar pe programare" data-en="By appointment">Doar pe programare</span>
+          <span class="hero-meta-tag accent" data-ro="Slot-uri 2026 · 07/52 disponibile" data-en="2026 slots · 07/52 open">Slot-uri 2026 · 07/52 disponibile</span>
+          <span class="hero-meta-tag" data-ro="Doar pe programare" data-en="By appointment only">Doar pe programare</span>
         </div>
       </div>
     </div>
@@ -1282,6 +1532,11 @@
          data-ro="Procesul e simplu: discutăm conceptul, propun design-ul, ajustăm până e fix ce vrei, apoi facem treaba bine. Una pe săptămână, calitate maximă."
          data-en="The process is simple: we discuss the concept, I propose the design, we adjust until it is exactly what you want, then we do the job right. One per week, maximum quality.">
         Procesul e simplu: discutăm conceptul, propun design-ul, ajustăm până e fix ce vrei, apoi facem treaba bine. Una pe săptămână, calitate maximă.
+      </p>
+      <p class="about-text"
+         data-ro-html="Vin din <strong>arhitectură</strong> — asta înseamnă că privesc tatuajul ca pe un proiect. Proporții, compoziție, cum cade lumina pe linie, cum se așază piesa pe corp în mișcare. Fiecare design e gândit să arate bine pe pielea ta în <strong>5, 10, 20 de ani</strong> — nu doar în prima zi pe Instagram."
+         data-en-html="My background is <strong>architecture</strong> — meaning I treat tattoos as projects. Proportions, composition, how light falls on a line, how the piece sits on the body in motion. Every design is built to look right on your skin in <strong>5, 10, 20 years</strong> — not just day one on Instagram.">
+        Vin din <strong>arhitectură</strong> — asta înseamnă că privesc tatuajul ca pe un proiect. Proporții, compoziție, cum cade lumina pe linie, cum se așază piesa pe corp în mișcare. Fiecare design e gândit să arate bine pe pielea ta în <strong>5, 10, 20 de ani</strong> — nu doar în prima zi pe Instagram.
       </p>
     </div>
     <div class="about-right reveal">
@@ -1442,41 +1697,41 @@
     <div class="carousel-viewport">
       <div class="carousel-track" id="carouselTrack">
         <!-- Set 1 -->
-        <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt="" loading="lazy" decoding="async"></div>
         <!-- Set 2 (duplicat pentru loop seamless) -->
-        <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt=""></div>
-        <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt=""></div>
+        <div class="carousel-item" data-img="img/1.1.jpg"><img src="img/1.1.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/A.jpg"><img src="img/A.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/E.jpg"><img src="img/E.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/B.jpg"><img src="img/B.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/C.jpg"><img src="img/C.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/D.jpg"><img src="img/D.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/F.jpg"><img src="img/F.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/G.jpg"><img src="img/G.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/3.2.jpg"><img src="img/3.2.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/3.3.jpg"><img src="img/3.3.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/3.4.jpg"><img src="img/3.4.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/2.1.jpg"><img src="img/2.1.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/2.2.jpg"><img src="img/2.2.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/2.3.jpg"><img src="img/2.3.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/1.2.jpg"><img src="img/1.2.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/1.3.jpg"><img src="img/1.3.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="carousel-item" data-img="img/INSTA-1.11.jpg"><img src="img/INSTA-1.11.jpg" alt="" loading="lazy" decoding="async"></div>
       </div>
     </div>
   </section>
@@ -1587,6 +1842,201 @@
     </div>
   </section>
 
+  <!-- TESTIMONIALE -->
+  <section id="testimoniale" class="testimoniale">
+    <div class="cyber-corners" aria-hidden="true"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+    <div class="testimoniale-header reveal">
+      <div class="cyber-section-band" aria-hidden="true">
+        <div class="grp"><span class="ldot"></span><span class="accent">// CLIENT_FEEDBACK</span><span class="sep">·</span><span>VERIFIED · DM</span></div>
+        <div class="grp"><span>RATING · <span class="accent">5.0/5</span></span><span class="sep">·</span><span>SAMPLE · 03</span><span class="sep">·</span><span>SOURCE · IG</span></div>
+      </div>
+      <div class="section-label" data-ro="Voci" data-en="Voices">Voci</div>
+      <h2 class="section-title"
+          data-ro-html="Ce zic <span class='accent'>clienții.</span>"
+          data-en-html="What clients <span class='accent'>say.</span>">
+        Ce zic <span class="accent">clienții.</span>
+      </h2>
+    </div>
+
+    <!-- ALEX: înlocuiește quote-urile, numele și piesele cu unele REALE din DM-urile/comentariile tale de pe Instagram -->
+    <div class="testimoniale-grid">
+      <article class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 stele">★ ★ ★ ★ ★</div>
+        <p class="testimonial-quote"
+           data-ro="„Am venit cu o idee vagă, am plecat cu un design fix ce simțeam. Linia curată, shading-ul exact, și răbdare maximă. Recomand fără rezerve."
+           data-en="„I came with a vague idea, left with a design that felt exactly mine. Clean lines, precise shading, full patience. Highly recommend.">
+          „Am venit cu o idee vagă, am plecat cu un design fix ce simțeam. Linia curată, shading-ul exact, și răbdare maximă. Recomand fără rezerve.
+        </p>
+        <div class="testimonial-meta">
+          <span class="testimonial-author">A.M.</span>
+          <span class="testimonial-piece" data-ro="Realism · braț · 2025" data-en="Realism · arm · 2025">REALISM · BRAȚ · 2025</span>
+        </div>
+      </article>
+
+      <article class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 stele">★ ★ ★ ★ ★</div>
+        <p class="testimonial-quote"
+           data-ro="„Cel mai pretențios artist cu care am lucrat — în sensul bun. Nu trece peste detalii, te ține până iese cum trebuie. Vindecare fără probleme."
+           data-en="„Most demanding artist I've worked with — in a good way. Doesn't skip details, sees it through until it's right. Healed perfectly.">
+          „Cel mai pretențios artist cu care am lucrat — în sensul bun. Nu trece peste detalii, te ține până iese cum trebuie. Vindecare fără probleme.
+        </p>
+        <div class="testimonial-meta">
+          <span class="testimonial-author">R.D.</span>
+          <span class="testimonial-piece" data-ro="Blackwork · spate · 2025" data-en="Blackwork · back · 2025">BLACKWORK · SPATE · 2025</span>
+        </div>
+      </article>
+
+      <article class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 stele">★ ★ ★ ★ ★</div>
+        <p class="testimonial-quote"
+           data-ro="„Design-ul l-am primit în 3 zile, exact ce ceream. La sesiune — atmosferă relaxată, ace sterile, totul profesional. Tatuajul arată identic ca în prima zi."
+           data-en="„Design came back in 3 days, exactly as asked. Session — relaxed vibe, sterile setup, fully professional. Tattoo still looks like day one.">
+          „Design-ul l-am primit în 3 zile, exact ce ceream. La sesiune — atmosferă relaxată, ace sterile, totul profesional. Tatuajul arată identic ca în prima zi.
+        </p>
+        <div class="testimonial-meta">
+          <span class="testimonial-author">M.P.</span>
+          <span class="testimonial-piece" data-ro="Custom · antebraț · 2024" data-en="Custom · forearm · 2024">CUSTOM · ANTEBRAȚ · 2024</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <div class="cyber-corners" aria-hidden="true"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+    <div class="faq-header reveal">
+      <div class="cyber-section-band" aria-hidden="true">
+        <div class="grp"><span class="ldot"></span><span class="accent">// FAQ_INDEX</span><span class="sep">·</span><span>Q.001 → Q.009</span></div>
+        <div class="grp"><span>UPDATED · 2026.05</span><span class="sep">·</span><span class="accent">RESPONSE_AVG · &lt; 24H</span></div>
+      </div>
+      <div class="section-label" data-ro="FAQ" data-en="FAQ">FAQ</div>
+      <h2 class="section-title"
+          data-ro-html="Întrebări <span class='accent'>frecvente.</span>"
+          data-en-html="Frequently <span class='accent'>asked.</span>">
+        Întrebări <span class="accent">frecvente.</span>
+      </h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.001</span>
+          <span class="faq-q" data-ro="Cât costă un tatuaj?" data-en="How much does a tattoo cost?">Cât costă un tatuaj?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="Prețul depinde de <strong>mărime, complexitate și durată</strong>. După ce văd ideea și referințele tale, îți dau cotație exactă. Sesiunile pornesc în general de la <strong>2-3 ore minimum</strong>. Pentru proiecte mari (full sleeve, spate) lucrăm în mai multe sesiuni cu preț per sesiune."
+             data-en-html="Price depends on <strong>size, complexity and duration</strong>. After I see your idea and references, I give you an exact quote. Sessions are generally <strong>2-3 hours minimum</strong>. Large projects (full sleeve, back) are split across multiple sessions with per-session pricing.">
+          Prețul depinde de <strong>mărime, complexitate și durată</strong>. După ce văd ideea și referințele tale, îți dau cotație exactă. Sesiunile pornesc în general de la <strong>2-3 ore minimum</strong>. Pentru proiecte mari (full sleeve, spate) lucrăm în mai multe sesiuni cu preț per sesiune.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.002</span>
+          <span class="faq-q" data-ro="Cum mă programez?" data-en="How do I book?">Cum mă programez?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="Trimite-mi un mesaj pe <strong>Instagram (@dimi_ad_ink)</strong> cu: ideea ta, eventuale referințe (poze), zona de pe corp și mărimea aproximativă. Răspund în maxim 24h cu fezabilitate, design preliminar și cotație. După confirmare, fixăm data."
+             data-en-html="Send me a DM on <strong>Instagram (@dimi_ad_ink)</strong> with: your idea, references (photos), body placement and approximate size. I reply within 24h with feasibility, preliminary design and quote. Once confirmed, we set the date.">
+          Trimite-mi un mesaj pe <strong>Instagram (@dimi_ad_ink)</strong> cu: ideea ta, eventuale referințe (poze), zona de pe corp și mărimea aproximativă. Răspund în maxim 24h cu fezabilitate, design preliminar și cotație. După confirmare, fixăm data.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.003</span>
+          <span class="faq-q" data-ro="Doare tare?" data-en="Does it hurt?">Doare tare?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="Variază în funcție de <strong>zona corpului și pragul tău de durere</strong>. Zonele cu os aproape de piele (coaste, claviculă, încheietură, gleznă) sunt mai sensibile. Brațul, coapsa și spatele sunt în general suportabile. Lucrez calm, cu pauze, și opresc oricând ai nevoie. Nu folosesc anestezic local — preferi o linie clară fără efecte secundare pe piele."
+             data-en-html="Depends on <strong>body area and your pain threshold</strong>. Areas with bone close to skin (ribs, collarbone, wrist, ankle) are more sensitive. Arm, thigh and back are generally manageable. I work calmly, with breaks, and stop whenever you need. I don't use topical anesthetic — clean lines without skin side-effects.">
+          Variază în funcție de <strong>zona corpului și pragul tău de durere</strong>. Zonele cu os aproape de piele (coaste, claviculă, încheietură, gleznă) sunt mai sensibile. Brațul, coapsa și spatele sunt în general suportabile. Lucrez calm, cu pauze, și opresc oricând ai nevoie. Nu folosesc anestezic local — preferi o linie clară fără efecte secundare pe piele.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.004</span>
+          <span class="faq-q" data-ro="Cât durează o sesiune?" data-en="How long is a session?">Cât durează o sesiune?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="Sesiunile minime sunt <strong>2-3 ore</strong>. Pentru proiecte mai elaborate, ajungem la 4-6 ore cu pauze. Niciodată nu forțez o piesă într-o singură sesiune dacă pielea ta sau focusul tău cer să oprim. Calitatea înaintea vitezei — întotdeauna."
+             data-en-html="Minimum sessions are <strong>2-3 hours</strong>. For larger pieces, 4-6 hours with breaks. I never force a piece into a single session if your skin or focus need to stop. Quality before speed — always.">
+          Sesiunile minime sunt <strong>2-3 ore</strong>. Pentru proiecte mai elaborate, ajungem la 4-6 ore cu pauze. Niciodată nu forțez o piesă într-o singură sesiune dacă pielea ta sau focusul tău cer să oprim. Calitatea înaintea vitezei — întotdeauna.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.005</span>
+          <span class="faq-q" data-ro="Trebuie să vin cu un design fix sau pot veni doar cu o idee?" data-en="Do I need a final design or just an idea?">Trebuie să vin cu un design fix sau pot veni doar cu o idee?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="<strong>Doar cu ideea — preferabil.</strong> Așa pot construi un design custom, gândit pentru tine, nu copiat de pe Pinterest. Aduci concept, referințe vizuale (poze, mood), eventual descriere în cuvinte — eu transform în desen. Refuz politicos cererile de copiere identică a unui tatuaj existent al altui artist."
+             data-en-html="<strong>Just with the idea — preferred.</strong> That way I build a custom design made for you, not copied off Pinterest. Bring concept, visual references (photos, mood), maybe a description — I turn it into a drawing. I politely decline requests to copy another artist's tattoo verbatim.">
+          <strong>Doar cu ideea — preferabil.</strong> Așa pot construi un design custom, gândit pentru tine, nu copiat de pe Pinterest. Aduci concept, referințe vizuale (poze, mood), eventual descriere în cuvinte — eu transform în desen. Refuz politicos cererile de copiere identică a unui tatuaj existent al altui artist.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.006</span>
+          <span class="faq-q" data-ro="Pot acoperi un tatuaj vechi (cover-up)?" data-en="Can you cover up an old tattoo?">Pot acoperi un tatuaj vechi (cover-up)?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="Da, dar <strong>depinde de piesa veche</strong>. Trimite-mi o poză clară a tatuajului existent și ce ai în minte ca acoperire. Cover-up-urile cer design-uri mai dense, în general blackwork sau realism cu shading puternic. Dacă piesa veche e foarte saturată, poate fi nevoie de 1-2 sesiuni de laser înainte. Îți spun deschis dacă e fezabil sau nu."
+             data-en-html="Yes, but <strong>depends on the existing piece</strong>. Send me a clear photo and what you'd like as cover. Cover-ups need denser designs, usually blackwork or realism with strong shading. If the old piece is very saturated, you may need 1-2 laser sessions first. I'll tell you straight if it's feasible or not.">
+          Da, dar <strong>depinde de piesa veche</strong>. Trimite-mi o poză clară a tatuajului existent și ce ai în minte ca acoperire. Cover-up-urile cer design-uri mai dense, în general blackwork sau realism cu shading puternic. Dacă piesa veche e foarte saturată, poate fi nevoie de 1-2 sesiuni de laser înainte. Îți spun deschis dacă e fezabil sau nu.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.007</span>
+          <span class="faq-q" data-ro="Lucrezi cu minori?" data-en="Do you tattoo minors?">Lucrezi cu minori?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="<strong>Nu.</strong> Tatuez exclusiv persoane care au împlinit <strong>18 ani</strong>. Verific actul de identitate înainte de fiecare sesiune cu un client nou."
+             data-en-html="<strong>No.</strong> I only tattoo people who are <strong>18 or older</strong>. I verify ID before every first session.">
+          <strong>Nu.</strong> Tatuez exclusiv persoane care au împlinit <strong>18 ani</strong>. Verific actul de identitate înainte de fiecare sesiune cu un client nou.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.008</span>
+          <span class="faq-q" data-ro="Care e protocolul de aftercare?" data-en="What is the aftercare protocol?">Care e protocolul de aftercare?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="După sesiune primești <strong>folie second-skin</strong> aplicată direct pe tatuaj (rămâne 3-5 zile), instrucțiuni scrise pas cu pas, și un balsam de vindecare. Reguli de bază: <strong>fără soare direct, fără piscină/saună, fără frecat puternic</strong> — minim 2-3 săptămâni. Sunt disponibil pe Instagram pentru orice întrebare în perioada de vindecare."
+             data-en-html="After the session you get <strong>second-skin film</strong> applied directly on the tattoo (stays 3-5 days), step-by-step written instructions, and a healing balm. Basics: <strong>no direct sun, no pool/sauna, no harsh scrubbing</strong> — minimum 2-3 weeks. I'm available on Instagram for any healing questions.">
+          După sesiune primești <strong>folie second-skin</strong> aplicată direct pe tatuaj (rămâne 3-5 zile), instrucțiuni scrise pas cu pas, și un balsam de vindecare. Reguli de bază: <strong>fără soare direct, fără piscină/saună, fără frecat puternic</strong> — minim 2-3 săptămâni. Sunt disponibil pe Instagram pentru orice întrebare în perioada de vindecare.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">Q.009</span>
+          <span class="faq-q" data-ro="Cum se face plata?" data-en="How is payment handled?">Cum se face plata?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer"
+             data-ro-html="Pentru a-ți rezerva slot-ul cer un <strong>avans simbolic</strong> (transfer bancar sau Revolut) — se scade din totalul piesei. Restul îl plătești la final, în ziua sesiunii: <strong>cash sau transfer</strong>. Detaliile exacte le primești după confirmarea programării."
+             data-en-html="To reserve your slot I ask for a <strong>small deposit</strong> (bank transfer or Revolut) — deducted from the total. The rest is paid at the end of the session: <strong>cash or transfer</strong>. Exact details after booking confirmation.">
+          Pentru a-ți rezerva slot-ul cer un <strong>avans simbolic</strong> (transfer bancar sau Revolut) — se scade din totalul piesei. Restul îl plătești la final, în ziua sesiunii: <strong>cash sau transfer</strong>. Detaliile exacte le primești după confirmarea programării.
+        </div>
+      </details>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact" class="contact">
     <div class="cyber-corners" aria-hidden="true"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
@@ -1621,7 +2071,74 @@
 
   <!-- FOOTER -->
   <footer>
-    <div>© 2026 · Alexandros Dimosthenous · Tattoo Lab</div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <img src="img/logo-clean.png" alt="AD Tattoo Lab" />
+          <span>AD TATTOO LAB</span>
+        </div>
+        <p class="footer-brand-tag"
+           data-ro="Black & grey realism, blackwork și custom design. Tatuaje în București — fiecare piesă construită de la zero, doar pe programare."
+           data-en="Black & grey realism, blackwork and custom design. Tattoos in Bucharest — every piece built from scratch, by appointment only.">
+          Black &amp; grey realism, blackwork și custom design. Tatuaje în București — fiecare piesă construită de la zero, doar pe programare.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-ro="Navigare" data-en="Navigate">// NAVIGARE</div>
+        <ul>
+          <li><a href="#about" data-ro="Despre" data-en="About">Despre</a></li>
+          <li><a href="#process" data-ro="Proces" data-en="Process">Proces</a></li>
+          <li><a href="#portfolio" data-ro="Portofoliu" data-en="Portfolio">Portofoliu</a></li>
+          <li><a href="#equipment" data-ro="Echipament" data-en="Equipment">Echipament</a></li>
+          <li><a href="#testimoniale" data-ro="Voci" data-en="Voices">Voci</a></li>
+          <li><a href="#faq" data-ro="FAQ" data-en="FAQ">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-ro="Contact" data-en="Contact">// CONTACT</div>
+        <ul>
+          <li><a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener">@dimi_ad_ink</a></li>
+          <li><a href="#contact" data-ro="Programează-te" data-en="Book now">Programează-te</a></li>
+          <li><span class="footer-link" style="cursor:default; opacity:0.6;" data-ro="Doar pe programare" data-en="By appointment only">Doar pe programare</span></li>
+          <li><span class="footer-link" style="cursor:default; opacity:0.6;" data-ro="Răspuns &lt; 24h" data-en="Reply &lt; 24h">Răspuns &lt; 24h</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-ro="Info" data-en="Info">// INFO</div>
+        <ul>
+          <li>
+            <details>
+              <summary data-ro="Confidențialitate" data-en="Privacy">Confidențialitate</summary>
+              <div class="legal-text"
+                   data-ro="Acest site nu folosește cookie-uri de tracking, nu colectează date personale și nu integrează analytics. Singurele resurse externe sunt Google Fonts și GSAP (CDN), necesare pentru afișarea paginii. Toate interacțiunile cu mine se desfășoară prin Instagram."
+                   data-en="This site does not use tracking cookies, does not collect personal data and does not integrate analytics. The only external resources are Google Fonts and GSAP (CDN), required to render the page. All interactions happen via Instagram.">
+                Acest site nu folosește cookie-uri de tracking, nu colectează date personale și nu integrează analytics. Singurele resurse externe sunt Google Fonts și GSAP (CDN), necesare pentru afișarea paginii. Toate interacțiunile cu mine se desfășoară prin Instagram.
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary data-ro="Termeni" data-en="Terms">Termeni</summary>
+              <div class="legal-text"
+                   data-ro="Tatuajele sunt permanente și se realizează doar pentru persoane majore (18+) cu act de identitate verificat. Avansul plătit nu se returnează în caz de neprezentare sau anulare cu mai puțin de 48h înainte de programare. Imaginile din portofoliu sunt proprietatea autorului și nu pot fi reproduse fără acord."
+                   data-en="Tattoos are permanent and only performed on adults (18+) with verified ID. Deposit is non-refundable in case of no-show or cancellation less than 48h before the appointment. Portfolio images are the author's property and may not be reproduced without permission.">
+                Tatuajele sunt permanente și se realizează doar pentru persoane majore (18+) cu act de identitate verificat. Avansul plătit nu se returnează în caz de neprezentare sau anulare cu mai puțin de 48h înainte de programare. Imaginile din portofoliu sunt proprietatea autorului și nu pot fi reproduse fără acord.
+              </div>
+            </details>
+          </li>
+          <li><a href="#hero" data-ro="↑ Sus" data-en="↑ Top">↑ <span data-ro="Sus" data-en="Top">Sus</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 · ALEXANDROS DIMOSTHENOUS</div>
+      <div>BUCUREȘTI · RO · 2026</div>
+      <div><a href="https://www.instagram.com/dimi_ad_ink" target="_blank" rel="noopener">@DIMI_AD_INK</a></div>
+    </div>
   </footer>
 
   <!-- FIXED FOOTER BAND (always visible, Lando-style) -->
