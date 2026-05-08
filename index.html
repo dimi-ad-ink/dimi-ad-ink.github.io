@@ -618,230 +618,249 @@
     .etape-subtitle .num { color: var(--red); }
 
     /* ─── PROCESS (sticky scroll cu poză cinematic) ────────────── */
+    /* ─── PROCESS — sticky scroll storytelling cu animatie machine ──── */
     .process {
-      position: relative; z-index: 1;
-      background: var(--black);
+      position: relative;
+      z-index: 1;
+      background: #000;
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
-      padding-top: 60px;
-      margin-bottom: 120px;
-      overflow: hidden;
-    }
-    .process-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      max-width: 1600px; margin: 0 auto;
-      position: relative;
+      /* 4 panels x 100vh + entry/exit cushion */
+      height: 480vh;
+      overflow: visible;
     }
     .process-sticky {
-      position: sticky; top: 0; height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      border-right: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      align-items: stretch;
       overflow: hidden;
-    }
-    .process-photo-wrap {
-      position: absolute; inset: 0;
-      overflow: hidden;
-    }
-    .process-photo {
-      position: absolute; inset: -8%;
-      width: 116%; height: 116%;
-      background-image: url('img/3.3.jpg');
-      background-size: cover; background-position: center;
-      filter: contrast(1.08) saturate(0.85);
-      will-change: transform;
-    }
-    .process-photo::after {
-      content: ''; position: absolute; inset: 0;
-      background:
-        linear-gradient(180deg, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.25) 50%, rgba(8,8,8,0.85) 100%),
-        radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(8,8,8,0.4) 100%);
-    }
-    .process-photo-label {
-      position: absolute; top: 32px; left: 32px;
-      font-family: 'Space Mono', monospace;
-      font-size: 10px; letter-spacing: 3px;
-      color: rgba(255,255,255,0.6);
-      z-index: 2;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .process-photo-label::before {
-      content: ''; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 12px var(--red);
-      animation: pulse 1.6s ease-in-out infinite;
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.4; transform: scale(0.7); }
     }
-    .process-photo-coord {
-      position: absolute; bottom: 32px; left: 32px;
-      font-family: 'Space Mono', monospace;
-      font-size: 10px; letter-spacing: 2px;
-      color: rgba(255,255,255,0.45);
-      z-index: 2;
-      line-height: 1.6;
-    }
-    .process-photo-coord span { color: var(--red); }
-    .process-steps { padding: 100px 60px; }
-    .process-step {
-      min-height: 80vh; display: flex; flex-direction: column;
+    .process-canvas-side {
+      position: relative;
+      background: #000;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      border-bottom: 1px dashed var(--line);
+      border-right: 1px solid var(--line);
+      overflow: hidden;
     }
-    .process-step:last-child { border-bottom: none; }
-    .process-step-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 12px; letter-spacing: 3px; color: var(--red);
-      margin-bottom: 18px;
+    #processCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    .process-step-title {
-      font-family: 'Roboto Condensed', sans-serif;
-      font-weight: 400;
-      font-size: clamp(32px, 4vw, 52px);
-      line-height: 1.1; letter-spacing: 0.02em;
-      text-transform: uppercase;
-      margin-bottom: 22px;
-    }
-    .process-step-desc {
-      font-family: 'Roboto Condensed', sans-serif;
-      font-weight: 300;
-      font-size: 16px; line-height: 1.8; color: var(--muted);
-      max-width: 460px;
-    }
-
-    @media (max-width: 900px) {
-      .process-inner { grid-template-columns: 1fr; }
-      .process-sticky { height: 60vh; border-right: none; border-bottom: 1px solid var(--line); position: relative; top: auto; }
-      .process-steps { padding: 40px 20px; }
-      .process-step { min-height: auto; padding: 60px 0; }
-    }
-
-    /* ─── GRAPH VIEW (Obsidian-style) — overlays on sticky photo ──────────── */
-    .graph-view {
-      position: absolute; inset: 0;
-      z-index: 3;
-      pointer-events: none;
-    }
-    .graph-svg {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
-    .graph-svg .gv-link {
-      stroke: rgba(200, 16, 46, 0.35);
-      stroke-width: 1.2;
-      fill: none;
-      stroke-dasharray: 4 4;
-      animation: gvLinkPulse 3.5s ease-in-out infinite;
-    }
-    @keyframes gvLinkPulse {
-      0%, 100% { stroke-opacity: 0.35; }
-      50% { stroke-opacity: 0.8; }
-    }
-    .graph-svg .gv-link.active {
-      stroke: var(--red);
-      stroke-width: 1.8;
-      stroke-dasharray: none;
-      stroke-opacity: 1 !important;
-      filter: drop-shadow(0 0 6px rgba(200, 16, 46, 0.7));
-    }
-    .gv-node {
+    .process-canvas-tag {
       position: absolute;
-      transform: translate(-50%, -50%);
-      pointer-events: auto;
-      cursor: pointer;
-    }
-    .gv-node-dot {
-      width: var(--gv-size, 16px); height: var(--gv-size, 16px);
-      border-radius: 50%;
-      background: var(--gv-color, var(--text));
-      border: 1.5px solid rgba(255,255,255,0.18);
-      box-shadow: 0 0 0 4px rgba(8,8,8,0.7), 0 0 18px rgba(0,0,0,0.6);
-      transition: transform 0.45s cubic-bezier(0.34, 1.6, 0.64, 1),
-                  background-color 0.35s ease,
-                  box-shadow 0.35s ease;
-    }
-    .gv-node.satellite .gv-node-dot {
-      background: rgba(255,255,255,0.22);
-      width: 7px; height: 7px;
-      box-shadow: 0 0 0 2px rgba(8,8,8,0.6);
-    }
-    .gv-node.main .gv-node-dot {
-      background: var(--red);
-      box-shadow: 0 0 0 5px rgba(8,8,8,0.85), 0 0 22px rgba(200,16,46,0.55);
-    }
-    .gv-node.main.active .gv-node-dot,
-    .gv-node.main:hover .gv-node-dot {
-      transform: scale(2.1);
-      box-shadow: 0 0 0 6px rgba(8,8,8,0.9), 0 0 38px rgba(200,16,46,0.95);
-    }
-    .gv-node-label {
-      position: absolute;
-      left: 50%; top: calc(100% + 12px);
-      transform: translateX(-50%);
+      top: 28px;
+      left: 32px;
       font-family: 'Space Mono', monospace;
-      font-size: 10px; letter-spacing: 2.5px;
-      color: rgba(255,255,255,0.55);
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: color 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.6, 0.64, 1);
-      pointer-events: none;
-    }
-    .gv-node.main.active .gv-node-label,
-    .gv-node.main:hover .gv-node-label {
+      font-size: 9px;
+      letter-spacing: 3px;
       color: var(--red);
-      transform: translateX(-50%) translateY(8px) scale(1.15);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .gv-node.satellite .gv-node-label { display: none; }
-    /* Photo popup near node */
-    .gv-node-photo {
-      position: absolute;
-      left: 50%; top: -16px;
-      transform: translate(-50%, -100%) scale(0.85);
-      width: 200px; height: 140px;
-      background-size: cover; background-position: center;
-      border: 1px solid var(--red);
-      box-shadow: 0 18px 60px rgba(0,0,0,0.85),
-                  0 0 24px rgba(200,16,46,0.45);
-      opacity: 0;
-      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
-      pointer-events: none;
-      z-index: 4;
-    }
-    .gv-node-photo::after {
+    .process-canvas-tag::before {
       content: '';
-      position: absolute; bottom: -8px; left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 12px; height: 12px;
-      background: var(--black);
-      border-right: 1px solid var(--red);
-      border-bottom: 1px solid var(--red);
-    }
-    .gv-node.main.active .gv-node-photo,
-    .gv-node.main:hover .gv-node-photo {
-      opacity: 1;
-      transform: translate(-50%, -100%) scale(1);
-    }
-    /* Graph caption (top-left corner) */
-    .gv-caption {
-      position: absolute; top: 22px; left: 22px;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 2.5px;
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-      z-index: 5;
-      pointer-events: none;
-      display: flex; align-items: center; gap: 9px;
-    }
-    .gv-caption::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--red); box-shadow: 0 0 8px var(--red);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
       animation: pulse 1.6s ease-in-out infinite;
     }
+    .process-canvas-counter {
+      position: absolute;
+      bottom: 28px;
+      left: 32px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.32);
+      z-index: 2;
+      line-height: 1.7;
+    }
+    .process-canvas-counter span { color: var(--red); }
+    .process-canvas-corner {
+      position: absolute;
+      width: 18px; height: 18px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .process-canvas-corner.tl { top: 16px; left: 16px; border-top: 1px solid rgba(200,16,46,0.5); border-left: 1px solid rgba(200,16,46,0.5); }
+    .process-canvas-corner.tr { top: 16px; right: 16px; border-top: 1px solid rgba(200,16,46,0.5); border-right: 1px solid rgba(200,16,46,0.5); }
+    .process-canvas-corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(200,16,46,0.5); border-left: 1px solid rgba(200,16,46,0.5); }
+    .process-canvas-corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(200,16,46,0.5); border-right: 1px solid rgba(200,16,46,0.5); }
+    .process-progress {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.04);
+      z-index: 3;
+    }
+    .process-progress::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: var(--p, 0%);
+      background: var(--red);
+      box-shadow: 0 0 10px rgba(200,16,46,0.7);
+      transition: width 0.05s linear;
+    }
+
+    /* RIGHT — text panels stack */
+    .process-text-side {
+      position: relative;
+      padding: 0 64px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(90deg, transparent 0%, rgba(8,8,8,0.5) 100%);
+    }
+    .process-panel {
+      position: absolute;
+      top: 50%;
+      left: 64px;
+      right: 64px;
+      transform: translateY(-50%) translateX(50px);
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .process-panel.active {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+      pointer-events: auto;
+    }
+    .process-panel-num-bg {
+      position: absolute;
+      top: -90px;
+      right: -10px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 200;
+      font-size: clamp(140px, 20vw, 260px);
+      line-height: 0.9;
+      color: rgba(255,255,255,0.035);
+      z-index: 0;
+      pointer-events: none;
+      letter-spacing: -8px;
+    }
+    .process-panel-stage {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--red);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .process-panel-stage::before {
+      content: '';
+      width: 38px; height: 1px;
+      background: var(--red);
+    }
+    .process-panel-meta {
+      color: rgba(255,255,255,0.35);
+      font-size: 10px;
+      margin-left: 6px;
+    }
+    .process-panel-title {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      color: #fff;
+      margin: 0 0 26px;
+      position: relative;
+      z-index: 1;
+      text-transform: none;
+    }
+    .process-panel-title .accent { color: var(--red); }
+    .process-panel-desc {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Step indicator dots — bottom of text side */
+    .process-step-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 64px;
+      display: flex;
+      gap: 14px;
+      z-index: 4;
+      align-items: center;
+    }
+    .process-step-dot-line {
+      position: relative;
+      width: 36px;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      transition: background 0.4s ease;
+      cursor: pointer;
+    }
+    .process-step-dot-line.active {
+      background: var(--red);
+    }
+    .process-step-dot-line.active::after {
+      content: '';
+      position: absolute;
+      top: -3px; right: -2px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+    }
+    .process-step-counter {
+      margin-left: 18px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.4);
+    }
+    .process-step-counter .current { color: var(--red); }
+
     @media (max-width: 900px) {
-      .gv-node-photo { width: 140px; height: 100px; top: -10px; }
-      .gv-node-label { font-size: 9px; }
+      .process { height: auto; }
+      .process-sticky {
+        position: relative;
+        height: auto;
+        grid-template-columns: 1fr;
+        top: auto;
+      }
+      .process-canvas-side {
+        height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .process-text-side { padding: 60px 24px 100px; flex-direction: column; gap: 60px; align-items: stretch; }
+      .process-panel {
+        position: relative;
+        top: auto; left: auto; right: auto;
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .process-panel-num-bg { top: -50px; font-size: 120px; }
+      .process-step-indicator { display: none; }
     }
 
     /* ─── PORTFOLIO — circular auto-scroll ───────────── */
@@ -964,138 +983,6 @@
     @media (max-width: 720px) {
       .equipment-header { padding: 0 20px; }
       .equipment-grid { margin: 60px 20px 0; }
-    }
-
-    /* ─── MACHINE REVEAL — scroll frame animation ─────── */
-    .machine-reveal {
-      height: 500vh;
-      position: relative;
-      background: #000;
-    }
-    .machine-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    #machineCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .machine-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .machine-cyber-tag {
-      position: absolute;
-      top: 28px;
-      left: 5vw;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--red);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .machine-reveal.visible .machine-cyber-tag {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .machine-frame-counter {
-      position: absolute;
-      top: 28px;
-      right: 5vw;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.25);
-    }
-    .machine-title-wrap {
-      position: absolute;
-      bottom: 13vh;
-      left: 5vw;
-      z-index: 2;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.8s 0.15s ease, transform 0.8s 0.15s ease;
-    }
-    .machine-reveal.visible .machine-title-wrap {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .machine-title {
-      font-family: 'Roboto Condensed', sans-serif;
-      font-weight: 200;
-      font-size: clamp(34px, 6.5vw, 84px);
-      line-height: 0.93;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: -1px;
-      margin: 0;
-    }
-    .machine-title .accent { color: var(--red); font-weight: 400; }
-    .machine-sub {
-      margin-top: 14px;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: rgba(255,255,255,0.35);
-    }
-    .machine-progress-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 2px;
-      background: var(--red);
-      width: 0%;
-      z-index: 3;
-      box-shadow: 0 0 8px rgba(200,16,46,0.5);
-    }
-    .machine-corner-tl,
-    .machine-corner-br {
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      opacity: 0;
-      transition: opacity 0.6s 0.3s ease;
-    }
-    .machine-corner-tl {
-      top: 50px;
-      left: calc(5vw - 8px);
-      border-top: 1px solid rgba(200,16,46,0.5);
-      border-left: 1px solid rgba(200,16,46,0.5);
-    }
-    .machine-corner-br {
-      bottom: calc(13vh + 110px);
-      right: 5vw;
-      border-bottom: 1px solid rgba(200,16,46,0.5);
-      border-right: 1px solid rgba(200,16,46,0.5);
-    }
-    .machine-reveal.visible .machine-corner-tl,
-    .machine-reveal.visible .machine-corner-br {
-      opacity: 1;
-    }
-    .machine-scanline {
-      position: absolute;
-      left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(200,16,46,0.15), transparent);
-      animation: machineScan 4s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes machineScan {
-      0%   { top: 0%;   opacity: 0; }
-      5%   { opacity: 1; }
-      95%  { opacity: 1; }
-      100% { top: 100%; opacity: 0; }
     }
 
     /* ─── CONTACT (zoom-in title) ────────────────────── */
@@ -1443,123 +1330,94 @@
     <div class="etape-subtitle" data-ro-html="De la <span class='num'>idee</span> la <span class='num'>tatuaj</span>" data-en-html="From <span class='num'>idea</span> to <span class='num'>ink</span>">De la <span class="num">idee</span> la <span class="num">tatuaj</span></div>
   </div>
 
-  <!-- PROCESS -->
+  <!-- PROCESS — sticky scroll storytelling cu animatie machine -->
   <section id="process" class="process">
-    <div class="cyber-corners" aria-hidden="true"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
-    <div class="cyber-section-band" aria-hidden="true" style="max-width:1400px; margin: 0 auto 30px; padding-left:60px; padding-right:60px;">
-      <div class="grp"><span class="ldot"></span><span class="accent">// PIPELINE_004</span><span class="sep">·</span><span>STAGES_LOCKED</span></div>
-      <div class="grp"><span>NODES · 04/04</span><span class="sep">·</span><span>SAT · 07</span><span class="sep">·</span><span class="accent">RUNTIME 02H</span></div>
-    </div>
-    <div class="process-inner">
-      <div class="process-sticky">
-        <div class="process-photo-wrap">
-          <div class="process-photo" id="processPhoto"></div>
-          <div class="process-photo-coord">
-            FRAME · <span>03/04</span><br/>
-            DEPTH · <span>0.8MM</span><br/>
-            HZ · <span>120</span><br/>
-            REF · <span>RT_PROC.04</span><br/>
-            STATUS · <span style="color:var(--red);">REC</span>
-          </div>
-        </div>
+    <div class="process-sticky">
+      <div class="process-progress" id="processProgress"></div>
 
-        <!-- GRAPH VIEW (Obsidian-style) -->
-        <div class="graph-view" id="graphView">
-          <div class="gv-caption">Graph View · Process</div>
-
-          <svg class="graph-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <!-- Main connections between the 4 process nodes -->
-            <line class="gv-link" data-link="1-2" x1="22" y1="22" x2="78" y2="32" />
-            <line class="gv-link" data-link="2-3" x1="78" y1="32" x2="78" y2="68" />
-            <line class="gv-link" data-link="3-4" x1="78" y1="68" x2="22" y2="78" />
-            <line class="gv-link" data-link="4-1" x1="22" y1="78" x2="22" y2="22" />
-
-            <!-- Cross / diagonal -->
-            <line class="gv-link" data-link="1-3" x1="22" y1="22" x2="78" y2="68" />
-
-            <!-- Satellite connections (decorative) -->
-            <line class="gv-link" x1="22" y1="22" x2="10" y2="12" />
-            <line class="gv-link" x1="22" y1="22" x2="38" y2="8" />
-            <line class="gv-link" x1="78" y1="32" x2="92" y2="20" />
-            <line class="gv-link" x1="78" y1="32" x2="90" y2="48" />
-            <line class="gv-link" x1="78" y1="68" x2="92" y2="82" />
-            <line class="gv-link" x1="22" y1="78" x2="8"  y2="88" />
-            <line class="gv-link" x1="22" y1="78" x2="36" y2="92" />
-          </svg>
-
-          <!-- Main nodes — fiecare cu poza relevanta pentru etapa -->
-          <!-- 01 CONCEPT (Discutam ideea) - Alex examinand bratul / discutie cu client -->
-          <div class="gv-node main" data-step="1" style="left:22%; top:22%;">
-            <div class="gv-node-photo" style="background-image:url('img/A.jpg');"></div>
-            <div class="gv-node-dot"></div>
-            <div class="gv-node-label" data-ro="01 · Concept" data-en="01 · Concept">01 · Concept</div>
-          </div>
-          <!-- 02 DESIGN (Construiesc design-ul) - schita pe hartie de transfer -->
-          <div class="gv-node main" data-step="2" style="left:78%; top:32%;">
-            <div class="gv-node-photo" style="background-image:url('img/INSTA-1.11.jpg');"></div>
-            <div class="gv-node-dot"></div>
-            <div class="gv-node-label" data-ro="02 · Design" data-en="02 · Design">02 · Design</div>
-          </div>
-          <!-- 03 SETUP (Pregatesc echipamentul) - aplicare stencil pe piele -->
-          <div class="gv-node main" data-step="3" style="left:78%; top:68%;">
-            <div class="gv-node-photo" style="background-image:url('img/3.2.jpg');"></div>
-            <div class="gv-node-dot"></div>
-            <div class="gv-node-label" data-ro="03 · Setup" data-en="03 · Setup">03 · Setup</div>
-          </div>
-          <!-- 04 INK (Tatuajul efectiv) - Alex tatuand efectiv -->
-          <div class="gv-node main" data-step="4" style="left:22%; top:78%;">
-            <div class="gv-node-photo" style="background-image:url('img/3.1.jpg');"></div>
-            <div class="gv-node-dot"></div>
-            <div class="gv-node-label" data-ro="04 · Ink" data-en="04 · Ink">04 · Ink</div>
-          </div>
-
-          <!-- Satellite nodes (decorative, no interaction) -->
-          <div class="gv-node satellite" style="left:10%; top:12%;"><div class="gv-node-dot"></div></div>
-          <div class="gv-node satellite" style="left:38%; top:8%;"><div class="gv-node-dot"></div></div>
-          <div class="gv-node satellite" style="left:92%; top:20%;"><div class="gv-node-dot"></div></div>
-          <div class="gv-node satellite" style="left:90%; top:48%;"><div class="gv-node-dot"></div></div>
-          <div class="gv-node satellite" style="left:92%; top:82%;"><div class="gv-node-dot"></div></div>
-          <div class="gv-node satellite" style="left:8%; top:88%;"><div class="gv-node-dot"></div></div>
-          <div class="gv-node satellite" style="left:36%; top:92%;"><div class="gv-node-dot"></div></div>
+      <!-- LEFT: machine canvas — anima pe scroll -->
+      <div class="process-canvas-side">
+        <canvas id="processCanvas"></canvas>
+        <div class="process-canvas-corner tl"></div>
+        <div class="process-canvas-corner tr"></div>
+        <div class="process-canvas-corner bl"></div>
+        <div class="process-canvas-corner br"></div>
+        <div class="process-canvas-tag">// HARDWARE · FK_IRONS_FLUX_MAX</div>
+        <div class="process-canvas-counter">
+          FRAME · <span id="processFrameNum">001</span> / 076<br>
+          STATUS · <span>REC</span>
         </div>
       </div>
 
-      <div class="process-steps">
-        <div class="process-step" data-step="1">
-          <div class="process-step-num">// 01 — <span data-ro="CONCEPT" data-en="CONCEPT">CONCEPT</span> <span style="opacity:0.4; margin-left:10px;">[NODE_C01 · ~30MIN]</span></div>
-          <h3 class="process-step-title" data-ro="Discutăm ideea." data-en="We discuss the idea.">Discutăm ideea.</h3>
-          <p class="process-step-desc"
+      <!-- RIGHT: text panels stacked, crossfade pe scroll -->
+      <div class="process-text-side">
+        <!-- 01 CONCEPT -->
+        <div class="process-panel active" data-panel="0">
+          <div class="process-panel-num-bg">01</div>
+          <div class="process-panel-stage">
+            <span data-ro="ETAPA 01 · CONCEPT" data-en="STAGE 01 · CONCEPT">ETAPA 01 · CONCEPT</span>
+            <span class="process-panel-meta">[~30MIN]</span>
+          </div>
+          <h3 class="process-panel-title" data-ro="Discutăm ideea." data-en="We discuss the idea.">Discutăm ideea.</h3>
+          <p class="process-panel-desc"
              data-ro="Trimite-mi pe Instagram conceptul, referințele sau doar direcția. Stabilim mărimea, plasarea, stilul. Fără cost, fără presiune."
              data-en="Send me the concept, references, or just the direction on Instagram. We set the size, placement, style. No cost, no pressure.">
             Trimite-mi pe Instagram conceptul, referințele sau doar direcția. Stabilim mărimea, plasarea, stilul. Fără cost, fără presiune.
           </p>
         </div>
-        <div class="process-step" data-step="2">
-          <div class="process-step-num">// 02 — <span data-ro="DESIGN" data-en="DESIGN">DESIGN</span> <span style="opacity:0.4; margin-left:10px;">[NODE_D02 · ~02-05D]</span></div>
-          <h3 class="process-step-title" data-ro="Construiesc design-ul." data-en="I build the design.">Construiesc design-ul.</h3>
-          <p class="process-step-desc"
+
+        <!-- 02 DESIGN -->
+        <div class="process-panel" data-panel="1">
+          <div class="process-panel-num-bg">02</div>
+          <div class="process-panel-stage">
+            <span data-ro="ETAPA 02 · DESIGN" data-en="STAGE 02 · DESIGN">ETAPA 02 · DESIGN</span>
+            <span class="process-panel-meta">[02-05D]</span>
+          </div>
+          <h3 class="process-panel-title" data-ro="Construiesc design-ul." data-en="I build the design.">Construiesc design-ul.</h3>
+          <p class="process-panel-desc"
              data-ro="Lucrez digital — schiță, refinare, ajustări până e fix ce vrei. Niciun stencil ridicat din portofoliul altcuiva."
              data-en="I work digitally — sketch, refinement, adjustments until it is exactly what you want. No stencil lifted from someone else's portfolio.">
             Lucrez digital — schiță, refinare, ajustări până e fix ce vrei. Niciun stencil ridicat din portofoliul altcuiva.
           </p>
         </div>
-        <div class="process-step" data-step="3">
-          <div class="process-step-num">// 03 — <span data-ro="SETUP" data-en="SETUP">SETUP</span> <span style="opacity:0.4; margin-left:10px;">[NODE_S03 · STERILE]</span></div>
-          <h3 class="process-step-title" data-ro="Pregătesc echipamentul." data-en="I prepare the equipment.">Pregătesc echipamentul.</h3>
-          <p class="process-step-desc"
+
+        <!-- 03 SETUP -->
+        <div class="process-panel" data-panel="2">
+          <div class="process-panel-num-bg">03</div>
+          <div class="process-panel-stage">
+            <span data-ro="ETAPA 03 · SETUP" data-en="STAGE 03 · SETUP">ETAPA 03 · SETUP</span>
+            <span class="process-panel-meta">[STERILE]</span>
+          </div>
+          <h3 class="process-panel-title" data-ro="Pregătesc echipamentul." data-en="I prepare the equipment.">Pregătesc echipamentul.</h3>
+          <p class="process-panel-desc"
              data-ro="Sterilizare completă, ace noi sigilate, cerneluri verificate. Setup steril, materiale de calitate, mediu controlat."
              data-en="Full sterilization, new sealed needles, verified inks. Sterile setup, quality materials, controlled environment.">
             Sterilizare completă, ace noi sigilate, cerneluri verificate. Setup steril, materiale de calitate, mediu controlat.
           </p>
         </div>
-        <div class="process-step" data-step="4">
-          <div class="process-step-num">// 04 — <span data-ro="INK" data-en="INK">INK</span> <span style="opacity:0.4; margin-left:10px;">[NODE_I04 · 02-08H]</span></div>
-          <h3 class="process-step-title" data-ro="Tatuajul efectiv." data-en="The actual tattoo.">Tatuajul efectiv.</h3>
-          <p class="process-step-desc"
+
+        <!-- 04 INK -->
+        <div class="process-panel" data-panel="3">
+          <div class="process-panel-num-bg">04</div>
+          <div class="process-panel-stage">
+            <span data-ro="ETAPA 04 · INK" data-en="STAGE 04 · INK">ETAPA 04 · INK</span>
+            <span class="process-panel-meta">[02-08H]</span>
+          </div>
+          <h3 class="process-panel-title" data-ro="Tatuajul efectiv." data-en="The actual tattoo.">Tatuajul efectiv.</h3>
+          <p class="process-panel-desc"
              data-ro="Sesiunea propriu-zisă. Pauzele când ai nevoie, comunicare deschisă, focus pe execuție. La final — instrucțiuni complete de aftercare."
              data-en="The session itself. Breaks when you need them, open communication, focus on execution. At the end — complete aftercare instructions.">
             Sesiunea propriu-zisă. Pauzele când ai nevoie, comunicare deschisă, focus pe execuție. La final — instrucțiuni complete de aftercare.
           </p>
+        </div>
+
+        <!-- step indicator -->
+        <div class="process-step-indicator">
+          <span class="process-step-dot-line active" data-dot="0"></span>
+          <span class="process-step-dot-line" data-dot="1"></span>
+          <span class="process-step-dot-line" data-dot="2"></span>
+          <span class="process-step-dot-line" data-dot="3"></span>
+          <span class="process-step-counter"><span class="current" id="processStepCurrent">01</span> / 04</span>
         </div>
       </div>
     </div>
@@ -1725,25 +1583,6 @@
              data-en="Second-skin film for protection, healing balm, clear written instructions. Post-tattoo support included.">
           Folie second-skin pentru protecție, balsam de vindecare, instrucțiuni clare scrise. Suport post-tatuaj inclus.
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MACHINE REVEAL — scroll-driven frame animation -->
-  <section id="machine" class="machine-reveal">
-    <div class="machine-sticky">
-      <canvas id="machineCanvas"></canvas>
-      <div class="machine-overlay">
-        <div class="machine-cyber-tag">// HARDWARE · ROTARY_MACHINE · FK_IRONS_FLUX_MAX</div>
-        <div class="machine-frame-counter"><span id="machineFrameNum">001</span>&nbsp;/&nbsp;076 · 15FPS</div>
-        <div class="machine-corner-tl"></div>
-        <div class="machine-corner-br"></div>
-        <div class="machine-scanline"></div>
-        <div class="machine-title-wrap">
-          <h2 class="machine-title">Precision<br><span class="accent">Engineered.</span></h2>
-          <p class="machine-sub">// ROTARY · WIRELESS · HIGH-FREQ · BCU_2026</p>
-        </div>
-        <div class="machine-progress-bar" id="machineProgress"></div>
       </div>
     </div>
   </section>
@@ -1956,71 +1795,122 @@
       etapeObs.observe(etapeHeader);
     }
 
-    // ─── GRAPH VIEW (Obsidian-style) — interactivitate + scroll-sync ──
+    // ═══════════════════════════════════════════════════
+    // PROCESS — sticky scroll storytelling (machine canvas + text panels)
+    // ═══════════════════════════════════════════════════
     (function() {
-      const graphView = document.getElementById('graphView');
-      if (!graphView) return;
+      const section    = document.getElementById('process');
+      const canvas     = document.getElementById('processCanvas');
+      const frameNum   = document.getElementById('processFrameNum');
+      const stepCur    = document.getElementById('processStepCurrent');
+      const progressEl = document.getElementById('processProgress');
+      if (!section || !canvas) return;
 
-      const mainNodes = graphView.querySelectorAll('.gv-node.main');
-      const links     = graphView.querySelectorAll('.gv-link');
-      const steps     = document.querySelectorAll('.process-step');
+      const ctx    = canvas.getContext('2d');
+      const TOTAL  = 76;
+      const PANELS = section.querySelectorAll('.process-panel');
+      const DOTS   = section.querySelectorAll('.process-step-dot-line');
+      const N_PANELS = PANELS.length; // 4
 
-      // Activează linkurile conectate la nodul activ
-      function activateNode(stepIdx) {
-        mainNodes.forEach(n => n.classList.toggle('active', Number(n.dataset.step) === stepIdx));
-        links.forEach(link => {
-          const ld = link.dataset.link || '';
-          const [a, b] = ld.split('-').map(Number);
-          link.classList.toggle('active', a === stepIdx || b === stepIdx);
+      const imgs = [];
+      let curFrame  = -1;
+      let curPanel  = -1;
+      let pending   = false;
+      let dpr       = window.devicePixelRatio || 1;
+
+      function pad3(n) { return String(n).padStart(3, '0'); }
+
+      function sizeCanvas() {
+        const r = canvas.getBoundingClientRect();
+        canvas.width  = Math.round(r.width * dpr);
+        canvas.height = Math.round(r.height * dpr);
+      }
+
+      function drawFrame(idx) {
+        const img = imgs[idx];
+        if (!img || !img.complete || !img.naturalWidth) return;
+        if (canvas.width === 0) sizeCanvas();
+        const cw = canvas.width, ch = canvas.height;
+        const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
+        const w = img.naturalWidth  * scale;
+        const h = img.naturalHeight * scale;
+        const x = (cw - w) / 2;
+        const y = (ch - h) / 2;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, cw, ch);
+        ctx.drawImage(img, x, y, w, h);
+      }
+
+      function setPanel(idx) {
+        if (idx === curPanel) return;
+        curPanel = idx;
+        PANELS.forEach((p, i) => p.classList.toggle('active', i === idx));
+        DOTS.forEach((d, i) => d.classList.toggle('active', i === idx));
+        if (stepCur) stepCur.textContent = pad3(idx + 1).slice(1); // 01..04
+      }
+
+      function update() {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(() => {
+          pending = false;
+          const rect    = section.getBoundingClientRect();
+          const total   = section.offsetHeight - window.innerHeight;
+          const scrolled = -rect.top;
+          const progress = Math.max(0, Math.min(1, scrolled / total));
+
+          // Frame index
+          const fIdx = Math.min(TOTAL - 1, Math.floor(progress * TOTAL));
+          if (fIdx !== curFrame) {
+            curFrame = fIdx;
+            drawFrame(fIdx);
+            if (frameNum) frameNum.textContent = pad3(fIdx + 1);
+          }
+
+          // Active panel — equal segments cu mic offset ca sa schimbe putin mai devreme
+          // Folosim "early swap" la 0.85 din segment ca textul sa fie deja in pozitie
+          let pIdx;
+          if (progress < 0.22) pIdx = 0;
+          else if (progress < 0.47) pIdx = 1;
+          else if (progress < 0.72) pIdx = 2;
+          else pIdx = 3;
+          setPanel(pIdx);
+
+          if (progressEl) progressEl.style.setProperty('--p', (progress * 100) + '%');
         });
       }
 
-      // Hover pe nod = activează vizual (tooltip + photo apare prin CSS)
-      mainNodes.forEach(node => {
-        node.addEventListener('mouseenter', () => {
-          const step = Number(node.dataset.step);
-          activateNode(step);
-        });
-        node.addEventListener('mouseleave', () => {
-          // recalculate based on scroll position
-          updateActiveFromScroll();
+      // Preload all 76 frames
+      let loaded = 0;
+      for (let i = 1; i <= TOTAL; i++) {
+        const img = new Image();
+        img.src = 'img/machine/ezgif-frame-' + pad3(i) + '.jpg';
+        img.onload = function() {
+          loaded++;
+          if (loaded === 1) { sizeCanvas(); drawFrame(0); }
+        };
+        imgs.push(img);
+      }
+
+      function onResize() {
+        dpr = window.devicePixelRatio || 1;
+        sizeCanvas();
+        if (curFrame >= 0) drawFrame(curFrame);
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', onResize, { passive: true });
+      // Click pe dots — scroll la segmentul respectiv
+      DOTS.forEach((d, i) => {
+        d.addEventListener('click', () => {
+          const total = section.offsetHeight - window.innerHeight;
+          const targetProgress = (i + 0.5) / N_PANELS;
+          const targetTop = section.offsetTop + total * targetProgress;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
         });
       });
-
-      // Sincronizare cu scroll: care .process-step e cel mai aproape de mijlocul ecranului
-      function updateActiveFromScroll() {
-        if (!steps.length) return;
-        const mid = window.innerHeight * 0.5;
-        let bestIdx = 1, bestDist = Infinity;
-        steps.forEach(step => {
-          const r = step.getBoundingClientRect();
-          const c = (r.top + r.bottom) / 2;
-          const d = Math.abs(c - mid);
-          if (d < bestDist) { bestDist = d; bestIdx = Number(step.dataset.step); }
-        });
-        activateNode(bestIdx);
-      }
-      window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
-      updateActiveFromScroll();
+      update();
     })();
-
-    // ─── PROCESS PHOTO PARALLAX (sticky scroll) ──────────────
-    const processSection = document.querySelector('.process');
-    const processPhoto   = document.getElementById('processPhoto');
-
-    function updateProcessPhoto() {
-      if (!processSection || !processPhoto) return;
-      const rect = processSection.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / total));
-      // parallax: poza se mișcă subtle pe scroll + zoom slow
-      const ty = (progress - 0.5) * 80;
-      const scale = 1 + progress * 0.18;
-      processPhoto.style.transform = `translate3d(0, ${ty}px, 0) scale(${scale})`;
-    }
-    window.addEventListener('scroll', updateProcessPhoto, { passive: true });
-    updateProcessPhoto();
 
 
     // ─── LIGHTBOX (carusel circular) ────────────────────
@@ -2156,83 +2046,6 @@
       }, { passive: true });
     })();
 
-
-    // ═══════════════════════════════════════════════════
-    // MACHINE REVEAL — scroll-driven frame animation (76 frames)
-    // ═══════════════════════════════════════════════════
-    (function() {
-      const canvas      = document.getElementById('machineCanvas');
-      const section     = document.getElementById('machine');
-      const progressBar = document.getElementById('machineProgress');
-      const frameNumEl  = document.getElementById('machineFrameNum');
-      if (!canvas || !section) return;
-
-      const ctx   = canvas.getContext('2d');
-      const TOTAL = 76;
-      const imgs  = [];
-      let loaded  = 0;
-      let current = 0;
-      let rafPending = false;
-
-      function pad3(n) { return String(n).padStart(3, '0'); }
-
-      function resize() {
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
-        drawFrame(current);
-      }
-
-      function drawFrame(idx) {
-        const img = imgs[idx];
-        if (!img || !img.complete || !img.naturalWidth) return;
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const scale = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-        const w = img.naturalWidth  * scale;
-        const h = img.naturalHeight * scale;
-        const x = (canvas.width  - w) / 2;
-        const y = (canvas.height - h) / 2;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, x, y, w, h);
-      }
-
-      function onScroll() {
-        if (rafPending) return;
-        rafPending = true;
-        requestAnimationFrame(() => {
-          rafPending = false;
-          const rect    = section.getBoundingClientRect();
-          const total   = section.offsetHeight - window.innerHeight;
-          const scrolled = -rect.top;
-          const progress = Math.max(0, Math.min(1, scrolled / total));
-          const idx = Math.min(TOTAL - 1, Math.floor(progress * TOTAL));
-
-          if (idx !== current) {
-            current = idx;
-            drawFrame(idx);
-            if (frameNumEl) frameNumEl.textContent = pad3(idx + 1);
-          }
-          if (progressBar) progressBar.style.width = (progress * 100) + '%';
-          if (progress > 0.005) section.classList.add('visible');
-          else section.classList.remove('visible');
-        });
-      }
-
-      // Preload all frames
-      for (let i = 1; i <= TOTAL; i++) {
-        const img = new Image();
-        img.src = 'img/machine/ezgif-frame-' + pad3(i) + '.jpg';
-        img.onload = function() {
-          loaded++;
-          if (loaded === 1) drawFrame(0); // show first frame immediately
-        };
-        imgs.push(img);
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', resize, { passive: true });
-      onScroll();
-    })();
 
     // ═══════════════════════════════════════════════════
     // GSAP SCROLL ANIMATIONS — toate elementele animate
