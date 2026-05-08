@@ -966,6 +966,138 @@
       .equipment-grid { margin: 60px 20px 0; }
     }
 
+    /* ─── MACHINE REVEAL — scroll frame animation ─────── */
+    .machine-reveal {
+      height: 500vh;
+      position: relative;
+      background: #000;
+    }
+    .machine-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #machineCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .machine-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .machine-cyber-tag {
+      position: absolute;
+      top: 28px;
+      left: 5vw;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--red);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .machine-reveal.visible .machine-cyber-tag {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .machine-frame-counter {
+      position: absolute;
+      top: 28px;
+      right: 5vw;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.25);
+    }
+    .machine-title-wrap {
+      position: absolute;
+      bottom: 13vh;
+      left: 5vw;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.8s 0.15s ease, transform 0.8s 0.15s ease;
+    }
+    .machine-reveal.visible .machine-title-wrap {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .machine-title {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 200;
+      font-size: clamp(34px, 6.5vw, 84px);
+      line-height: 0.93;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .machine-title .accent { color: var(--red); font-weight: 400; }
+    .machine-sub {
+      margin-top: 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.35);
+    }
+    .machine-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--red);
+      width: 0%;
+      z-index: 3;
+      box-shadow: 0 0 8px rgba(200,16,46,0.5);
+    }
+    .machine-corner-tl,
+    .machine-corner-br {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      opacity: 0;
+      transition: opacity 0.6s 0.3s ease;
+    }
+    .machine-corner-tl {
+      top: 50px;
+      left: calc(5vw - 8px);
+      border-top: 1px solid rgba(200,16,46,0.5);
+      border-left: 1px solid rgba(200,16,46,0.5);
+    }
+    .machine-corner-br {
+      bottom: calc(13vh + 110px);
+      right: 5vw;
+      border-bottom: 1px solid rgba(200,16,46,0.5);
+      border-right: 1px solid rgba(200,16,46,0.5);
+    }
+    .machine-reveal.visible .machine-corner-tl,
+    .machine-reveal.visible .machine-corner-br {
+      opacity: 1;
+    }
+    .machine-scanline {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,16,46,0.15), transparent);
+      animation: machineScan 4s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes machineScan {
+      0%   { top: 0%;   opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
     /* ─── CONTACT (zoom-in title) ────────────────────── */
     .contact {
       padding: 160px 48px 140px;
@@ -1596,6 +1728,25 @@
     </div>
   </section>
 
+  <!-- MACHINE REVEAL — scroll-driven frame animation -->
+  <section id="machine" class="machine-reveal">
+    <div class="machine-sticky">
+      <canvas id="machineCanvas"></canvas>
+      <div class="machine-overlay">
+        <div class="machine-cyber-tag">// HARDWARE · ROTARY_MACHINE · FK_IRONS_FLUX_MAX</div>
+        <div class="machine-frame-counter"><span id="machineFrameNum">001</span>&nbsp;/&nbsp;076 · 15FPS</div>
+        <div class="machine-corner-tl"></div>
+        <div class="machine-corner-br"></div>
+        <div class="machine-scanline"></div>
+        <div class="machine-title-wrap">
+          <h2 class="machine-title">Precision<br><span class="accent">Engineered.</span></h2>
+          <p class="machine-sub">// ROTARY · WIRELESS · HIGH-FREQ · BCU_2026</p>
+        </div>
+        <div class="machine-progress-bar" id="machineProgress"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact" class="contact">
     <div class="cyber-corners" aria-hidden="true"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
@@ -1999,6 +2150,83 @@
       }, { passive: true });
     })();
 
+
+    // ═══════════════════════════════════════════════════
+    // MACHINE REVEAL — scroll-driven frame animation (76 frames)
+    // ═══════════════════════════════════════════════════
+    (function() {
+      const canvas      = document.getElementById('machineCanvas');
+      const section     = document.getElementById('machine');
+      const progressBar = document.getElementById('machineProgress');
+      const frameNumEl  = document.getElementById('machineFrameNum');
+      if (!canvas || !section) return;
+
+      const ctx   = canvas.getContext('2d');
+      const TOTAL = 76;
+      const imgs  = [];
+      let loaded  = 0;
+      let current = 0;
+      let rafPending = false;
+
+      function pad3(n) { return String(n).padStart(3, '0'); }
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drawFrame(current);
+      }
+
+      function drawFrame(idx) {
+        const img = imgs[idx];
+        if (!img || !img.complete || !img.naturalWidth) return;
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const scale = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+        const w = img.naturalWidth  * scale;
+        const h = img.naturalHeight * scale;
+        const x = (canvas.width  - w) / 2;
+        const y = (canvas.height - h) / 2;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, x, y, w, h);
+      }
+
+      function onScroll() {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(() => {
+          rafPending = false;
+          const rect    = section.getBoundingClientRect();
+          const total   = section.offsetHeight - window.innerHeight;
+          const scrolled = -rect.top;
+          const progress = Math.max(0, Math.min(1, scrolled / total));
+          const idx = Math.min(TOTAL - 1, Math.floor(progress * TOTAL));
+
+          if (idx !== current) {
+            current = idx;
+            drawFrame(idx);
+            if (frameNumEl) frameNumEl.textContent = pad3(idx + 1);
+          }
+          if (progressBar) progressBar.style.width = (progress * 100) + '%';
+          if (progress > 0.005) section.classList.add('visible');
+          else section.classList.remove('visible');
+        });
+      }
+
+      // Preload all frames
+      for (let i = 1; i <= TOTAL; i++) {
+        const img = new Image();
+        img.src = 'img/machine/ezgif-frame-' + pad3(i) + '.jpg';
+        img.onload = function() {
+          loaded++;
+          if (loaded === 1) drawFrame(0); // show first frame immediately
+        };
+        imgs.push(img);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', resize, { passive: true });
+      onScroll();
+    })();
 
     // ═══════════════════════════════════════════════════
     // GSAP SCROLL ANIMATIONS — toate elementele animate
